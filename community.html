@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community · Toadal Performance</title>
+<meta name="description" content="Toadal Performance community — monthly challenges, workout archive, and client results.">
+<link rel="stylesheet" href="style.css">
+<style>
+.current-challenge { background: var(--gold); border-radius: 3px; padding: 36px; margin-bottom: 48px; }
+.current-challenge-label { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--green-deep); margin-bottom: 8px; }
+.current-challenge h2 { font-family: var(--font-display); font-size: 48px; color: var(--green-deep); letter-spacing: .03em; margin-bottom: 12px; }
+.current-challenge p { font-size: 16px; font-weight: 400; color: var(--green-dark); line-height: 1.7; max-width: 560px; margin-bottom: 20px; }
+.challenge-rules { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.ch-rule { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; font-weight: 500; color: var(--green-deep); }
+.ch-rule::before { content: '→'; font-weight: 700; flex-shrink: 0; }
+.challenge-prize-bar { display: flex; align-items: center; justify-content: space-between; background: rgba(15,42,26,.12); border-radius: 2px; padding: 14px 18px; flex-wrap: wrap; gap: 12px; }
+.prize-bar-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--green-dark); }
+.prize-bar-val { font-family: var(--font-display); font-size: 24px; color: var(--green-deep); }
+.past-challenges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; margin-bottom: 60px; }
+.past-challenge { background: var(--green-dark); border-radius: 3px; padding: 22px 24px; border: 1px solid rgba(255,255,255,.07); }
+.past-month { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.past-name { font-family: var(--font-display); font-size: 22px; color: var(--cream); letter-spacing: .04em; margin-bottom: 8px; }
+.past-desc { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.6; margin-bottom: 12px; }
+.past-winner { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--cream); }
+.winner-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; background: rgba(201,168,76,.15); color: var(--gold); border-radius: 2px; letter-spacing: .08em; text-transform: uppercase; }
+.wotw-archive { display: flex; flex-direction: column; gap: 10px; }
+.wotw-row { background: var(--green-dark); border-radius: 3px; border: 1px solid rgba(255,255,255,.06); overflow: hidden; }
+.wotw-row-header { display: flex; align-items: center; gap: 16px; padding: 16px 20px; cursor: pointer; }
+.wotw-row-header:hover { background: rgba(255,255,255,.03); }
+.wotw-row-date { font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--gold); width: 120px; flex-shrink: 0; }
+.wotw-row-name { font-size: 15px; font-weight: 500; color: var(--cream); flex: 1; }
+.wotw-row-level { font-size: 11px; padding: 3px 8px; border-radius: 2px; background: rgba(255,255,255,.06); color: var(--green-light); }
+.wotw-row-chev { color: var(--text-muted); font-size: 16px; transition: transform .2s; }
+.wotw-row.open .wotw-row-chev { transform: rotate(180deg); }
+.wotw-row-body { max-height: 0; overflow: hidden; transition: max-height .35s; }
+.wotw-row-body-inner { padding: 0 20px 16px; }
+.ex-simple { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 2px; margin-bottom: 2px; background: rgba(255,255,255,.04); font-size: 13px; }
+.ex-simple-name { color: var(--cream); }
+.ex-simple-sets { color: var(--gold); font-weight: 600; }
+.ex-simple-rest { color: var(--text-muted); }
+.wotw-row.open .wotw-row-body { max-height: 600px; }
+.social-challenge-prompt { background: var(--green-dark); border-radius: 3px; padding: 28px 32px; text-align: center; border: 1px solid rgba(201,168,76,.2); }
+.social-challenge-prompt h3 { font-family: var(--font-display); font-size: 28px; color: var(--cream); margin-bottom: 10px; letter-spacing: .04em; }
+.social-challenge-prompt p { font-size: 15px; font-weight: 300; color: var(--green-light); line-height: 1.7; max-width: 500px; margin: 0 auto 20px; }
+.hashtag { font-family: var(--font-display); font-size: 28px; color: var(--gold); letter-spacing: .04em; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Community</span>
+    <h1 class="section-title">Challenge yourself.<br>Challenge each other.</h1>
+    <p>Monthly challenges, weekly workouts, and a community of people who show up. Open to everyone — client or not.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- CURRENT CHALLENGE -->
+    <span class="section-label" style="color:var(--gold)">Active Now</span>
+    <div class="current-challenge reveal">
+      <div class="current-challenge-label">May 2026 Challenge</div>
+      <h2>THE 100 REP CHALLENGE 🐸</h2>
+      <p>Complete 100 reps of any compound exercise in as few sets as possible. Record your full attempt, post it to Instagram or TikTok, and tag us. We'll crown the winner on May 31st — judged on form quality, not just speed.</p>
+      <div class="challenge-rules">
+        <div class="ch-rule">Choose any compound movement: squat, deadlift, bench, row, overhead press, or pull-up</div>
+        <div class="ch-rule">Record your full attempt — no edits, no cuts</div>
+        <div class="ch-rule">Post to Instagram Reels or TikTok</div>
+        <div class="ch-rule">Tag @ToadalPerformance and use #ToadalChallenge in your caption</div>
+        <div class="ch-rule">Winner announced May 31st — we're looking for clean form and full range of motion</div>
+      </div>
+      <div class="challenge-prize-bar">
+        <div><div class="prize-bar-label">Prize</div><div class="prize-bar-val">1 Free Month of Core Coaching ($400 value)</div></div>
+        <a href="https://instagram.com/toadalperformance" target="_blank" class="btn btn-green">Enter on Instagram →</a>
+      </div>
+    </div>
+
+    <!-- PAST CHALLENGES -->
+    <span class="section-label">Challenge Archive</span>
+    <h2 class="section-title" style="font-size:36px;margin-bottom:28px">Past challenges.</h2>
+    <div class="past-challenges-grid reveal">
+      <div class="past-challenge">
+        <div class="past-month">Coming soon</div>
+        <div class="past-name">APRIL CHALLENGE</div>
+        <div class="past-desc">Our first ever challenge — launching May 2026. Check back here for the archive as we grow.</div>
+        <div class="past-winner"><span class="winner-badge">Winner</span> TBD</div>
+      </div>
+      <div class="past-challenge">
+        <div class="past-month">Coming soon</div>
+        <div class="past-name">JUNE CHALLENGE</div>
+        <div class="past-desc">Coming in June 2026. Follow us on Instagram to be the first to know what we drop next.</div>
+        <div class="past-winner"><span class="winner-badge">Winner</span> TBD</div>
+      </div>
+      <div class="past-challenge">
+        <div class="past-month">Coming soon</div>
+        <div class="past-name">JULY CHALLENGE</div>
+        <div class="past-desc">Summer challenge incoming. Tag us in your summer training in the meantime.</div>
+        <div class="past-winner"><span class="winner-badge">Winner</span> TBD</div>
+      </div>
+    </div>
+
+    <!-- WORKOUT ARCHIVE -->
+    <span class="section-label">Workout Archive</span>
+    <h2 class="section-title" style="font-size:36px;margin-bottom:8px">Past workouts.</h2>
+    <p style="font-size:15px;font-weight:300;color:var(--green-light);margin-bottom:28px">Every workout of the week, archived here. Free to use — just tag us if you do.</p>
+    <div class="wotw-archive reveal">
+      <div class="wotw-row open">
+        <div class="wotw-row-header" onclick="toggleWOTW(this)">
+          <div class="wotw-row-date">May 12, 2026</div>
+          <div class="wotw-row-name">Full Body Grind</div>
+          <div class="wotw-row-level">Intermediate</div>
+          <div class="wotw-row-chev">▼</div>
+        </div>
+        <div class="wotw-row-body">
+          <div class="wotw-row-body-inner">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">~45 min · Dumbbells or gym · RPE 7-8</div>
+            <div class="ex-simple"><span class="ex-simple-name">Romanian Deadlift</span><span class="ex-simple-sets">4 × 10</span><span class="ex-simple-rest">90s</span></div>
+            <div class="ex-simple"><span class="ex-simple-name">Dumbbell Bench Press</span><span class="ex-simple-sets">4 × 10</span><span class="ex-simple-rest">90s</span></div>
+            <div class="ex-simple"><span class="ex-simple-name">Goblet Squat</span><span class="ex-simple-sets">3 × 12</span><span class="ex-simple-rest">60s</span></div>
+            <div class="ex-simple"><span class="ex-simple-name">Single Arm DB Row</span><span class="ex-simple-sets">3 × 12 ea</span><span class="ex-simple-rest">60s</span></div>
+            <div class="ex-simple"><span class="ex-simple-name">Farmer's Carry</span><span class="ex-simple-sets">3 × 40m</span><span class="ex-simple-rest">90s</span></div>
+            <div class="ex-simple"><span class="ex-simple-name">Plank Hold</span><span class="ex-simple-sets">3 × 45s</span><span class="ex-simple-rest">45s</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="wotw-row">
+        <div class="wotw-row-header" onclick="toggleWOTW(this)">
+          <div class="wotw-row-date">More coming</div>
+          <div class="wotw-row-name">New workout drops every week</div>
+          <div class="wotw-row-level">All levels</div>
+          <div class="wotw-row-chev">▼</div>
+        </div>
+        <div class="wotw-row-body">
+          <div class="wotw-row-body-inner">
+            <p style="font-size:14px;font-weight:300;color:var(--green-light);padding-top:4px">Follow us on Instagram @ToadalPerformance to get each new workout as soon as it drops. We post every Monday.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIAL PROMPT -->
+    <div style="margin-top:48px" class="reveal">
+      <div class="social-challenge-prompt">
+        <h3>Tag us in your workouts</h3>
+        <div class="hashtag">#ToadalPerformance</div>
+        <p>Whether you're doing our workout of the week, entering the challenge, or just crushing a personal best — tag us. We repost the best ones every week and we're always watching.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="https://instagram.com/toadalperformance" target="_blank" class="btn btn-gold">Instagram →</a>
+          <a href="https://tiktok.com/@toadalperformance" target="_blank" class="btn btn-outline">TikTok →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script src="shared.js"></script>
+<script>
+injectNav('Community');
+injectFooter();
+initReveal();
+function toggleWOTW(header){
+  const row=header.closest('.wotw-row');
+  row.classList.toggle('open');
+}
+</script>
+</body>
+</html>

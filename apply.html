@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply · Toadal Performance</title>
+<meta name="description" content="Apply for coaching at Toadal Performance. Free 20-minute consult included. Long Island and NYC.">
+<link rel="stylesheet" href="style.css">
+<style>
+.apply-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.apply-intro p { font-size: 16px; font-weight: 300; color: var(--green-light); line-height: 1.8; margin: 16px 0 28px; }
+.perks { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.perks li { display: flex; align-items: flex-start; gap: 11px; font-size: 14px; font-weight: 400; color: var(--cream); line-height: 1.5; }
+.perks li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.process-steps { display: flex; flex-direction: column; gap: 0; }
+.process-step { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.process-step:last-child { border-bottom: none; }
+.step-num { font-family: var(--font-display); font-size: 32px; color: var(--gold); line-height: 1; flex-shrink: 0; width: 40px; }
+.step-body {}
+.step-title { font-size: 14px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+.step-desc { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.6; }
+.apply-form-wrap { background: var(--green-dark); border-radius: 3px; padding: 36px; border: 1px solid rgba(255,255,255,.07); }
+.apply-form-wrap h2 { font-family: var(--font-display); font-size: 30px; color: var(--cream); letter-spacing: .04em; margin-bottom: 6px; }
+.apply-form-wrap > p { font-size: 13px; font-weight: 300; color: var(--green-light); margin-bottom: 24px; }
+.success-msg { display: none; text-align: center; padding: 40px 20px; }
+.success-msg.show { display: block; }
+.success-icon { font-size: 48px; margin-bottom: 16px; }
+.success-msg h3 { font-family: var(--font-display); font-size: 32px; color: var(--gold); margin-bottom: 10px; letter-spacing: .04em; }
+.success-msg p { font-size: 15px; font-weight: 300; color: var(--green-light); line-height: 1.7; }
+@media(max-width:860px){ .apply-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Apply for Coaching</span>
+    <h1 class="section-title">Ready to go<br>Toadal?</h1>
+    <p>Fill out the application below. Both coaches review every submission personally and will reach out within 24 hours to schedule your free consult call.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="apply-grid">
+      <div class="reveal">
+        <span class="section-label">What happens next</span>
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">You fill out this form</div>
+              <div class="step-desc">Takes about 3 minutes. Be honest — the more we know upfront, the better your program will be.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">We review it together</div>
+              <div class="step-desc">Both coaches read your application and reach out within 24 hours — usually much faster.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Free 20-minute consult call</div>
+              <div class="step-desc">We talk through your goals, your history, and whether Toadal is the right fit. No pressure, no commitment.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Your custom program — within 5 days</div>
+              <div class="step-desc">If you're in, your program is ready within 5 business days of enrolling. We start immediately.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:32px;padding:20px 22px;background:rgba(201,168,76,.08);border-radius:3px;border-left:3px solid var(--gold)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Questions before applying?</div>
+          <div style="font-size:14px;font-weight:300;color:var(--green-light);line-height:1.7">Email us at <a href="mailto:team@toadalperformance.com" style="color:var(--gold)">team@toadalperformance.com</a> and we'll get back to you within 24 hours.</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <div class="apply-form-wrap">
+          <h2>Apply Now</h2>
+          <p>Free to apply. Both coaches review every form personally.</p>
+          <form id="apply-form" onsubmit="handleApply(event)">
+            <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="form-group"><label>First name</label><input type="text" name="fname" placeholder="Alex" required></div>
+              <div class="form-group"><label>Last name</label><input type="text" name="lname" placeholder="Johnson" required></div>
+            </div>
+            <div class="form-group"><label>Email address</label><input type="email" name="email" placeholder="alex@email.com" required></div>
+            <div class="form-group"><label>Phone number</label><input type="tel" name="phone" placeholder="(516) 555-0100"></div>
+            <div class="form-group"><label>Location (city / area)</label><input type="text" name="location" placeholder="Commack, NY" required></div>
+            <div class="form-group"><label>Primary fitness goal</label>
+              <select name="goal" required>
+                <option value="" disabled selected>Select your main goal</option>
+                <option>Lose body fat</option>
+                <option>Build muscle and strength</option>
+                <option>Improve athletic performance</option>
+                <option>General health and consistency</option>
+                <option>Body recomposition</option>
+                <option>Other (describe below)</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Timeline for your goal</label>
+              <select name="timeline">
+                <option value="" disabled selected>When do you want results?</option>
+                <option>1–3 months</option>
+                <option>3–6 months</option>
+                <option>6–12 months</option>
+                <option>This is a long-term lifestyle change</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Package interest</label>
+              <select name="package">
+                <option value="" disabled selected>Which package interests you?</option>
+                <option>Core — $400/mo</option>
+                <option>Elite — $650/mo</option>
+                <option>Premier — $1,100/mo</option>
+                <option>Not sure yet — happy to discuss</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Equipment access</label>
+              <select name="equipment" required>
+                <option value="" disabled selected>What do you have access to?</option>
+                <option>Full gym membership</option>
+                <option>Home gym with weights</option>
+                <option>Minimal home equipment (bands, dumbbells)</option>
+                <option>Bodyweight only</option>
+                <option>Combination — depends on the day</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Are you interested in in-person sessions?</label>
+              <select name="inperson">
+                <option value="" disabled selected>Select one</option>
+                <option>Yes — would love in-person sessions</option>
+                <option>Maybe — open to it</option>
+                <option>No — remote coaching only</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Training history</label>
+              <select name="history" required>
+                <option value="" disabled selected>How experienced are you?</option>
+                <option>Complete beginner (less than 6 months)</option>
+                <option>Some experience (6 months – 2 years)</option>
+                <option>Intermediate (2–4 years consistent)</option>
+                <option>Advanced (4+ years consistent training)</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Injuries, limitations, or medical conditions</label>
+              <textarea name="injuries" placeholder="List any injuries, physical limitations, or conditions we should know about. Type 'none' if not applicable."></textarea>
+            </div>
+            <div class="form-group"><label>What has stopped you from reaching your goals before?</label>
+              <textarea name="obstacles" placeholder="Be honest — this helps us understand how to support you best."></textarea>
+            </div>
+            <div class="form-group"><label>How did you hear about us?</label>
+              <select name="source">
+                <option value="" disabled selected>Select one</option>
+                <option>Instagram</option>
+                <option>TikTok</option>
+                <option>Referral from a friend or family member</option>
+                <option>Google search</option>
+                <option>Long Island community / word of mouth</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Anything else you want us to know?</label>
+              <textarea name="notes" placeholder="Optional — add anything that would help us prepare for your consult call."></textarea>
+            </div>
+            <button type="submit" class="btn btn-gold form-submit">Submit Application →</button>
+            <div class="form-note">We read every application personally. You'll hear from us within 24 hours.</div>
+          </form>
+          <div class="success-msg" id="success-msg">
+            <div class="success-icon">🐸</div>
+            <h3>APPLICATION RECEIVED</h3>
+            <p>Both coaches have your application. We'll reach out within 24 hours to schedule your free consult call. Welcome to the Toadal community.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="shared.js"></script>
+<script>
+injectNav('');
+injectFooter();
+initReveal();
+function handleApply(e){
+  e.preventDefault();
+  document.getElementById('apply-form').style.display='none';
+  document.getElementById('success-msg').classList.add('show');
+  // TODO: Connect to Formspree — change form action to https://formspree.io/f/YOUR_ID
+  // and remove the onsubmit attribute. Formspree free tier = 50 submissions/mo.
+}
+</script>
+</body>
+</html>
