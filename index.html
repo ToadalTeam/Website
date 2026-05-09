@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toadal Performance | Team Fitness Coaching · Long Island & NYC</title>
+<meta name="description" content="Premium team-based fitness coaching on Long Island and NYC. Multiple coaches, one mission: your results.">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── HOME ONLY ── */
+#hero {
+  min-height: 100vh; display: flex; align-items: center;
+  background: var(--green-deep); position: relative; overflow: hidden;
+}
+.hero-ticker {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: var(--gold); padding: 9px 0; overflow: hidden; white-space: nowrap;
+  font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--green-deep);
+}
+.hero-ticker-inner { display: inline-block; animation: ticker 30s linear infinite; }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 420px; gap: 60px;
+  align-items: center; padding-top: 80px;
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 14px;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--gold); }
+.hero-headline {
+  font-family: var(--font-display); font-size: clamp(56px, 9vw, 110px);
+  line-height: .9; letter-spacing: .015em; color: var(--cream); margin-bottom: 24px;
+}
+.hero-headline em { color: var(--gold); font-style: normal; }
+.hero-headline .stroke { -webkit-text-stroke: 1.5px var(--cream); color: transparent; }
+.hero-sub {
+  font-size: 16px; font-weight: 300; color: rgba(245,240,232,.65);
+  line-height: 1.75; max-width: 420px; margin-bottom: 36px;
+}
+.hero-sub strong { color: var(--green-light); font-weight: 500; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-location {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; letter-spacing: .06em; color: var(--text-muted);
+}
+.hero-location::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green-bright); display: block; flex-shrink: 0;
+}
+.hero-mascot-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  position: relative;
+}
+.hero-mascot-label {
+  font-family: var(--font-display); font-size: 13px; letter-spacing: .2em;
+  color: rgba(201,168,76,.4); text-align: center; margin-top: -8px;
+}
+
+/* ── QUICK STATS ── */
+#stats { background: var(--gold); padding: 28px 0; }
+.stats-row { display: flex; justify-content: center; gap: 0; }
+.stat-item {
+  display: flex; align-items: center; gap: 16px; padding: 0 48px;
+  border-right: 1px solid rgba(15,42,26,.2);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: var(--font-display); font-size: 38px; color: var(--green-deep); line-height: 1; }
+.stat-label { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--green-dark); }
+
+/* ── DIFFERENCE ── */
+#difference { background: var(--cream); }
+.diff-intro { max-width: 540px; margin-bottom: 56px; }
+.diff-intro p { font-size: 17px; font-weight: 300; color: var(--text-mid); line-height: 1.8; margin-top: 16px; }
+.diff-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.diff-card {
+  background: var(--white); border-radius: 3px; padding: 32px 28px;
+  border-top: 3px solid var(--gold); box-shadow: 0 2px 20px rgba(15,42,26,.05);
+  transition: transform .22s, box-shadow .22s;
+}
+.diff-card:hover { transform: translateY(-5px); box-shadow: 0 8px 32px rgba(15,42,26,.09); }
+.diff-num { font-family: var(--font-display); font-size: 52px; color: var(--cream-dark); line-height: 1; margin-bottom: 10px; }
+.diff-title { font-size: 16px; font-weight: 600; color: var(--text-dark); margin-bottom: 10px; }
+.diff-text { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.75; }
+
+/* ── PACKAGES TEASER ── */
+#packages-teaser { background: var(--green-deep); }
+.pkgs-header { text-align: center; margin-bottom: 48px; }
+.pkgs-header p { font-size: 16px; font-weight: 300; color: var(--green-light); max-width: 480px; margin: 14px auto 0; line-height: 1.7; }
+.pkg-teasers { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 36px; }
+.pkg-teaser {
+  background: var(--green-dark); border-radius: 3px; padding: 28px;
+  border: 1px solid rgba(255,255,255,.06); text-align: center;
+  transition: border-color .22s, transform .22s;
+}
+.pkg-teaser:hover { border-color: rgba(201,168,76,.35); transform: translateY(-4px); }
+.pkg-teaser.featured { border-color: var(--gold); background: var(--green-mid); }
+.pkg-teaser-name { font-family: var(--font-display); font-size: 28px; letter-spacing: .06em; color: var(--cream); margin-bottom: 6px; }
+.pkg-teaser-price { font-family: var(--font-display); font-size: 44px; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+.pkg-teaser-per { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+.pkg-teaser-line { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.6; margin-bottom: 20px; }
+.pkgs-cta { text-align: center; }
+
+/* ── WORKOUT OF THE WEEK ── */
+#wotw { background: var(--cream); }
+.wotw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.wotw-intro p { font-size: 16px; font-weight: 300; color: var(--text-mid); line-height: 1.8; margin: 14px 0 28px; }
+.wotw-card {
+  background: var(--green-deep); border-radius: 3px; overflow: hidden;
+  border: 1px solid rgba(201,168,76,.2);
+}
+.wotw-card-header {
+  background: var(--green-mid); padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.wotw-card-header-left {}
+.wotw-week { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: rgba(245,240,232,.6); margin-bottom: 4px; }
+.wotw-name { font-family: var(--font-display); font-size: 26px; color: var(--cream); letter-spacing: .04em; }
+.wotw-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 2px; background: var(--gold); color: var(--green-deep);
+}
+.wotw-body { padding: 24px; }
+.wotw-meta { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+.wotw-meta-item { font-size: 12px; font-weight: 600; color: var(--green-light); display: flex; align-items: center; gap: 6px; }
+.wotw-meta-item span { color: rgba(245,240,232,.5); font-weight: 300; }
+.exercise-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
+.exercise-row {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 12px; align-items: center; padding: 10px 14px; border-radius: 2px;
+  background: rgba(255,255,255,.04);
+}
+.exercise-row:nth-child(odd) { background: rgba(255,255,255,.06); }
+.exercise-name { font-size: 14px; font-weight: 400; color: var(--cream); }
+.exercise-sets { font-size: 13px; font-weight: 600; color: var(--gold); white-space: nowrap; }
+.exercise-rest { font-size: 12px; font-weight: 300; color: var(--text-muted); white-space: nowrap; }
+.wotw-note {
+  font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.7;
+  padding: 12px 14px; background: rgba(201,168,76,.07); border-left: 2px solid var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── CHALLENGE OF THE MONTH ── */
+#challenge { background: var(--green-dark); }
+.challenge-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.challenge-content p { font-size: 16px; font-weight: 300; color: var(--green-light); line-height: 1.8; margin: 14px 0 28px; max-width: 440px; }
+.challenge-card {
+  background: var(--green-deep); border-radius: 3px;
+  border: 1px solid rgba(201,168,76,.25); overflow: hidden;
+}
+.challenge-card-top {
+  background: var(--gold); padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.challenge-month { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--green-deep); }
+.challenge-title { font-family: var(--font-display); font-size: 28px; color: var(--green-deep); letter-spacing: .04em; }
+.challenge-body { padding: 24px; }
+.challenge-desc { font-size: 14px; font-weight: 300; color: var(--green-light); line-height: 1.75; margin-bottom: 20px; }
+.challenge-rules { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.challenge-rule { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; font-weight: 400; color: var(--cream); line-height: 1.5; }
+.challenge-rule::before { content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.challenge-prize {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; background: rgba(201,168,76,.1); border-radius: 2px;
+  border: 1px solid rgba(201,168,76,.2);
+}
+.prize-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.prize-value { font-family: var(--font-display); font-size: 22px; color: var(--cream); letter-spacing: .04em; }
+
+/* ── SOCIAL STRIP ── */
+#socials { background: var(--green-deep); padding: 64px 0; border-top: 1px solid rgba(201,168,76,.1); }
+.socials-inner { text-align: center; }
+.socials-inner p { font-size: 16px; font-weight: 300; color: var(--green-light); margin: 12px 0 36px; }
+.social-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 680px; margin: 0 auto 36px; }
+.social-card {
+  border-radius: 3px; padding: 32px; text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: transform .22s; border: 1px solid rgba(255,255,255,.08);
+}
+.social-card:hover { transform: translateY(-4px); }
+.social-card.instagram { background: rgba(201,168,76,.08); border-color: rgba(201,168,76,.2); }
+.social-card.tiktok { background: rgba(255,255,255,.04); }
+.social-card-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.social-card.instagram .social-card-icon { background: rgba(201,168,76,.15); }
+.social-card.tiktok .social-card-icon { background: rgba(255,255,255,.08); }
+.social-card-handle { font-family: var(--font-display); font-size: 22px; letter-spacing: .05em; }
+.social-card.instagram .social-card-handle { color: var(--gold); }
+.social-card.tiktok .social-card-handle { color: var(--cream); }
+.social-card-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); text-align: center; line-height: 1.5; }
+.social-card-cta { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.social-card.instagram .social-card-cta { color: var(--gold); }
+.social-card.tiktok .social-card-cta { color: var(--green-light); }
+
+/* ── CONSULT CTA ── */
+#consult { background: var(--gold); padding: 72px 0; }
+.consult-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.consult-text h2 { font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px); color: var(--green-deep); line-height: .95; letter-spacing: .02em; }
+.consult-text p { font-size: 16px; font-weight: 300; color: var(--green-dark); margin-top: 10px; max-width: 440px; line-height: 1.6; }
+.consult-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.consult-note { font-size: 12px; font-weight: 400; color: var(--green-dark); }
+
+/* ── RESPONSIVE HOME ── */
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-mascot-wrap { display: none; }
+  .stats-row { flex-wrap: wrap; gap: 20px; justify-content: flex-start; padding: 0 20px; }
+  .stat-item { border-right: none; padding: 0 20px; }
+  .diff-cards, .pkg-teasers { grid-template-columns: 1fr; }
+  .wotw-grid, .challenge-inner { grid-template-columns: 1fr; gap: 40px; }
+  .social-cards { grid-template-columns: 1fr; max-width: 380px; }
+  .consult-inner { flex-direction: column; text-align: center; }
+  .consult-actions { align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<section id="hero">
+  <div class="hero-ticker">
+    <span class="hero-ticker-inner">
+      TOADAL PERFORMANCE &nbsp;·&nbsp; LONG ISLAND &nbsp;·&nbsp; NYC &nbsp;·&nbsp; TEAM COACHING &nbsp;·&nbsp; YOUR GOALS. OUR OBSESSION. &nbsp;·&nbsp;
+      TOADAL PERFORMANCE &nbsp;·&nbsp; LONG ISLAND &nbsp;·&nbsp; NYC &nbsp;·&nbsp; TEAM COACHING &nbsp;·&nbsp; YOUR GOALS. OUR OBSESSION. &nbsp;·&nbsp;
+    </span>
+  </div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Long Island &amp; NYC · Est. 2026</div>
+        <h1 class="hero-headline">
+          NOT ONE<br>
+          COACH.<br>
+          <em>A TEAM.</em>
+        </h1>
+        <p class="hero-sub">
+          Most coaching fails because <strong>one person isn't enough</strong>. At Toadal, your team of coaches handles your programming, check-ins, and results — together.
+        </p>
+        <div class="hero-actions">
+          <a href="apply.html" class="btn btn-gold">Apply for Coaching</a>
+          <a href="#difference" class="btn btn-outline">See How It Works</a>
+        </div>
+        <div class="hero-location">Long Island &amp; New York City · In-person and remote</div>
+      </div>
+      <div class="hero-mascot-wrap">
+        <svg viewBox="0 0 200 260" width="200" height="260" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="85" width="13" height="58" rx="4.5" fill="#906810"/>
+          <rect x="19" y="89" width="7" height="50" rx="3" fill="#C9A84C"/>
+          <rect x="29" y="95" width="8" height="36" rx="2.5" fill="#7A5810"/>
+          <rect x="37" y="105" width="126" height="12" rx="4.5" fill="#906810"/>
+          <rect x="163" y="95" width="8" height="36" rx="2.5" fill="#7A5810"/>
+          <rect x="171" y="85" width="13" height="58" rx="4.5" fill="#906810"/>
+          <rect x="174" y="89" width="7" height="50" rx="3" fill="#C9A84C"/>
+          <path d="M65 127 Q50 110 42 97" stroke="#1A5A38" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M42 97 Q38 107 38 113" stroke="#1A5A38" stroke-width="11" fill="none" stroke-linecap="round"/>
+          <ellipse cx="47" cy="103" rx="10" ry="7" fill="#2A7A4A" transform="rotate(-50 47 103)"/>
+          <ellipse cx="38" cy="115" rx="8" ry="5.5" fill="#1A5A38" transform="rotate(-10 38 115)"/>
+          <path d="M135 127 Q150 110 158 97" stroke="#1A5A38" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M158 97 Q162 107 162 113" stroke="#1A5A38" stroke-width="11" fill="none" stroke-linecap="round"/>
+          <ellipse cx="153" cy="103" rx="10" ry="7" fill="#2A7A4A" transform="rotate(50 153 103)"/>
+          <ellipse cx="162" cy="115" rx="8" ry="5.5" fill="#1A5A38" transform="rotate(10 162 115)"/>
+          <ellipse cx="100" cy="155" rx="48" ry="39" fill="#1A5A38"/>
+          <ellipse cx="100" cy="149" rx="44" ry="34" fill="#2A8A55"/>
+          <ellipse cx="100" cy="159" rx="26" ry="21" fill="#3AAA70" opacity=".5"/>
+          <circle cx="78" cy="108" r="19" fill="#2A8A55" stroke="#1A5A38" stroke-width="1.8"/>
+          <circle cx="122" cy="108" r="19" fill="#2A8A55" stroke="#1A5A38" stroke-width="1.8"/>
+          <circle cx="78" cy="106" r="12" fill="#0A1810"/>
+          <circle cx="122" cy="106" r="12" fill="#0A1810"/>
+          <circle cx="82" cy="101" r="4.5" fill="#fff"/>
+          <circle cx="126" cy="101" r="4.5" fill="#fff"/>
+          <circle cx="83.5" cy="102" r="2" fill="#0A1810"/>
+          <circle cx="127.5" cy="102" r="2" fill="#0A1810"/>
+          <path d="M62 96 Q78 89 86 94" stroke="#0F3A22" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+          <path d="M114 94 Q122 89 138 96" stroke="#0F3A22" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+          <path d="M86 144 Q100 139 114 144" stroke="#0F3A22" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+          <path d="M76 190 Q60 207 52 219" stroke="#1A5A38" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M124 190 Q140 207 148 219" stroke="#1A5A38" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <ellipse cx="46" cy="222" rx="17" ry="6.5" fill="#1A5A38"/>
+          <ellipse cx="154" cy="222" rx="17" ry="6.5" fill="#1A5A38"/>
+        </svg>
+        <div class="hero-mascot-label">TOADAL PERFORMANCE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Coaches<br>per client</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24H</div>
+        <div class="stat-label">Response<br>guarantee</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">LI</div>
+        <div class="stat-label">Long Island<br>&amp; NYC</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Custom<br>programming</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE DIFFERENCE -->
+<section id="difference" class="section section-light">
+  <div class="container">
+    <div class="diff-intro reveal">
+      <span class="section-label dark">Why Toadal</span>
+      <h2 class="section-title on-light">The Toadal<br>difference.</h2>
+      <div class="gold-line"></div>
+      <p>One coach is one perspective. One schedule. One blind spot. We built Toadal because we knew there was a better way — and a whole team of coaches is it.</p>
+    </div>
+    <div class="diff-cards">
+      <div class="diff-card reveal">
+        <div class="diff-num">01</div>
+        <div class="diff-title">Multiple coaches, one plan</div>
+        <div class="diff-text">Two certified coaches collaborate on every program, every check-in, and every adjustment. No single perspective ever limits your progress.</div>
+      </div>
+      <div class="diff-card reveal reveal-delay-1">
+        <div class="diff-num">02</div>
+        <div class="diff-title">Accountability that sticks</div>
+        <div class="diff-text">Someone is always available. Always checking in. No more falling off because your coach was busy or you ran out of motivation.</div>
+      </div>
+      <div class="diff-card reveal reveal-delay-2">
+        <div class="diff-num">03</div>
+        <div class="diff-title">Built around your life</div>
+        <div class="diff-text">Your schedule, your equipment, your limitations. In-person on Long Island or remote from anywhere. Totally flexible, never generic.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES TEASER -->
+<section id="packages-teaser" class="section">
+  <div class="container">
+    <div class="pkgs-header reveal">
+      <span class="section-label">Packages</span>
+      <h2 class="section-title">Pick your<br>level.</h2>
+      <p>Every package includes two coaches, custom programming, and a free consult to start.</p>
+    </div>
+    <div class="pkg-teasers reveal">
+      <div class="pkg-teaser">
+        <div class="pkg-teaser-name">CORE</div>
+        <div class="pkg-teaser-price">$400</div>
+        <div class="pkg-teaser-per">per month</div>
+        <div class="pkg-teaser-line">Remote coaching, weekly check-ins, custom programming, and access to your full coach team.</div>
+        <a href="packages.html" class="btn btn-outline" style="font-size:11px;padding:10px 22px">See details</a>
+      </div>
+      <div class="pkg-teaser featured">
+        <div class="pkg-teaser-name">ELITE</div>
+        <div class="pkg-teaser-price">$650</div>
+        <div class="pkg-teaser-per">per month</div>
+        <div class="pkg-teaser-line">Everything in Core plus nutrition guidance, bi-weekly check-ins, and priority 24-hour response.</div>
+        <a href="packages.html" class="btn btn-gold" style="font-size:11px;padding:10px 22px">Most popular</a>
+      </div>
+      <div class="pkg-teaser">
+        <div class="pkg-teaser-name">PREMIER</div>
+        <div class="pkg-teaser-price">$1,100</div>
+        <div class="pkg-teaser-per">per month</div>
+        <div class="pkg-teaser-line">Full-service coaching. Daily check-ins, in-person sessions, complete nutrition plan, VIP access.</div>
+        <a href="packages.html" class="btn btn-outline" style="font-size:11px;padding:10px 22px">See details</a>
+      </div>
+    </div>
+    <div class="pkgs-cta reveal">
+      <a href="packages.html" class="btn btn-outline-gold" style="margin-right:12px">Compare all packages</a>
+      <a href="apply.html" class="btn btn-gold">Apply now — it's free to start</a>
+    </div>
+  </div>
+</section>
+
+<!-- WORKOUT OF THE WEEK -->
+<section id="wotw" class="section section-light">
+  <div class="container">
+    <div class="wotw-grid">
+      <div class="reveal">
+        <span class="section-label dark">Free Content</span>
+        <h2 class="section-title on-light">Workout<br>of the week.</h2>
+        <div class="gold-line"></div>
+        <p>Every week we drop a free workout — programmed by the Toadal team and open to everyone. Client or not. Follow along, tag us, and let us know how you did.</p>
+        <p style="margin-top:12px">Want workouts programmed specifically for your goals? <a href="apply.html" style="color:var(--green-mid);font-weight:500">Apply for coaching →</a></p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="wotw-card">
+          <div class="wotw-card-header">
+            <div class="wotw-card-header-left">
+              <div class="wotw-week">Week of May 12, 2026</div>
+              <div class="wotw-name">FULL BODY GRIND</div>
+            </div>
+            <div class="wotw-badge">Free</div>
+          </div>
+          <div class="wotw-body">
+            <div class="wotw-meta">
+              <div class="wotw-meta-item">Level <span>Intermediate</span></div>
+              <div class="wotw-meta-item">Duration <span>~45 min</span></div>
+              <div class="wotw-meta-item">Equipment <span>Dumbbells or gym</span></div>
+            </div>
+            <div class="exercise-list">
+              <div class="exercise-row">
+                <div class="exercise-name">Romanian Deadlift</div>
+                <div class="exercise-sets">4 × 10</div>
+                <div class="exercise-rest">90s rest</div>
+              </div>
+              <div class="exercise-row">
+                <div class="exercise-name">Dumbbell Bench Press</div>
+                <div class="exercise-sets">4 × 10</div>
+                <div class="exercise-rest">90s rest</div>
+              </div>
+              <div class="exercise-row">
+                <div class="exercise-name">Goblet Squat</div>
+                <div class="exercise-sets">3 × 12</div>
+                <div class="exercise-rest">60s rest</div>
+              </div>
+              <div class="exercise-row">
+                <div class="exercise-name">Single Arm DB Row</div>
+                <div class="exercise-sets">3 × 12 ea</div>
+                <div class="exercise-rest">60s rest</div>
+              </div>
+              <div class="exercise-row">
+                <div class="exercise-name">Farmer's Carry</div>
+                <div class="exercise-sets">3 × 40m</div>
+                <div class="exercise-rest">90s rest</div>
+              </div>
+              <div class="exercise-row">
+                <div class="exercise-name">Plank Hold</div>
+                <div class="exercise-sets">3 × 45s</div>
+                <div class="exercise-rest">45s rest</div>
+              </div>
+            </div>
+            <div class="wotw-note">🐸 Coach tip: Keep RPE 7-8 throughout. If you're brand new to the RDL, watch our form video in the exercise library before loading up.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE OF THE MONTH -->
+<section id="challenge" class="section">
+  <div class="container">
+    <div class="challenge-inner">
+      <div class="challenge-content reveal">
+        <span class="section-label">Community</span>
+        <h2 class="section-title">Challenge<br>of the month.</h2>
+        <div class="gold-line"></div>
+        <p>Every month we post a community challenge open to clients and non-clients alike. Post your results on Instagram and TikTok, tag us, and the winner gets a free month of Core coaching.</p>
+        <a href="community.html" class="btn btn-outline">See all challenges</a>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="challenge-card">
+          <div class="challenge-card-top">
+            <div>
+              <div class="challenge-month">May 2026</div>
+              <div class="challenge-title">THE 100 REP CHALLENGE</div>
+            </div>
+            <div style="font-size:32px">🐸</div>
+          </div>
+          <div class="challenge-body">
+            <div class="challenge-desc">Complete 100 reps of any exercise in as few sets as possible. Record it, post it, tag us. We'll crown the cleanest form — not just the fastest.</div>
+            <div class="challenge-rules">
+              <div class="challenge-rule">Choose any compound movement (squat, deadlift, push-up, row)</div>
+              <div class="challenge-rule">Post a video of your full attempt to Instagram or TikTok</div>
+              <div class="challenge-rule">Tag @toadalperformance and use #ToadalChallenge</div>
+              <div class="challenge-rule">Winner chosen by the coaching team on May 31st</div>
+            </div>
+            <div class="challenge-prize">
+              <div>
+                <div class="prize-label">Winner gets</div>
+                <div class="prize-value">1 Free Month of Core</div>
+              </div>
+              <a href="https://instagram.com/toadalperformance" target="_blank" class="btn btn-gold" style="padding:10px 18px;font-size:11px">Join Now →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL STRIP -->
+<section id="socials">
+  <div class="container">
+    <div class="socials-inner">
+      <span class="section-label" style="display:block">Follow Along</span>
+      <h2 class="section-title" style="font-size:clamp(32px,4vw,52px)">We post daily.<br>Follow the journey.</h2>
+      <p>Workouts, tips, behind-the-scenes, client results, and the occasional buff toad content.</p>
+      <div class="social-cards reveal">
+        <a href="https://instagram.com/toadalperformance" target="_blank" class="social-card instagram">
+          <div class="social-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="#C9A84C" stroke="none"/></svg>
+          </div>
+          <div class="social-card-handle">@ToadalPerformance</div>
+          <div class="social-card-desc">Workout tips, client results, challenges, and your daily dose of fitness motivation.</div>
+          <div class="social-card-cta">Follow on Instagram →</div>
+        </a>
+        <a href="https://tiktok.com/@toadalperformance" target="_blank" class="social-card tiktok">
+          <div class="social-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(245,240,232,.8)"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z"/></svg>
+          </div>
+          <div class="social-card-handle">@ToadalPerformance</div>
+          <div class="social-card-desc">Exercise tutorials, coaching clips, challenge videos, and the occasional buff toad moment.</div>
+          <div class="social-card-cta">Follow on TikTok →</div>
+        </a>
+      </div>
+      <p style="font-size:13px;color:var(--text-muted)">Tag us in your workouts using <strong style="color:var(--gold)">#ToadalPerformance</strong> — we repost the best ones.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FREE CONSULT CTA -->
+<section id="consult">
+  <div class="container">
+    <div class="consult-inner">
+      <div class="consult-text">
+        <h2>Free 20-minute<br>consult. No commitment.</h2>
+        <p>Talk to both coaches about your goals, your history, and whether Toadal is the right fit. We'll be honest either way.</p>
+      </div>
+      <div class="consult-actions">
+        <a href="apply.html" class="btn btn-green" style="font-size:13px;padding:16px 36px">Book Your Free Consult</a>
+        <div class="consult-note">Spots are limited. We cap client intake to protect quality.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="shared.js"></script>
+<script>
+  injectNav('');
+  injectFooter();
+  initReveal();
+  initSmoothScroll();
+</script>
+</body>
+</html>
