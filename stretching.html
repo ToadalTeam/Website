@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stretching Library · Toadal Performance</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.stretch-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px}
+.stab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:2px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(245,240,232,.6);cursor:pointer;transition:all .2s}
+.stab:hover,.stab.active{background:var(--green-mid);border-color:var(--green-mid);color:var(--cream)}
+.stretch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.stretch-card{background:var(--green-card);border-radius:3px;padding:22px;border:1px solid rgba(255,255,255,.06);transition:border-color .2s}
+.stretch-card:hover{border-color:rgba(201,168,76,.25)}
+.stretch-icon{font-size:28px;margin-bottom:10px}
+.stretch-name{font-size:15px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.stretch-type{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.stretch-desc{font-size:13px;font-weight:300;color:var(--green-light);line-height:1.65;margin-bottom:10px}
+.stretch-how{font-size:12px;font-weight:300;color:rgba(245,240,232,.5);line-height:1.6;font-style:italic}
+.stretch-duration{display:inline-block;font-size:11px;padding:3px 8px;background:rgba(201,168,76,.1);color:var(--gold);border-radius:2px;font-weight:600;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Tools</span>
+    <h1 class="section-title">Stretching Library.</h1>
+    <p>Pre-workout activation, post-workout recovery, and daily mobility routines. Free for everyone — client or not.</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="stretch-tabs">
+      <button class="stab active" onclick="filter('all',this)">All</button>
+      <button class="stab" onclick="filter('pre',this)">Pre-Workout</button>
+      <button class="stab" onclick="filter('post',this)">Post-Workout</button>
+      <button class="stab" onclick="filter('mobility',this)">Daily Mobility</button>
+      <button class="stab" onclick="filter('lower',this)">Lower Body</button>
+      <button class="stab" onclick="filter('upper',this)">Upper Body</button>
+    </div>
+    <div class="stretch-grid" id="stretch-grid"></div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:20px;font-style:italic">🎥 Video demonstrations coming soon. New stretches added weekly.</p>
+  </div>
+</section>
+<script src="shared.js"></script>
+<script>
+injectNav('Tools');
+injectFooter();
+const stretches=[
+  {name:'Hip Flexor Stretch',type:'pre',cat:'lower',icon:'🦵',desc:'Opens up the hip flexors before lower body training. Critical if you sit at a desk all day.',how:'Lunge position, back knee down. Push hips forward and hold. Keep torso upright.',duration:'30–45 sec each side'},
+  {name:'World's Greatest Stretch',type:'pre',cat:'lower',icon:'🌍',desc:'The single best pre-workout movement. Hits hip flexors, thoracic spine, and hamstrings.',how:'Lunge forward, same-side elbow to the floor, rotate upper body and reach to ceiling.',duration:'5 reps each side'},
+  {name:'Leg Swings',type:'pre',cat:'lower',icon:'🦵',desc:'Dynamic hamstring and hip opener. Gets blood moving before lower body work.',how:'Hold a wall, swing one leg forward and back in a controlled arc. Increase range gradually.',duration:'15–20 swings each leg'},
+  {name:'Arm Circles',type:'pre',cat:'upper',icon:'💪',desc:'Shoulder warm-up to increase circulation and range of motion before upper body training.',how:'Arms out to sides, make small then progressively larger circles. Forward and backward.',duration:'20 each direction'},
+  {name:'Band Pull-Apart',type:'pre',cat:'upper',icon:'💪',desc:'Activates the rear delts and external rotators before pressing movements.',how:'Hold a band in front at shoulder height, pull apart until band touches chest. Control the return.',duration:'3 × 15 reps'},
+  {name:'Cat-Cow',type:'pre',cat:'mobility',icon:'🧘',desc:'Spinal mobilization to warm up the entire back before any training.',how:'On all fours. Arch back toward ceiling (cat), then let it sag toward floor (cow). Breathe.',duration:'10 slow reps'},
+  {name:'Pigeon Pose',type:'post',cat:'lower',icon:'🧘',desc:'Deep glute and hip flexor stretch. Essential after any lower body session.',how:'From downward dog, bring one knee forward behind your wrist. Lower hip to floor. Hold.',duration:'60–90 sec each side'},
+  {name:'Standing Quad Stretch',type:'post',cat:'lower',icon:'🦵',desc:'Stretches the quad and hip flexor after squats and lunges.',how:'Stand on one leg, pull opposite foot to glute. Keep knees together. Hold wall if needed.',duration:'30–45 sec each side'},
+  {name:'Seated Hamstring Stretch',type:'post',cat:'lower',icon:'🦵',desc:'Elongates the hamstrings after deadlifts and Romanian deadlifts.',how:'Sit on floor, legs straight. Reach toward feet, hinging at hips. Don\'t round the back.',duration:'45–60 sec each side'},
+  {name:'Child\'s Pose',type:'post',cat:'mobility',icon:'🧘',desc:'Full spinal decompression and lower back relief after heavy training.',how:'Knees wide, sit back toward heels, arms extended forward. Breathe deeply into your back.',duration:'60–90 sec'},
+  {name:'Doorway Chest Stretch',type:'post',cat:'upper',icon:'🏋️',desc:'Opens the chest and shoulders after pressing movements.',how:'Stand in a doorway, forearms on frame at 90°. Lean forward until stretch is felt across chest.',duration:'30 sec × 3'},
+  {name:'Cross-Body Shoulder Stretch',type:'post',cat:'upper',icon:'💪',desc:'Rear delt and shoulder capsule stretch after rows and pulling work.',how:'Bring one arm across body, other arm pulls it gently in. Keep shoulder down.',duration:'30–45 sec each'},
+  {name:'90/90 Hip Stretch',type:'mobility',cat:'lower',icon:'🧘',desc:'One of the best hip mobility exercises. Addresses both internal and external rotation.',how:'Sit with both legs bent at 90° on the floor in front and beside you. Shift between sides.',duration:'60 sec each side'},
+  {name:'Thoracic Rotation',type:'mobility',cat:'mobility',icon:'🔄',desc:'Opens up mid-back rotation. Crucial for posture and shoulder health.',how:'Side-lying, knees stacked at 90°. Top arm sweeps open as far as possible. Follow with eyes.',duration:'10 slow reps each side'},
+  {name:'Ankle Circles',type:'mobility',cat:'lower',icon:'🦶',desc:'Improves ankle mobility for better squat depth and movement quality.',how:'Seated or standing. Rotate ankle through full range of motion. Slow and deliberate.',duration:'15 circles each direction, each ankle'},
+  {name:'Wrist Flexor Stretch',type:'mobility',cat:'upper',icon:'✋',desc:'Stretches the forearm flexors. Important for anyone who lifts or works at a desk.',how:'Arm extended, palm up. Other hand gently pulls fingers down toward floor.',duration:'30 sec each hand'},
+];
+let active='all';
+function filter(t,btn){
+  active=t;
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function render(){
+  const list=active==='all'?stretches:stretches.filter(s=>s.type===active||s.cat===active);
+  const typeColors={pre:'rgba(46,154,85,.15)',post:'rgba(201,168,76,.1)',mobility:'rgba(83,58,183,.12)'};
+  const typeLabels={pre:'Pre-Workout',post:'Post-Workout',mobility:'Mobility'};
+  document.getElementById('stretch-grid').innerHTML=list.map(s=>`
+    <div class="stretch-card">
+      <div class="stretch-icon">${s.icon}</div>
+      <div class="stretch-name">${s.name}</div>
+      <div class="stretch-type">${typeLabels[s.type]||s.type}</div>
+      <div class="stretch-desc">${s.desc}</div>
+      <div class="stretch-how">${s.how}</div>
+      <div class="stretch-duration">${s.duration}</div>
+    </div>`).join('');
+}
+render();
+initReveal();
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise Library · Toadal Performance</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.muscle-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.mtab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:2px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(245,240,232,.6);cursor:pointer;transition:all .2s}
+.mtab:hover,.mtab.active{background:var(--green-mid);border-color:var(--green-mid);color:var(--cream)}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.ex-card{background:var(--green-card);border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:border-color .2s,transform .2s;cursor:pointer}
+.ex-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px)}
+.ex-thumb{height:100px;background:var(--green-mid);display:flex;align-items:center;justify-content:center;font-size:32px;position:relative}
+.ex-muscle-tag{position:absolute;bottom:8px;left:10px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.5)}
+.ex-info{padding:14px 16px}
+.ex-title{font-size:14px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.ex-desc{font-size:12px;font-weight:300;color:var(--green-light);line-height:1.5}
+.ex-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.ex-tag{font-size:10px;padding:2px 7px;border-radius:2px;background:rgba(201,168,76,.1);color:var(--gold);font-weight:600}
+.coming-note{font-size:12px;color:var(--text-muted);margin-top:20px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Tools</span>
+    <h1 class="section-title">Exercise Library.</h1>
+    <p>Video breakdowns of every exercise in our programs. Full coaching cues, common mistakes, and progressions — organized by muscle group. Free for everyone.</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="muscle-tabs">
+      <button class="mtab active" onclick="filter('all',this)">All</button>
+      <button class="mtab" onclick="filter('legs',this)">Legs</button>
+      <button class="mtab" onclick="filter('back',this)">Back</button>
+      <button class="mtab" onclick="filter('chest',this)">Chest</button>
+      <button class="mtab" onclick="filter('shoulders',this)">Shoulders</button>
+      <button class="mtab" onclick="filter('arms',this)">Arms</button>
+      <button class="mtab" onclick="filter('core',this)">Core</button>
+      <button class="mtab" onclick="filter('full',this)">Full Body</button>
+    </div>
+    <div class="ex-grid" id="ex-grid"></div>
+    <p class="coming-note">🎥 Video links coming soon — we're filming the full library. New exercises added weekly. Check back often.</p>
+  </div>
+</section>
+<script src="shared.js"></script>
+<script>
+injectNav('Tools');
+injectFooter();
+const exercises=[
+  {name:'Romanian Deadlift',muscle:'legs',icon:'🦵',desc:'Hip hinge pattern. Builds hamstrings and glutes with full stretch.',tags:['Hamstrings','Glutes','Lower back']},
+  {name:'Goblet Squat',muscle:'legs',icon:'🦵',desc:'Great for learning squat mechanics, knee tracking, and depth.',tags:['Quads','Glutes','Core']},
+  {name:'Bulgarian Split Squat',muscle:'legs',icon:'🦵',desc:'Unilateral squat for quad and glute development. Builds balance.',tags:['Quads','Glutes','Balance']},
+  {name:'Hip Thrust',muscle:'legs',icon:'🦵',desc:'Glute isolation with full range of motion. Best glute builder.',tags:['Glutes','Hamstrings']},
+  {name:'Leg Press',muscle:'legs',icon:'🦵',desc:'Quad-dominant push. Allows heavy loading with controlled form.',tags:['Quads','Glutes']},
+  {name:'Nordic Curl',muscle:'legs',icon:'🦵',desc:'Eccentric hamstring exercise. Excellent for injury prevention.',tags:['Hamstrings']},
+  {name:'Barbell Row',muscle:'back',icon:'💪',desc:'Horizontal pulling. Builds back thickness and strength.',tags:['Lats','Rhomboids','Biceps']},
+  {name:'Pull-Up',muscle:'back',icon:'💪',desc:'Vertical pull. Builds lat width and upper body strength.',tags:['Lats','Biceps','Core']},
+  {name:'Single Arm DB Row',muscle:'back',icon:'💪',desc:'Unilateral row to address muscle imbalances.',tags:['Lats','Rhomboids']},
+  {name:'Cable Row',muscle:'back',icon:'💪',desc:'Constant tension horizontal pull for mid-back development.',tags:['Mid back','Rhomboids']},
+  {name:'Lat Pulldown',muscle:'back',icon:'💪',desc:'Machine vertical pull. Great for building lat width.',tags:['Lats','Biceps']},
+  {name:'Bench Press',muscle:'chest',icon:'🏋️',desc:'Foundational horizontal push. Chest, triceps, and shoulder dominant.',tags:['Chest','Triceps','Shoulders']},
+  {name:'Dumbbell Fly',muscle:'chest',icon:'🏋️',desc:'Chest isolation through full stretch and contraction.',tags:['Chest']},
+  {name:'Push-Up Variations',muscle:'chest',icon:'🏋️',desc:'Bodyweight push-up and all major progressions.',tags:['Chest','Triceps','Core']},
+  {name:'Incline DB Press',muscle:'chest',icon:'🏋️',desc:'Upper chest emphasis. Great for balanced chest development.',tags:['Upper chest','Triceps']},
+  {name:'Overhead Press',muscle:'shoulders',icon:'🙌',desc:'Vertical pressing movement. Shoulder and tricep dominant.',tags:['Shoulders','Triceps','Core']},
+  {name:'Lateral Raise',muscle:'shoulders',icon:'🙌',desc:'Medial delt isolation for shoulder width.',tags:['Medial delt']},
+  {name:'Face Pull',muscle:'shoulders',icon:'🙌',desc:'Rear delt and external rotation. Critical for shoulder health.',tags:['Rear delt','Rotator cuff']},
+  {name:'Arnold Press',muscle:'shoulders',icon:'🙌',desc:'Full shoulder press with rotation. Hits all three delt heads.',tags:['All delts','Triceps']},
+  {name:'Bicep Curl',muscle:'arms',icon:'💪',desc:'Bicep isolation through full range of motion.',tags:['Biceps']},
+  {name:'Tricep Pushdown',muscle:'arms',icon:'💪',desc:'Cable tricep isolation. Squeeze hard at lockout.',tags:['Triceps']},
+  {name:'Hammer Curl',muscle:'arms',icon:'💪',desc:'Neutral grip curl for brachialis and forearm development.',tags:['Biceps','Brachialis','Forearms']},
+  {name:'Skull Crusher',muscle:'arms',icon:'💪',desc:'Overhead tricep extension with EZ bar or dumbbells.',tags:['Triceps']},
+  {name:'Plank',muscle:'core',icon:'🧘',desc:'Anti-extension core stability. Squeeze everything at once.',tags:['Core','Stability']},
+  {name:"Farmer's Carry",muscle:'core',icon:'🧘',desc:'Loaded carry. Builds core, grip strength, and conditioning.',tags:['Core','Grip','Full body']},
+  {name:'Dead Bug',muscle:'core',icon:'🧘',desc:'Anti-extension pattern. Excellent for beginners and lower back health.',tags:['Core','Lower back']},
+  {name:'Cable Woodchop',muscle:'core',icon:'🧘',desc:'Rotational core movement. Builds anti-rotation strength.',tags:['Core','Obliques']},
+  {name:'Deadlift',muscle:'full',icon:'🏋️',desc:'The king of all lifts. Full posterior chain and total body strength.',tags:['Full body','Hamstrings','Back','Glutes']},
+  {name:'Clean & Press',muscle:'full',icon:'🏋️',desc:'Olympic-style full body power movement.',tags:['Full body','Power']},
+  {name:'Kettlebell Swing',muscle:'full',icon:'🏋️',desc:'Hip hinge power exercise. Great for conditioning and glute development.',tags:['Hamstrings','Glutes','Conditioning']},
+];
+let active='all';
+function filter(m,btn){
+  active=m;
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function render(){
+  const list=active==='all'?exercises:exercises.filter(e=>e.muscle===active);
+  document.getElementById('ex-grid').innerHTML=list.map(e=>`
+    <div class="ex-card">
+      <div class="ex-thumb">${e.icon}<div class="ex-muscle-tag">${e.muscle}</div></div>
+      <div class="ex-info">
+        <div class="ex-title">${e.name}</div>
+        <div class="ex-desc">${e.desc}</div>
+        <div class="ex-tags">${e.tags.map(t=>`<span class="ex-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+render();
+initReveal();
+</script>
+</body>
+</html>
