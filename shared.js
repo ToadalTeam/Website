@@ -23,8 +23,8 @@ const NAV_ITEMS = [
     label: 'About', href: 'coaches.html',
     dropdown: [
       { section: 'The team', links: [
-        { label: 'Our Coaches', href: 'coaches.html', icon: '👥' },
-        { label: 'How It Works', href: 'index.html#difference', icon: '⚡' },
+        { label: 'Our Coaches', href: 'coaches.html', icon: '' },
+        { label: 'How It Works', href: 'index.html#difference', icon: '' },
       ]}
     ]
   },
@@ -32,8 +32,8 @@ const NAV_ITEMS = [
     label: 'Packages', href: 'packages.html',
     dropdown: [
       { section: 'Coaching', links: [
-        { label: 'All Packages', href: 'packages.html', icon: '📋' },
-        { label: 'In-Person Training', href: 'packages.html#inperson', icon: '📍' },
+        { label: 'All Packages', href: 'packages.html', icon: '' },
+        { label: 'In-Person Training', href: 'packages.html#inperson', icon: '' },
       ]}
     ]
   },
@@ -41,16 +41,16 @@ const NAV_ITEMS = [
     label: 'Tools', href: 'resources.html',
     dropdown: [
       { section: 'Calculators', links: [
-        { label: 'RPE Calculator', href: 'resources.html#rpe', icon: '💪' },
-        { label: 'RMR Calculator', href: 'resources.html#rmr', icon: '🔥' },
-        { label: '1RM Calculator', href: 'resources.html#orm', icon: '🏋️' },
+        { label: 'RPE Calculator', href: 'resources.html#rpe', icon: '' },
+        { label: 'RMR Calculator', href: 'resources.html#rmr', icon: '' },
+        { label: '1RM Calculator', href: 'resources.html#orm', icon: '️' },
       ]},
       { section: 'Reference', links: [
-        { label: 'Exercise Library', href: 'library.html', icon: '🎥' },
-        { label: 'Stretching Library', href: 'stretching.html', icon: '🧘' },
-        { label: 'Equipment Guide', href: 'equipment.html', icon: '🛠️' },
-        { label: 'LI Gym Finder', href: 'resources.html#gyms', icon: '📍' },
-        { label: 'Fitness Glossary', href: 'resources.html#glossary', icon: '📖' },
+        { label: 'Exercise Library', href: 'library.html', icon: '' },
+        { label: 'Stretching Library', href: 'stretching.html', icon: '' },
+        { label: 'Equipment Guide', href: 'equipment.html', icon: '️' },
+        { label: 'LI Gym Finder', href: 'resources.html#gyms', icon: '' },
+        { label: 'Fitness Glossary', href: 'resources.html#glossary', icon: '' },
       ]}
     ]
   },
@@ -58,8 +58,8 @@ const NAV_ITEMS = [
     label: 'Community', href: 'community.html',
     dropdown: [
       { section: 'Get involved', links: [
-        { label: 'Weekly Challenge', href: 'community.html#challenge', icon: '🏆' },
-        { label: 'Workout Archive', href: 'community.html#archive', icon: '📅' },
+        { label: 'Weekly Challenge', href: 'community.html#challenge', icon: '' },
+        { label: 'Workout Archive', href: 'community.html#archive', icon: '' },
       ]}
     ]
   },
@@ -98,7 +98,7 @@ function injectNav(activePage) {
     <li class="nav-item">
       <a href="${item.href}" class="nav-link${activePage === item.label ? ' active' : ''}">
         ${item.label}
-        ${item.dropdown ? '<span class="nav-arrow">▼</span>' : ''}
+        ${item.dropdown ? '<span class="nav-arrow"></span>' : ''}
       </a>
       ${buildDropdown(item)}
     </li>
