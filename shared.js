@@ -1,4 +1,4 @@
-// ── TOADAL PERFORMANCE v2 — Shared JS ──
+// ── TOADAL PERFORMANCE v3 — Shared JS ──
 
 const LOGO_SVG = `<svg width="28" height="28" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
   <ellipse cx="30" cy="38" rx="14" ry="11" fill="#1A5A38"/>
@@ -23,8 +23,8 @@ const NAV_ITEMS = [
     label: 'About', href: 'coaches.html',
     dropdown: [
       { section: 'The team', links: [
-        { label: 'Our Coaches', href: 'coaches.html', icon: '' },
-        { label: 'How It Works', href: 'index.html#difference', icon: '' },
+        { label: 'Our Coaches', href: 'coaches.html' },
+        { label: 'How It Works', href: 'index.html#difference' },
       ]}
     ]
   },
@@ -32,8 +32,8 @@ const NAV_ITEMS = [
     label: 'Packages', href: 'packages.html',
     dropdown: [
       { section: 'Coaching', links: [
-        { label: 'All Packages', href: 'packages.html', icon: '' },
-        { label: 'In-Person Training', href: 'packages.html#inperson', icon: '' },
+        { label: 'All Packages', href: 'packages.html' },
+        { label: 'In-Person Training', href: 'packages.html#inperson' },
       ]}
     ]
   },
@@ -41,16 +41,16 @@ const NAV_ITEMS = [
     label: 'Tools', href: 'resources.html',
     dropdown: [
       { section: 'Calculators', links: [
-        { label: 'RPE Calculator', href: 'resources.html#rpe', icon: '' },
-        { label: 'RMR Calculator', href: 'resources.html#rmr', icon: '' },
-        { label: '1RM Calculator', href: 'resources.html#orm', icon: '' },
+        { label: 'RPE Load Calculator', href: 'resources.html#rpe-load' },
+        { label: 'RMR Calculator', href: 'resources.html#rmr' },
+        { label: '1RM Calculator', href: 'resources.html#orm' },
       ]},
       { section: 'Reference', links: [
-        { label: 'Exercise Library', href: 'library.html', icon: '' },
-        { label: 'Stretching Library', href: 'stretching.html', icon: '' },
-        { label: 'Equipment Guide', href: 'equipment.html', icon: '' },
-        { label: 'LI Gym Finder', href: 'resources.html#gyms', icon: '' },
-        { label: 'Fitness Glossary', href: 'resources.html#glossary', icon: '' },
+        { label: 'Exercise Library', href: 'library.html' },
+        { label: 'Stretching Library', href: 'stretching.html' },
+        { label: 'Equipment Guide', href: 'equipment.html' },
+        { label: 'LI Gym Finder', href: 'resources.html#gyms' },
+        { label: 'Fitness Glossary', href: 'resources.html#glossary' },
       ]}
     ]
   },
@@ -58,8 +58,8 @@ const NAV_ITEMS = [
     label: 'Community', href: 'community.html',
     dropdown: [
       { section: 'Get involved', links: [
-        { label: 'Weekly Challenge', href: 'community.html#challenge', icon: '' },
-        { label: 'Workout Archive', href: 'community.html#archive', icon: '' },
+        { label: 'Weekly Challenge', href: 'community.html#challenge' },
+        { label: 'Workout Archive', href: 'community.html#archive' },
       ]}
     ]
   },
@@ -89,8 +89,20 @@ function buildMobileMenu() {
       });
     }
   });
-  html += `<a href="apply.html" class="cta-link">→ Apply for Coaching</a>`;
+  html += `<a href="apply.html" class="cta-link">Apply for Coaching</a>`;
   return html;
+}
+
+function injectDisclaimer() {
+  document.body.insertAdjacentHTML('afterbegin', `
+    <div id="disclaimer-banner" style="background:#122A1A;border-bottom:1px solid rgba(201,168,76,.25);padding:11px 0;text-align:center;position:relative;z-index:150;">
+      <div style="max-width:1140px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+        <span style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#C9A84C">Work in progress</span>
+        <span style="font-size:12px;font-weight:300;color:rgba(245,240,232,.65)">Toadal Performance is not yet taking clients — but we would love to hear from you.</span>
+        <a href="mailto:team@toadalperformance.com" style="font-size:12px;font-weight:600;color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,.4)">team@toadalperformance.com</a>
+      </div>
+    </div>
+  `);
 }
 
 function injectNav(activePage) {
@@ -98,7 +110,7 @@ function injectNav(activePage) {
     <li class="nav-item">
       <a href="${item.href}" class="nav-link${activePage === item.label ? ' active' : ''}">
         ${item.label}
-        ${item.dropdown ? '<span class="nav-arrow"></span>' : ''}
+        ${item.dropdown ? '<span class="nav-arrow">&#9660;</span>' : ''}
       </a>
       ${buildDropdown(item)}
     </li>
@@ -143,7 +155,7 @@ function injectFooter() {
             <a href="index.html" style="text-decoration:none">
               <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em;color:#F5F0E8">TOADAL<span style="color:#C9A84C">.</span></span>
             </a>
-            <p>Premium team-based fitness coaching on Long Island & NYC. Multiple coaches. One mission: your results.</p>
+            <p>Premium team-based fitness coaching on Long Island and NYC. Multiple coaches. One mission: your results.</p>
             <div class="footer-socials">
               <a href="https://instagram.com/teamtoadal" target="_blank" class="social-btn ig">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
@@ -166,12 +178,12 @@ function injectFooter() {
             </ul>
           </div>
           <div>
-            <div class="footer-col-title">Tools & Resources</div>
+            <div class="footer-col-title">Tools and Resources</div>
             <ul class="footer-links">
               <li><a href="library.html">Exercise Library</a></li>
               <li><a href="stretching.html">Stretching Library</a></li>
               <li><a href="equipment.html">Equipment Guide</a></li>
-              <li><a href="resources.html#rpe">RPE Calculator</a></li>
+              <li><a href="resources.html#rpe-load">RPE Load Calculator</a></li>
               <li><a href="resources.html#rmr">RMR Calculator</a></li>
               <li><a href="resources.html#orm">1RM Calculator</a></li>
               <li><a href="resources.html#gyms">LI Gym Finder</a></li>
@@ -180,7 +192,7 @@ function injectFooter() {
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 Toadal Performance LLC · Long Island, New York · team@toadalperformance.com</p>
+          <p>2026 Toadal Performance LLC · Long Island, New York · team@toadalperformance.com</p>
           <div class="footer-legal">
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
