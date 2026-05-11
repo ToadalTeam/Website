@@ -43,12 +43,12 @@ const NAV_ITEMS = [
       { section: 'Calculators', links: [
         { label: 'RPE Calculator', href: 'resources.html#rpe', icon: '' },
         { label: 'RMR Calculator', href: 'resources.html#rmr', icon: '' },
-        { label: '1RM Calculator', href: 'resources.html#orm', icon: '️' },
+        { label: '1RM Calculator', href: 'resources.html#orm', icon: '' },
       ]},
       { section: 'Reference', links: [
         { label: 'Exercise Library', href: 'library.html', icon: '' },
         { label: 'Stretching Library', href: 'stretching.html', icon: '' },
-        { label: 'Equipment Guide', href: 'equipment.html', icon: '️' },
+        { label: 'Equipment Guide', href: 'equipment.html', icon: '' },
         { label: 'LI Gym Finder', href: 'resources.html#gyms', icon: '' },
         { label: 'Fitness Glossary', href: 'resources.html#glossary', icon: '' },
       ]}
@@ -70,7 +70,7 @@ function buildDropdown(item) {
   const sections = item.dropdown.map(s => `
     <div class="dropdown-section">
       <div class="dropdown-label">${s.section}</div>
-      ${s.links.map(l => `<a href="${l.href}"><span class="dropdown-icon">${l.icon}</span>${l.label}</a>`).join('')}
+      ${s.links.map(l => `<a href="${l.href}">${l.label}</a>`).join('')}
     </div>
   `).join('');
   return `<div class="dropdown">${sections}</div>`;
@@ -84,7 +84,7 @@ function buildMobileMenu() {
       item.dropdown.forEach(section => {
         html += `<div class="mobile-section-title">${section.section}</div>`;
         section.links.forEach(l => {
-          html += `<a href="${l.href}">${l.icon} ${l.label}</a>`;
+          html += `<a href="${l.href}">${l.label}</a>`;
         });
       });
     }
