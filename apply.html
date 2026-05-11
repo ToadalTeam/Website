@@ -84,7 +84,11 @@
         <div class="apply-form-wrap">
           <h2>Apply Now</h2>
           <p>Free to apply. Both coaches review every form personally.</p>
-          <form id="apply-form" onsubmit="handleApply(event)">
+          <!-- To activate: go to formspree.io, create a free account, create a form,
+               and replace YOUR_FORM_ID below with your actual ID. Done. -->
+          <form id="apply-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <input type="hidden" name="_replyto" value="team@toadalperformance.com">
+            <input type="hidden" name="_subject" value="New Toadal Performance Application">
             <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
               <div class="form-group"><label>First name</label><input type="text" name="fname" placeholder="Alex" required></div>
               <div class="form-group"><label>Last name</label><input type="text" name="lname" placeholder="Johnson" required></div>
@@ -184,7 +188,8 @@
 
 <script src="shared.js"></script>
 <script>
-injectNav('');
+injectDisclaimer();
+  injectNav('');
 injectFooter();
 initReveal();
 function handleApply(e){

@@ -88,10 +88,39 @@
     <div class="resource-section" id="calculators">
       <span class="section-label">Calculators</span>
       <h2>Know your numbers.</h2>
-      <p>Three calculators built by the Toadal team. Bookmark this page — you'll come back to these.</p>
+      <p>Four calculators built by the Toadal team. Bookmark this page — you will come back to these.</p>
+
+      <!-- RPE LOAD CALCULATOR -->
+      <div id="rpe-load" style="margin-bottom:20px">
+        <h3 style="font-family:var(--font-display);font-size:28px;color:var(--cream);letter-spacing:.04em;margin-bottom:6px">RPE LOAD CALCULATOR</h3>
+        <p style="font-size:14px;font-weight:300;color:var(--green-light);line-height:1.6;margin-bottom:16px">Enter your 1RM, target reps, and target RPE — we'll tell you exactly what weight to use.</p>
+        <div style="background:var(--green-card);border-radius:3px;padding:28px;border:1px solid rgba(255,255,255,.07)">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
+            <div>
+              <label for="rpe-1rm">Your 1RM (lbs)</label>
+              <input type="number" id="rpe-1rm" placeholder="e.g. 315" oninput="calcRPELoad()">
+            </div>
+            <div>
+              <label for="rpe-reps">Target reps</label>
+              <input type="number" id="rpe-reps" placeholder="e.g. 5" min="1" max="20" oninput="calcRPELoad()">
+            </div>
+            <div>
+              <label for="rpe-target">Target RPE (1–10)</label>
+              <input type="number" id="rpe-target" placeholder="e.g. 7" min="1" max="10" oninput="calcRPELoad()">
+            </div>
+          </div>
+          <div id="rpe-load-result" style="display:none;background:rgba(201,168,76,.08);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 3px 3px 0">
+            <div style="font-family:var(--font-display);font-size:48px;color:var(--gold);line-height:1" id="rpe-load-weight">--</div>
+            <div style="font-size:13px;color:var(--green-light);margin-top:4px" id="rpe-load-label"></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:14px" id="rpe-load-zones"></div>
+          </div>
+          <div style="margin-top:14px;font-size:12px;font-weight:300;color:var(--text-muted);font-style:italic">Based on the Tuchscherer RPE chart — the most widely used RPE-to-percentage table in strength sports.</div>
+        </div>
+      </div>
+
       <div class="calc-grid reveal">
 
-        <!-- RPE -->
+        <!-- RPE GUIDE -->
         <div class="calc-card">
           <h3>RPE GUIDE</h3>
           <p>Rate of Perceived Exertion — understand how hard you should be pushing on any given set.</p>
@@ -279,9 +308,65 @@
 
 <script src="shared.js"></script>
 <script>
+injectDisclaimer();
 injectNav('Resources');
 injectFooter();
 initReveal();
+
+// ── RPE LOAD CALCULATOR (Tuchscherer chart) ──
+// rpeChart[reps][rpe] = percentage of 1RM
+const rpeChart = {
+  1:  {10:1.000, 9.5:0.978, 9:0.955, 8.5:0.939, 8:0.922, 7.5:0.907, 7:0.892, 6.5:0.878, 6:0.863},
+  2:  {10:0.955, 9.5:0.939, 9:0.922, 8.5:0.907, 8:0.892, 7.5:0.878, 7:0.863, 6.5:0.848, 6:0.833},
+  3:  {10:0.922, 9.5:0.907, 9:0.892, 8.5:0.878, 8:0.863, 7.5:0.848, 7:0.833, 6.5:0.820, 6:0.807},
+  4:  {10:0.892, 9.5:0.878, 9:0.863, 8.5:0.848, 8:0.833, 7.5:0.820, 7:0.807, 6.5:0.794, 6:0.781},
+  5:  {10:0.863, 9.5:0.848, 9:0.833, 8.5:0.820, 8:0.807, 7.5:0.794, 7:0.781, 6.5:0.768, 6:0.755},
+  6:  {10:0.833, 9.5:0.820, 9:0.807, 8.5:0.794, 8:0.781, 7.5:0.768, 7:0.755, 6.5:0.743, 6:0.730},
+  7:  {10:0.807, 9.5:0.794, 9:0.781, 8.5:0.768, 8:0.755, 7.5:0.743, 7:0.730, 6.5:0.718, 6:0.705},
+  8:  {10:0.781, 9.5:0.768, 9:0.755, 8.5:0.743, 8:0.730, 7.5:0.718, 7:0.705, 6.5:0.693, 6:0.680},
+  9:  {10:0.755, 9.5:0.743, 9:0.730, 8.5:0.718, 8:0.705, 7.5:0.693, 7:0.680, 6.5:0.668, 6:0.655},
+  10: {10:0.730, 9.5:0.718, 9:0.705, 8.5:0.693, 8:0.680, 7.5:0.668, 7:0.655, 6.5:0.643, 6:0.630},
+};
+
+function calcRPELoad() {
+  const orm = parseFloat(document.getElementById('rpe-1rm').value);
+  const reps = parseInt(document.getElementById('rpe-reps').value);
+  const rpe = parseFloat(document.getElementById('rpe-target').value);
+  const result = document.getElementById('rpe-load-result');
+
+  if (!orm || !reps || !rpe || reps < 1 || reps > 10 || rpe < 6 || rpe > 10) {
+    result.style.display = 'none';
+    return;
+  }
+
+  const repRow = rpeChart[reps] || rpeChart[10];
+  // Find closest RPE key
+  const rpeKeys = Object.keys(repRow).map(Number).sort((a,b) => b-a);
+  const closestRPE = rpeKeys.reduce((prev, curr) => Math.abs(curr-rpe) < Math.abs(prev-rpe) ? curr : prev);
+  const pct = repRow[closestRPE];
+  const weight = Math.round((orm * pct) / 2.5) * 2.5; // round to nearest 2.5
+
+  document.getElementById('rpe-load-weight').textContent = weight + ' lbs';
+  document.getElementById('rpe-load-label').textContent =
+    `${reps} reps at RPE ${rpe} = ${Math.round(pct * 100)}% of your ${orm} lb 1RM`;
+
+  // Show nearby RPE options for same reps
+  const zones = [];
+  rpeKeys.filter(r => r >= 6 && r <= 10).forEach(r => {
+    const w = Math.round((orm * repRow[r]) / 2.5) * 2.5;
+    zones.push({ rpe: r, weight: w, pct: Math.round(repRow[r]*100) });
+  });
+
+  document.getElementById('rpe-load-zones').innerHTML = zones.map(z =>
+    `<div style="background:rgba(255,255,255,.05);padding:7px 10px;border-radius:2px;font-size:12px;${z.rpe==closestRPE?'border:1px solid rgba(201,168,76,.4)':''}">
+      <div style="color:var(--gold);font-weight:700">RPE ${z.rpe}</div>
+      <div style="color:var(--cream)">${z.weight} lbs</div>
+      <div style="color:var(--text-muted)">${z.pct}%</div>
+    </div>`
+  ).join('');
+
+  result.style.display = 'block';
+}
 
 // RPE guide
 const rpeData = [

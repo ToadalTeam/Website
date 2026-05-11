@@ -48,7 +48,8 @@
 </section>
 <script src="shared.js"></script>
 <script>
-injectNav('Tools');
+injectDisclaimer();
+  injectNav('Tools');
 injectFooter();
 const exercises=[
   {name:'Romanian Deadlift',muscle:'legs',icon:'',desc:'Hip hinge pattern. Builds hamstrings and glutes with full stretch.',tags:['Hamstrings','Glutes','Lower back']},
@@ -62,10 +63,10 @@ const exercises=[
   {name:'Single Arm DB Row',muscle:'back',icon:'',desc:'Unilateral row to address muscle imbalances.',tags:['Lats','Rhomboids']},
   {name:'Cable Row',muscle:'back',icon:'',desc:'Constant tension horizontal pull for mid-back development.',tags:['Mid back','Rhomboids']},
   {name:'Lat Pulldown',muscle:'back',icon:'',desc:'Machine vertical pull. Great for building lat width.',tags:['Lats','Biceps']},
-  {name:'Bench Press',muscle:'chest',icon:'️',desc:'Foundational horizontal push. Chest, triceps, and shoulder dominant.',tags:['Chest','Triceps','Shoulders']},
-  {name:'Dumbbell Fly',muscle:'chest',icon:'️',desc:'Chest isolation through full stretch and contraction.',tags:['Chest']},
-  {name:'Push-Up Variations',muscle:'chest',icon:'️',desc:'Bodyweight push-up and all major progressions.',tags:['Chest','Triceps','Core']},
-  {name:'Incline DB Press',muscle:'chest',icon:'️',desc:'Upper chest emphasis. Great for balanced chest development.',tags:['Upper chest','Triceps']},
+  {name:'Bench Press',muscle:'chest',icon:'',desc:'Foundational horizontal push. Chest, triceps, and shoulder dominant.',tags:['Chest','Triceps','Shoulders']},
+  {name:'Dumbbell Fly',muscle:'chest',icon:'',desc:'Chest isolation through full stretch and contraction.',tags:['Chest']},
+  {name:'Push-Up Variations',muscle:'chest',icon:'',desc:'Bodyweight push-up and all major progressions.',tags:['Chest','Triceps','Core']},
+  {name:'Incline DB Press',muscle:'chest',icon:'',desc:'Upper chest emphasis. Great for balanced chest development.',tags:['Upper chest','Triceps']},
   {name:'Overhead Press',muscle:'shoulders',icon:'',desc:'Vertical pressing movement. Shoulder and tricep dominant.',tags:['Shoulders','Triceps','Core']},
   {name:'Lateral Raise',muscle:'shoulders',icon:'',desc:'Medial delt isolation for shoulder width.',tags:['Medial delt']},
   {name:'Face Pull',muscle:'shoulders',icon:'',desc:'Rear delt and external rotation. Critical for shoulder health.',tags:['Rear delt','Rotator cuff']},
@@ -78,9 +79,9 @@ const exercises=[
   {name:"Farmer's Carry",muscle:'core',icon:'',desc:'Loaded carry. Builds core, grip strength, and conditioning.',tags:['Core','Grip','Full body']},
   {name:'Dead Bug',muscle:'core',icon:'',desc:'Anti-extension pattern. Excellent for beginners and lower back health.',tags:['Core','Lower back']},
   {name:'Cable Woodchop',muscle:'core',icon:'',desc:'Rotational core movement. Builds anti-rotation strength.',tags:['Core','Obliques']},
-  {name:'Deadlift',muscle:'full',icon:'️',desc:'The king of all lifts. Full posterior chain and total body strength.',tags:['Full body','Hamstrings','Back','Glutes']},
-  {name:'Clean & Press',muscle:'full',icon:'️',desc:'Olympic-style full body power movement.',tags:['Full body','Power']},
-  {name:'Kettlebell Swing',muscle:'full',icon:'️',desc:'Hip hinge power exercise. Great for conditioning and glute development.',tags:['Hamstrings','Glutes','Conditioning']},
+  {name:'Deadlift',muscle:'full',icon:'',desc:'The king of all lifts. Full posterior chain and total body strength.',tags:['Full body','Hamstrings','Back','Glutes']},
+  {name:'Clean & Press',muscle:'full',icon:'',desc:'Olympic-style full body power movement.',tags:['Full body','Power']},
+  {name:'Kettlebell Swing',muscle:'full',icon:'',desc:'Hip hinge power exercise. Great for conditioning and glute development.',tags:['Hamstrings','Glutes','Conditioning']},
 ];
 let active='all';
 function filter(m,btn){
@@ -93,7 +94,7 @@ function render(){
   const list=active==='all'?exercises:exercises.filter(e=>e.muscle===active);
   document.getElementById('ex-grid').innerHTML=list.map(e=>`
     <div class="ex-card">
-      <div class="ex-thumb">${e.icon}<div class="ex-muscle-tag">${e.muscle}</div></div>
+      <div class="ex-thumb"><div class="ex-muscle-tag">${e.muscle}</div></div>
       <div class="ex-info">
         <div class="ex-title">${e.name}</div>
         <div class="ex-desc">${e.desc}</div>

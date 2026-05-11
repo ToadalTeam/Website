@@ -46,21 +46,22 @@
 </section>
 <script src="shared.js"></script>
 <script>
-injectNav('Tools');
+injectDisclaimer();
+  injectNav('Tools');
 injectFooter();
 const equipment=[
-  {name:'Barbell',cat:'free',icon:'️',desc:'A long metal bar (usually 45 lbs) used for the biggest compound lifts. The foundation of serious strength training.',uses:'Squats, deadlifts, bench press, overhead press, rows, and Olympic lifts.',tip:'Most barbells in a commercial gym weigh 45 lbs. Always count the bar when calculating your total weight.'},
+  {name:'Barbell',cat:'free',icon:'',desc:'A long metal bar (usually 45 lbs) used for the biggest compound lifts. The foundation of serious strength training.',uses:'Squats, deadlifts, bench press, overhead press, rows, and Olympic lifts.',tip:'Most barbells in a commercial gym weigh 45 lbs. Always count the bar when calculating your total weight.'},
   {name:'Dumbbells',cat:'free',icon:'',desc:'Pairs of handheld weights ranging from 2–150+ lbs. The most versatile piece of equipment in any gym.',uses:'Virtually every exercise — presses, rows, curls, lunges, carries, and more.',tip:'Adjust the bench angle and your grip to target different parts of the same muscle group.'},
   {name:'Kettlebell',cat:'free',icon:'',desc:'A cast iron ball with a handle. The handle offset makes it ideal for ballistic, swinging, and carrying movements.',uses:'Swings, Turkish get-ups, goblet squats, carries, and pressing variations.',tip:'The standard swing is a hip hinge, not a squat. Keep your back flat and drive with your hips.'},
-  {name:'EZ Curl Bar',cat:'free',icon:'↩️',desc:'A wavy barbell that allows a more natural grip angle for arm and tricep exercises.',uses:'Bicep curls, skull crushers, upright rows, and close-grip presses.',tip:'The angled grip reduces wrist strain compared to a straight bar for curls.'},
-  {name:'Trap Bar / Hex Bar',cat:'free',icon:'⬡',desc:'A hexagonal or diamond-shaped bar you stand inside. Great for beginners and anyone with lower back limitations.',uses:'Deadlifts, farmer\'s carries, shrugs, and jump squats.',tip:'The trap bar deadlift puts less stress on the lower back than a conventional barbell deadlift.'},
+  {name:'EZ Curl Bar',cat:'free',icon:'',desc:'A wavy barbell that allows a more natural grip angle for arm and tricep exercises.',uses:'Bicep curls, skull crushers, upright rows, and close-grip presses.',tip:'The angled grip reduces wrist strain compared to a straight bar for curls.'},
+  {name:'Trap Bar / Hex Bar',cat:'free',icon:'',desc:'A hexagonal or diamond-shaped bar you stand inside. Great for beginners and anyone with lower back limitations.',uses:'Deadlifts, farmer\'s carries, shrugs, and jump squats.',tip:'The trap bar deadlift puts less stress on the lower back than a conventional barbell deadlift.'},
   {name:'Smith Machine',cat:'machine',icon:'',desc:'A barbell fixed to vertical rails that only moves straight up and down. Good for some exercises, limited for others.',uses:'Squats, bench press, shoulder press, and lunges — especially useful for beginners learning movement patterns.',tip:'The fixed path means your body adapts to the machine rather than vice versa. Use free weights when possible.'},
   {name:'Leg Press Machine',cat:'machine',icon:'',desc:'A sled machine where you push weight with your legs at an angle while seated. Allows very heavy loading safely.',uses:'Quad-dominant pressing, high-rep conditioning, and as a squat alternative for injured athletes.',tip:'Foot position changes the muscle emphasis — higher feet targets hamstrings/glutes, lower feet targets quads.'},
   {name:'Hack Squat Machine',cat:'machine',icon:'',desc:'A padded machine for squatting at an angle with your back supported.',uses:'Quad development. Good alternative when barbell squatting is uncomfortable.',tip:'Keep your heels planted and knees tracking over toes throughout the movement.'},
-  {name:'Chest Press Machine',cat:'machine',icon:'️',desc:'A seated pressing machine that mimics the bench press with a fixed path.',uses:'Chest, triceps, and shoulder development — especially useful for beginners or when a spotter isn\'t available.',tip:'Adjust the seat height so the handles are at mid-chest level.'},
+  {name:'Chest Press Machine',cat:'machine',icon:'',desc:'A seated pressing machine that mimics the bench press with a fixed path.',uses:'Chest, triceps, and shoulder development — especially useful for beginners or when a spotter isn\'t available.',tip:'Adjust the seat height so the handles are at mid-chest level.'},
   {name:'Lat Pulldown Machine',cat:'machine',icon:'',desc:'A cable-based machine for vertical pulling. One of the best upper body builders.',uses:'Lat development, bicep work, and building toward pull-ups.',tip:'Think about pulling your elbows down and back — not just pulling the bar down.'},
   {name:'Cable Machine',cat:'cable',icon:'',desc:'A weight stack connected to a pulley and cable. Provides constant tension through the entire range of motion — unlike free weights.',uses:'Rows, flyes, tricep pushdowns, face pulls, woodchops, curls, and hundreds more.',tip:'Constant tension throughout the movement makes cables excellent for muscle growth — the muscle never gets a break.'},
-  {name:'Cable Crossover',cat:'cable',icon:'️',desc:'Two cable machines facing each other. Allows chest flyes and crossover movements with adjustable angles.',uses:'Chest flyes at multiple angles, functional movements, and core rotation work.',tip:'Adjust the pulley height to emphasize different parts of the chest (high = lower chest, low = upper chest).'},
+  {name:'Cable Crossover',cat:'cable',icon:'',desc:'Two cable machines facing each other. Allows chest flyes and crossover movements with adjustable angles.',uses:'Chest flyes at multiple angles, functional movements, and core rotation work.',tip:'Adjust the pulley height to emphasize different parts of the chest (high = lower chest, low = upper chest).'},
   {name:'Treadmill',cat:'cardio',icon:'',desc:'A moving belt for walking, jogging, and running indoors. The most common cardio machine.',uses:'Steady-state cardio, interval training (HIIT), and warm-up walks.',tip:'Incline walking (10–15% at 3–4 mph) burns significant calories with much less joint impact than running.'},
   {name:'Stationary Bike',cat:'cardio',icon:'',desc:'A fixed bicycle for low-impact cardiovascular exercise. Easy on the joints.',uses:'Warm-up, steady-state cardio, and HIIT intervals.',tip:'Adjust the seat height so your knee has a slight bend (not fully extended) at the bottom of the pedal stroke.'},
   {name:'Rowing Machine',cat:'cardio',icon:'',desc:'A full-body cardio machine that mimics rowing. Engages legs, back, and arms simultaneously.',uses:'Full body conditioning, low-impact HIIT, and building aerobic capacity.',tip:'The power comes from your legs first (70%), then core, then arms. Most people do it backwards.'},
@@ -83,7 +84,6 @@ function render(){
   document.getElementById('eq-grid').innerHTML=list.map(e=>`
     <div class="eq-card">
       <div class="eq-top">
-        <div class="eq-icon">${e.icon}</div>
         <div><div class="eq-name">${e.name}</div><div class="eq-cat">${e.cat}</div></div>
       </div>
       <div class="eq-desc">${e.desc}</div>
