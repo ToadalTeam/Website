@@ -218,3 +218,10 @@ function initSmoothScroll() {
     });
   });
 }
+
+// Force all reveal elements visible on load (fallback)
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }, 100);
+});
