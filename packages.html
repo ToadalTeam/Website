@@ -4,233 +4,344 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Packages · Toadal Performance</title>
-<meta name="description" content="Toadal Performance coaching packages. Core, Elite, and Premier — pick your level. Long Island and NYC.">
+<meta name="description" content="Toadal Performance coaching packages — nutrition, programming, and full-service coaching on Long Island and NYC.">
 <link rel="stylesheet" href="style.css">
 <style>
-.packages-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 60px; }
-.pkg { background: var(--green-dark); border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,.07); transition: transform .22s, border-color .22s; }
-.pkg:hover { transform: translateY(-6px); border-color: rgba(201,168,76,.3); }
-.pkg.featured { border-color: var(--gold); background: var(--green-mid); }
-.pkg-top { padding: 28px 24px 20px; border-bottom: 1px solid rgba(255,255,255,.07); }
-.pkg-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; background: var(--gold); color: var(--green-deep); margin-bottom: 14px; }
-.pkg-name { font-family: var(--font-display); font-size: 34px; letter-spacing: .06em; color: var(--cream); margin-bottom: 6px; }
-.pkg-price-wrap { display: flex; align-items: baseline; gap: 4px; margin-bottom: 8px; }
-.pkg-price { font-family: var(--font-display); font-size: 50px; color: var(--gold); line-height: 1; }
-.pkg-per { font-size: 14px; font-weight: 300; color: var(--text-muted); }
-.pkg-tagline { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.6; }
-.pkg-feats { padding: 20px 24px; list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.pkg-feats li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; font-weight: 300; color: var(--cream); opacity: .85; line-height: 1.5; }
-.pkg-feats li::before { content: ''; color: var(--gold); font-weight: 700; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
-.pkg-footer { padding: 16px 24px 24px; }
-.compare-table { width: 100%; border-collapse: collapse; margin-bottom: 60px; }
-.compare-table th { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; padding: 14px 20px; background: var(--green-dark); color: var(--gold); text-align: center; border: 1px solid rgba(255,255,255,.06); }
-.compare-table th:first-child { text-align: left; }
-.compare-table td { padding: 13px 20px; font-size: 13px; border: 1px solid rgba(255,255,255,.06); text-align: center; color: var(--cream); font-weight: 300; }
-.compare-table td:first-child { text-align: left; font-weight: 400; color: rgba(245,240,232,.8); background: rgba(255,255,255,.02); }
-.compare-table tr:nth-child(even) td { background: rgba(255,255,255,.03); }
-.compare-table tr:nth-child(even) td:first-child { background: rgba(255,255,255,.04); }
-.check { color: var(--green-bright); font-size: 15px; }
-.dash { color: var(--text-muted); }
-.inperson-section { background: var(--cream); }
-.zones-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 24px; }
-.zone { background: var(--white); border-radius: 3px; padding: 22px 24px; border: 1px solid var(--cream-dark); display: flex; align-items: center; justify-content: space-between; gap: 20px; transition: border-color .2s; }
-.zone:hover { border-color: var(--gold); }
-.zone-left {}
-.zone-name { font-size: 15px; font-weight: 600; color: var(--text-dark); margin-bottom: 4px; }
-.zone-dist { font-size: 13px; font-weight: 300; color: var(--text-muted); }
-.zone-price { font-family: var(--font-display); font-size: 34px; color: var(--green-mid); }
-.mileage-calc { background: var(--green-deep); border-radius: 3px; padding: 28px; border: 1px solid rgba(201,168,76,.2); margin-bottom: 40px; }
-.mileage-calc h3 { font-family: var(--font-display); font-size: 24px; color: var(--cream); margin-bottom: 16px; letter-spacing: .04em; }
-.calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: end; }
-.calc-result { font-family: var(--font-display); font-size: 38px; color: var(--gold); margin-top: 8px; }
-.calc-zone { font-size: 13px; color: var(--green-light); margin-top: 4px; }
-.faq-pkg { display: flex; flex-direction: column; gap: 2px; }
-.faq-item { border-bottom: 1px solid rgba(255,255,255,.08); }
-.faq-q { width: 100%; background: none; border: none; text-align: left; padding: 18px 0; font-family: var(--font-body); font-size: 15px; font-weight: 500; color: var(--cream); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; transition: color .2s; }
-.faq-q:hover { color: var(--gold); }
-.faq-icon { width: 18px; height: 18px; flex-shrink: 0; position: relative; }
-.faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: var(--gold); border-radius: 1px; transition: all .3s; }
-.faq-icon::before { width: 10px; height: 1.5px; top: 8px; left: 4px; }
-.faq-icon::after { width: 1.5px; height: 10px; top: 4px; left: 8px; }
-.faq-item.open .faq-icon::after { transform: rotate(90deg); opacity: 0; }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-.faq-a-inner { padding-bottom: 18px; font-size: 14px; font-weight: 300; color: var(--green-light); line-height: 1.8; }
-.faq-item.open .faq-a { max-height: 240px; }
-@media(max-width:860px){ .packages-grid{grid-template-columns:1fr;} .compare-table{display:none;} .zones-grid{grid-template-columns:1fr;} .calc-row{grid-template-columns:1fr;} }
+.launch-banner{background:var(--gold);color:var(--green-deep);text-align:center;padding:14px 24px;font-size:13px;font-weight:600;letter-spacing:.04em}
+.launch-banner strong{font-weight:800}
+
+.packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
+.pkg{background:var(--green-card);border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.07);transition:transform .22s,border-color .22s;display:flex;flex-direction:column}
+.pkg:hover{transform:translateY(-5px);border-color:rgba(201,168,76,.3)}
+.pkg.featured{border-color:rgba(201,168,76,.35);background:var(--green-mid)}
+.pkg-top{padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.pkg-name{font-family:var(--font-display);font-size:34px;letter-spacing:.06em;color:var(--cream);margin-bottom:10px}
+.pkg-price-area{margin-bottom:12px}
+.pkg-intro-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep);background:var(--gold);padding:3px 9px;border-radius:2px;margin-bottom:8px}
+.pkg-price-wrap{display:flex;align-items:baseline;gap:6px;margin-bottom:5px}
+.pkg-price{font-family:var(--font-display);font-size:52px;color:var(--gold);line-height:1}
+.pkg-per{font-size:13px;font-weight:300;color:var(--text-muted)}
+.pkg-regular{font-size:13px;font-weight:400;color:rgba(245,240,232,.55);display:flex;align-items:center;gap:6px}
+.pkg-regular s{text-decoration:line-through;color:rgba(245,240,232,.35)}
+.pkg-regular-after{font-size:12px;color:rgba(245,240,232,.45);font-weight:300}
+.pkg-tagline{font-size:13px;font-weight:300;color:var(--green-light);line-height:1.6;margin-top:10px}
+.pkg-feats{padding:20px 24px;list-style:none;display:flex;flex-direction:column;gap:10px;flex:1}
+.pkg-feats li{display:flex;align-items:flex-start;gap:9px;font-size:13px;font-weight:300;color:var(--cream);opacity:.88;line-height:1.5}
+.pkg-feats li::before{content:'✓';color:var(--gold);font-weight:900;font-size:11px;flex-shrink:0;margin-top:2px}
+.pkg-footer{padding:16px 24px 24px}
+
+.custom-pkg{background:var(--green-card);border-radius:3px;border:1px solid rgba(201,168,76,.2);padding:36px 40px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;margin-bottom:60px}
+.custom-title{font-family:var(--font-display);font-size:36px;color:var(--cream);letter-spacing:.04em;margin-bottom:8px}
+.custom-desc{font-size:15px;font-weight:300;color:var(--green-light);line-height:1.75;max-width:520px}
+.custom-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.custom-tag{font-size:12px;font-weight:500;padding:4px 12px;border-radius:2px;background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+
+.addons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:60px}
+.addon{background:var(--green-card);border-radius:3px;padding:20px 22px;border:1px solid rgba(255,255,255,.06);transition:border-color .2s}
+.addon:hover{border-color:rgba(201,168,76,.25)}
+.addon-name{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:6px}
+.addon-price{font-family:var(--font-display);font-size:28px;color:var(--gold);line-height:1;margin-bottom:6px}
+.addon-desc{font-size:12px;font-weight:300;color:var(--green-light);line-height:1.6}
+
+.inperson-wrap{background:var(--cream);border-radius:3px;padding:48px;margin-bottom:60px}
+.inperson-rate-box{background:var(--green-deep);border-radius:3px;padding:28px 32px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.inperson-rate-main{}
+.inperson-rate-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.inperson-rate-price{font-family:var(--font-display);font-size:52px;color:var(--gold);line-height:1;margin-bottom:4px}
+.inperson-rate-sub{font-size:13px;font-weight:300;color:var(--green-light)}
+.inperson-rate-right{text-align:right}
+.inperson-rate-note{font-size:13px;font-weight:300;color:var(--green-light);line-height:1.7;max-width:300px}
+.inperson-note{background:var(--green-card);border-radius:3px;padding:20px 24px;margin-bottom:16px;border-left:3px solid var(--gold);font-size:13px;font-weight:300;color:var(--green-light);line-height:1.8}
+.inperson-note strong{color:var(--gold);font-weight:600}
+.clearance-box{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:3px;padding:20px 24px}
+.clearance-box h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.clearance-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.clearance-list li{font-size:13px;font-weight:300;color:var(--cream);display:flex;align-items:flex-start;gap:10px;line-height:1.6}
+.clearance-list li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:1px}
+
+.compare-table{width:100%;border-collapse:collapse;margin-bottom:60px}
+.compare-table th{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:14px 20px;background:var(--green-dark);color:var(--gold);text-align:center;border:1px solid rgba(255,255,255,.06)}
+.compare-table th:first-child{text-align:left}
+.compare-table td{padding:13px 20px;font-size:13px;border:1px solid rgba(255,255,255,.06);text-align:center;color:var(--cream);font-weight:300}
+.compare-table td:first-child{text-align:left;font-weight:400;color:rgba(245,240,232,.8);background:rgba(255,255,255,.02)}
+.compare-table tr:nth-child(even) td{background:rgba(255,255,255,.03)}
+.compare-table tr:nth-child(even) td:first-child{background:rgba(255,255,255,.04)}
+.ck{color:var(--green-bright);font-weight:700}
+.ds{color:var(--text-muted)}
+.op{color:var(--gold);font-size:11px}
+
+.faq-list{display:flex;flex-direction:column;gap:2px;max-width:720px}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.08)}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:18px 0;font-family:var(--font-body);font-size:15px;font-weight:500;color:var(--cream);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-icon{width:18px;height:18px;flex-shrink:0;position:relative}
+.faq-icon::before,.faq-icon::after{content:'';position:absolute;background:var(--gold);border-radius:1px;transition:all .3s}
+.faq-icon::before{width:10px;height:1.5px;top:8px;left:4px}
+.faq-icon::after{width:1.5px;height:10px;top:4px;left:8px}
+.faq-item.open .faq-icon::after{transform:rotate(90deg);opacity:0}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a-inner{padding-bottom:18px;font-size:14px;font-weight:300;color:var(--green-light);line-height:1.8}
+.faq-item.open .faq-a{max-height:300px}
+
+@media(max-width:860px){
+  .packages-grid{grid-template-columns:1fr}
+  .custom-pkg{grid-template-columns:1fr}
+  .compare-table{display:none}
+  .addons-grid{grid-template-columns:1fr 1fr}
+  .inperson-rate-box{flex-direction:column;gap:16px}
+  .inperson-rate-right{text-align:left}
+}
+@media(max-width:480px){.addons-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
+<div class="launch-banner">
+  <strong>Launch Special</strong> — Introductory rates for the first 3 months. Regular pricing applies after.
+</div>
+
 <div class="page-hero">
   <div class="container">
     <span class="section-label">Coaching Packages</span>
     <h1 class="section-title">Pick your level.</h1>
-    <p>Every package includes two certified coaches, custom programming, and a free 20-minute consult to start. No contracts — cancel with 30 days notice.</p>
+    <p>Every package starts with a free 30-minute consultation with your coaches, and is fully customized to you. No long-term contracts.</p>
   </div>
 </div>
 
 <section class="section">
   <div class="container">
+
+    <!-- 3 MAIN PACKAGES -->
     <div class="packages-grid reveal">
+
+      <!-- PERFORMANCE -->
       <div class="pkg">
         <div class="pkg-top">
-          <div class="pkg-name">CORE</div>
-          <div class="pkg-price-wrap"><div class="pkg-price">$400</div><div class="pkg-per">/month</div></div>
-          <div class="pkg-tagline">Remote coaching with a dedicated team. The foundation for real results.</div>
+          <div class="pkg-name">PERFORMANCE</div>
+          <div class="pkg-price-area">
+            <div class="pkg-intro-tag">First 3 months</div>
+            <div class="pkg-price-wrap">
+              <div class="pkg-price">$169</div>
+              <div class="pkg-per">/month</div>
+            </div>
+            <div class="pkg-regular">
+              Then <s>$249/mo</s>
+              <span class="pkg-regular-after">after 3 months</span>
+            </div>
+          </div>
+          <div class="pkg-tagline">Your choice — a custom nutrition plan or a custom training program, with bi-weekly check-ins to review progress and make adjustments.</div>
         </div>
         <ul class="pkg-feats">
-          <li>Custom program built for your goals and schedule</li>
-          <li>Weekly check-ins from your coach team</li>
-          <li>Equipment-adaptive programming (gym, home, bodyweight)</li>
-          <li>Progress tracking and monthly analysis</li>
-          <li>Direct messaging with the team (48hr response)</li>
-          <li>Full exercise video library access</li>
-          <li>Injury and limitation modifications</li>
-          <li>Free 20-minute onboarding consult call</li>
+          <li>Free 30-minute consultation</li>
+          <li>Choose one: Custom Nutrition Plan OR Custom Training Program</li>
+          <li>Bi-weekly check-ins — review progress and adjust as needed</li>
+          <li>Program adapted to your equipment, schedule, and limitations</li>
+          <li>Direct messaging access to your coaching team</li>
+          <li>Full exercise and stretching library access</li>
+          <li>Injury and limitation modifications built in</li>
         </ul>
         <div class="pkg-footer">
-          <a href="apply.html" class="btn btn-outline" style="width:100%;text-align:center;display:block">Apply for Core</a>
+          <a href="apply.html" class="btn btn-outline-gold" style="width:100%;text-align:center;display:block">Apply for Performance</a>
         </div>
       </div>
+
+      <!-- COMPLETE -->
       <div class="pkg featured">
         <div class="pkg-top">
-          <div class="pkg-badge">Most Popular</div>
-          <div class="pkg-name">ELITE</div>
-          <div class="pkg-price-wrap"><div class="pkg-price">$650</div><div class="pkg-per">/month</div></div>
-          <div class="pkg-tagline">Everything in Core plus nutrition and priority access to your team.</div>
+          <div class="pkg-name">COMPLETE</div>
+          <div class="pkg-price-area">
+            <div class="pkg-intro-tag">First 3 months</div>
+            <div class="pkg-price-wrap">
+              <div class="pkg-price">$249</div>
+              <div class="pkg-per">/month</div>
+            </div>
+            <div class="pkg-regular">
+              Then <s>$349/mo</s>
+              <span class="pkg-regular-after">after 3 months</span>
+            </div>
+          </div>
+          <div class="pkg-tagline">Nutrition and programming working together — the combination where most clients see their biggest results, with bi-weekly check-ins.</div>
         </div>
         <ul class="pkg-feats">
-          <li>Everything in Core</li>
-          <li>Bi-weekly check-ins (every two weeks minimum)</li>
-          <li>Nutrition guidelines and meal frameworks</li>
-          <li>Priority 24-hour response guarantee</li>
-          <li>Monthly video progress review call</li>
-          <li>Quarterly program restructure review</li>
-          <li>RMR and calorie target calculation</li>
-          <li>Supplement guidance</li>
+          <li>Everything in Performance</li>
+          <li>Both: Custom Nutrition Plan AND Custom Training Program</li>
+          <li>Bi-weekly check-in calls — adjustments to anything that needs changing</li>
+          <li>Calorie targets, macros, and meal framework built around your life</li>
+          <li>Program updated whenever your goals or circumstances change</li>
+          <li>Progress tracking and analysis from your coaching team</li>
         </ul>
         <div class="pkg-footer">
-          <a href="apply.html" class="btn btn-gold" style="width:100%;text-align:center;display:block">Apply for Elite</a>
+          <a href="apply.html" class="btn btn-gold" style="width:100%;text-align:center;display:block">Apply for Complete</a>
         </div>
       </div>
+
+      <!-- ELITE -->
       <div class="pkg">
         <div class="pkg-top">
-          <div class="pkg-name">PREMIER</div>
-          <div class="pkg-price-wrap"><div class="pkg-price">$1,100</div><div class="pkg-per">/month</div></div>
-          <div class="pkg-tagline">Full-service coaching. Daily contact, in-person sessions, complete nutrition plan.</div>
+          <div class="pkg-name">ELITE</div>
+          <div class="pkg-price-area">
+            <div class="pkg-intro-tag">First 3 months</div>
+            <div class="pkg-price-wrap">
+              <div class="pkg-price">$349</div>
+              <div class="pkg-per">/month</div>
+            </div>
+            <div class="pkg-regular">
+              Then <s>$499/mo</s>
+              <span class="pkg-regular-after">after 3 months</span>
+            </div>
+          </div>
+          <div class="pkg-tagline">Full-service coaching with weekly check-ins and discounted in-person sessions. The most hands-on option we offer.</div>
         </div>
         <ul class="pkg-feats">
-          <li>Everything in Elite</li>
-          <li>Daily check-ins (7 days a week)</li>
-          <li>In-person sessions on request (zone rates apply)</li>
-          <li>Full personalized nutrition plan with meal timing</li>
-          <li>Same-day VIP response — always</li>
-          <li>Quarterly 1-hour strategy sessions with both coaches</li>
-          <li>Priority access to all new programs and challenges</li>
-          <li>Custom workout videos recorded for your program</li>
+          <li>Everything in Complete</li>
+          <li>Weekly check-ins — consistent every week, no exceptions</li>
+          <li>Weekly review and adjustments to both program and nutrition</li>
+          <li>Discounted in-person training sessions</li>
         </ul>
         <div class="pkg-footer">
-          <a href="apply.html" class="btn btn-outline" style="width:100%;text-align:center;display:block">Apply for Premier</a>
+          <a href="apply.html" class="btn btn-outline-gold" style="width:100%;text-align:center;display:block">Apply for Elite</a>
         </div>
       </div>
     </div>
 
-    <div class="reveal">
+    <!-- STANDALONE ADD-ONS -->
+    <div class="reveal" style="margin-bottom:60px">
+      <span class="section-label">Just Need One Thing?</span>
+      <h2 class="section-title" style="font-size:36px;margin-bottom:8px">Standalone options.</h2>
+      <p style="font-size:15px;font-weight:300;color:var(--green-light);margin-bottom:28px;max-width:520px;line-height:1.7">Not ready for ongoing coaching? These one-time services have no recurring commitment.</p>
+      <div class="addons-grid">
+        <div class="addon">
+          <div class="addon-name">Nutrition Plan</div>
+          <div class="addon-price">$99</div>
+          <div class="addon-desc">A one-time custom nutrition plan built around your goals, schedule, and food preferences. Includes calorie targets and a practical meal framework.</div>
+        </div>
+        <div class="addon">
+          <div class="addon-name">Training Program</div>
+          <div class="addon-price">$99</div>
+          <div class="addon-desc">A one-time custom training program designed for your goals and equipment. Full exercise selection, sets, reps, and progressions — built by your coaches, not a template.</div>
+        </div>
+        <div class="addon">
+          <div class="addon-name">Session Bundle — 4 Pack</div>
+          <div class="addon-price">$300+</div>
+          <div class="addon-desc">Four in-person training sessions at a bundled rate. Pricing varies by distance. First bundle includes a free consultation before your first session. Bundles never expire.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOM PACKAGE -->
+    <div class="custom-pkg reveal">
+      <div>
+        <div class="custom-title">CUSTOM PACKAGE</div>
+        <div class="custom-desc">None of the above fits perfectly? We build packages from scratch. Tell us what you need on your consultation call and we will price it out together. No package is too specific.</div>
+        <div class="custom-tags">
+          <span class="custom-tag">Any check-in frequency</span>
+          <span class="custom-tag">Couples and partner coaching</span>
+          <span class="custom-tag">Corporate wellness</span>
+          <span class="custom-tag">Sport-specific programming</span>
+          <span class="custom-tag">Injury rehab focused</span>
+          <span class="custom-tag">Competition prep</span>
+        </div>
+      </div>
+      <div style="flex-shrink:0">
+        <a href="apply.html" class="btn btn-gold" style="white-space:nowrap">Get a Custom Quote</a>
+      </div>
+    </div>
+
+    <!-- COMPARE TABLE -->
+    <div class="reveal" style="margin-bottom:60px">
       <span class="section-label">Side by Side</span>
-      <h2 class="section-title" style="margin-bottom:28px;font-size:36px">Compare packages.</h2>
+      <h2 class="section-title" style="font-size:36px;margin-bottom:28px">Compare packages.</h2>
       <table class="compare-table">
         <thead>
           <tr>
             <th>Feature</th>
-            <th>Core · $400</th>
-            <th>Elite · $650</th>
-            <th>Premier · $1,100</th>
+            <th>Performance · $169</th>
+            <th>Complete · $249</th>
+            <th>Elite · $349</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Custom program</td><td><span class="check"></span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Two coaches assigned</td><td><span class="check"></span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Free consult call</td><td><span class="check"></span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Check-in frequency</td><td>Weekly</td><td>Bi-weekly</td><td>Daily</td></tr>
-          <tr><td>Response guarantee</td><td>48 hours</td><td>24 hours</td><td>Same day</td></tr>
-          <tr><td>Exercise video library</td><td><span class="check"></span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Injury modifications</td><td><span class="check"></span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Nutrition guidelines</td><td><span class="dash">—</span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Full nutrition plan</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check"></span></td></tr>
-          <tr><td>Monthly video review</td><td><span class="dash">—</span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>In-person sessions</td><td>Add-on</td><td>Add-on</td><td>Included</td></tr>
-          <tr><td>Quarterly strategy session</td><td><span class="dash">—</span></td><td><span class="check"></span></td><td><span class="check"></span></td></tr>
-          <tr><td>Custom workout videos</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check"></span></td></tr>
+          <tr><td>Free 30-min consultation</td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Two coaches assigned</td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Custom training program</td><td><span class="op">Choose one</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Custom nutrition plan</td><td><span class="op">Choose one</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Check-in frequency</td><td>Bi-weekly</td><td>Bi-weekly</td><td>Weekly</td></tr>
+          <tr><td>Program and nutrition adjustments</td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Progress tracking</td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Injury modifications</td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td><td><span class="ck">Yes</span></td></tr>
+          <tr><td>Discounted in-person sessions</td><td><span class="ds">—</span></td><td><span class="ds">—</span></td><td><span class="ck">Yes</span></td></tr>
         </tbody>
       </table>
     </div>
-  </div>
-</section>
 
-<!-- IN-PERSON -->
-<section class="section inperson-section">
-  <div class="container">
-    <span class="section-label dark">In-Person Training</span>
-    <h2 class="section-title on-light" style="margin-bottom:8px">We come to you.</h2>
-    <p style="font-size:16px;font-weight:300;color:var(--text-muted);margin-bottom:36px;max-width:520px;line-height:1.7">Based on Long Island, we travel across Nassau County, Suffolk County, and into New York City. Rates are per session and based on distance.</p>
-    <div class="zones-grid reveal">
-      <div class="zone"><div class="zone-left"><div class="zone-name">Zone 1 — Local</div><div class="zone-dist">0 – 10 miles · No travel surcharge</div></div><div class="zone-price">$80</div></div>
-      <div class="zone"><div class="zone-left"><div class="zone-name">Zone 2 — Regional</div><div class="zone-dist">11 – 25 miles · Travel time included</div></div><div class="zone-price">$110</div></div>
-      <div class="zone"><div class="zone-left"><div class="zone-name">Zone 3 — Extended</div><div class="zone-dist">26 – 50 miles · Travel + premium rate</div></div><div class="zone-price">$150</div></div>
-      <div class="zone"><div class="zone-left"><div class="zone-name">Zone 4 — NYC / Travel</div><div class="zone-dist">50+ miles or Manhattan sessions</div></div><div class="zone-price">Quote</div></div>
-    </div>
-    <div class="mileage-calc reveal">
-      <h3>Estimate your session rate</h3>
-      <div class="calc-row">
-        <div>
-          <label for="miles-input">Your distance from us (miles)</label>
-          <input type="number" id="miles-input" placeholder="Enter miles" min="0" oninput="calcRate()" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:var(--cream);">
+    <!-- IN-PERSON SECTION -->
+    <div id="inperson" class="inperson-wrap reveal">
+      <span class="section-label dark">In-Person Training</span>
+      <h2 class="section-title on-light" style="margin-bottom:20px">We come to you.</h2>
+      <p style="font-size:15px;font-weight:300;color:var(--text-muted);margin-bottom:28px;max-width:540px;line-height:1.7">Available as a standalone service or as an add-on to any package. We come to your home, gym, or outdoor space anywhere on Long Island or in NYC.</p>
+
+      <div class="inperson-rate-box">
+        <div class="inperson-rate-main">
+          <div class="inperson-rate-label">Starting at</div>
+          <div class="inperson-rate-price">$100</div>
+          <div class="inperson-rate-sub">per session — price varies by distance</div>
         </div>
-        <div>
-          <label>Estimated rate per session</label>
-          <div class="calc-result" id="calc-result">—</div>
-          <div class="calc-zone" id="calc-zone">Enter a distance above</div>
+        <div class="inperson-rate-right">
+          <div class="inperson-rate-note">Email us at <a href="mailto:team@toadalperformance.com" style="color:var(--gold)">team@toadalperformance.com</a> with your location for an exact quote. We will get back to you quickly.</div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- FAQ -->
-<section class="section">
-  <div class="container" style="max-width:720px">
-    <span class="section-label">Frequently Asked</span>
-    <h2 class="section-title" style="margin-bottom:36px">Package questions.</h2>
-    <div class="faq-pkg reveal">
-      <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">Can I switch packages later?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">You can upgrade anytime with no waiting period. Downgrades require 30 days notice. We'd rather you find the right fit than stay in the wrong tier.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">Is there a contract or minimum commitment?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">No contracts. Cancel with 30 days notice at any time. We keep clients through results, not paperwork.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">What if I need in-person sessions on Core or Elite?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">In-person sessions are available as an add-on to any package at zone-based rates. Book them as needed — no recurring commitment required.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">How does billing work?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Monthly billing on the same date each month. Payment details are handled during the onboarding call. We'll discuss payment methods then.</div></div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFAQ(this)">Do you offer any discounts?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">We occasionally run referral incentives — refer a friend who signs up and receive credit toward your next month. Ask about our current referral program during your consult call.</div></div></div>
+      <div class="inperson-note">
+        <strong>4-session bundle starting at $300</strong> — buying in bulk saves you money and locks in your rate. Bundle sessions never expire and can be used at any pace. First bundle purchase includes a complimentary consultation before your first session.<br><br>
+        <strong>Elite package clients</strong> receive a discount on all in-person session rates — mention this when you email for a quote.
+      </div>
+
+      <div class="clearance-box">
+        <h4>Before your first session — required</h4>
+        <ul class="clearance-list">
+          <li>All new clients must complete a PAR-Q (Physical Activity Readiness Questionnaire) before any training begins — remote or in-person</li>
+          <li>If you answer YES to any PAR-Q question, written medical clearance from your doctor is required before we can begin</li>
+          <li>A signed Liability Waiver and Client Services Agreement are required before your first session</li>
+          <li>All forms will be sent to you after your consultation and must be completed before scheduling begins</li>
+          <li>Please disclose any known injuries, limitations, or medical conditions in your application so we can prepare accordingly</li>
+        </ul>
+      </div>
     </div>
-    <div style="text-align:center;margin-top:48px">
-      <a href="apply.html" class="btn btn-gold">Apply — Free Consult Included</a>
+
+    <!-- FAQ -->
+    <div class="reveal">
+      <span class="section-label">Frequently Asked</span>
+      <h2 class="section-title" style="font-size:36px;margin-bottom:28px">Package questions.</h2>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What is included in the free consultation?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">A 30-minute call where we talk through your goals, history, schedule, and what package suits you best. No pressure and no commitment required. We will be honest if we do not think we are the right fit for you right now.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What is the difference between Performance and Complete?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Performance gives you one thing — either a nutrition plan or a training program — with bi-weekly check-ins. Complete gives you both together. Training and nutrition work as a system, and most clients see significantly better results when both are dialed in at once. If budget is a concern, start with Performance and upgrade anytime.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">How do check-ins work?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Every check-in is a real review of where you are and what needs to change. We look at your progress, your feedback, what is working, and what is not. Adjustments to your program or nutrition happen at every check-in as needed. Performance and Complete clients check in bi-weekly. Elite clients check in every week.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">How does the introductory pricing work?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Your first 3 months are billed at the introductory rate shown. After that, pricing moves to the regular rate. The introductory rate is yours for the full 3 months regardless — we are not going to raise it on you mid-program.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">Can I switch packages after I start?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Upgrades happen immediately. Downgrades take effect at the next billing cycle. We would rather you be in the right package than one that does not fit your current situation.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What do I need before starting in-person sessions?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Before any in-person session you will need to complete a PAR-Q, sign a Liability Waiver, and sign a Client Services Agreement. If your PAR-Q flags any health conditions you will need written medical clearance from your doctor. We will walk you through all of this after your consultation.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">What comes with the first session or bundle?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Your first session or first bundle purchase includes a free consultation before we begin. We use that time to assess your movement, understand your goals in detail, and plan exactly what your sessions will look like. We never show up and wing it.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="faq(this)">Is there a contract or commitment?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">No contracts. You can cancel your coaching package with 30 days notice at any time. The introductory rate applies for your first 3 months — after that you are free to stay, upgrade, downgrade, or cancel.</div></div></div>
+      </div>
+      <div style="text-align:center;margin-top:48px">
+        <a href="apply.html" class="btn btn-gold" style="font-size:13px;padding:16px 40px">Apply — Free Consult Included</a>
+      </div>
     </div>
+
   </div>
 </section>
 
 <script src="shared.js"></script>
 <script>
-  injectDisclaimer();
-  injectNav('Packages');
-  injectFooter();
-  initReveal();
-  function toggleFAQ(btn){ const item=btn.closest('.faq-item'); const open=item.classList.contains('open'); document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open')); if(!open)item.classList.add('open'); }
-  function calcRate(){
-    const m=parseFloat(document.getElementById('miles-input').value);
-    const res=document.getElementById('calc-result');
-    const zone=document.getElementById('calc-zone');
-    if(isNaN(m)||m<0){res.textContent='—';zone.textContent='Enter a distance above';return;}
-    const base=80, perMile=1.50, threshold=10;
-    if(m<=10){res.textContent='$80/session';zone.textContent='Zone 1 — Local (no travel surcharge)';}
-    else if(m<=25){const r=Math.ceil(base+Math.max(0,m-threshold)*perMile);res.textContent='~$'+r+'/session';zone.textContent='Zone 2 — Regional';}
-    else if(m<=50){const r=Math.ceil(base+Math.max(0,m-threshold)*perMile*1.2);res.textContent='~$'+r+'/session';zone.textContent='Zone 3 — Extended';}
-    else{res.textContent='Custom quote';zone.textContent='Zone 4 — Contact us for pricing';}
-  }
+injectDisclaimer();
+injectNav('Packages');
+injectFooter();
+initReveal();
+function faq(btn){
+  const item=btn.closest('.faq-item');
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!open)item.classList.add('open');
+}
 </script>
 </body>
 </html>

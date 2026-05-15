@@ -9,17 +9,19 @@
 .eq-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px}
 .etab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:2px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(245,240,232,.6);cursor:pointer;transition:all .2s}
 .etab:hover,.etab.active{background:var(--green-mid);border-color:var(--green-mid);color:var(--cream)}
-.eq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.eq-card{background:var(--green-card);border-radius:3px;padding:22px 24px;border:1px solid rgba(255,255,255,.06);transition:border-color .2s}
-.eq-card:hover{border-color:rgba(201,168,76,.25)}
-.eq-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
-.eq-icon{font-size:32px;flex-shrink:0}
-.eq-name{font-size:15px;font-weight:600;color:var(--cream);margin-bottom:3px}
-.eq-cat{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.eq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.eq-card{background:var(--green-card);border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:border-color .2s,transform .2s}
+.eq-card:hover{border-color:rgba(201,168,76,.25);transform:translateY(-3px)}
+.eq-img{height:140px;background:#0A1F12;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.eq-img svg{width:100%;height:100%}
+.eq-body{padding:18px 20px}
+.eq-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.eq-name{font-size:15px;font-weight:600;color:var(--cream)}
+.eq-cat{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,.1);padding:2px 8px;border-radius:2px}
 .eq-desc{font-size:13px;font-weight:300;color:var(--green-light);line-height:1.65;margin-bottom:10px}
-.eq-uses{font-size:12px;font-weight:400;color:rgba(245,240,232,.55);line-height:1.6}
-.eq-uses strong{color:var(--green-light);font-weight:500}
-.eq-tip{font-size:12px;font-weight:300;color:rgba(245,240,232,.4);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);font-style:italic}
+.eq-uses{font-size:12px;font-weight:300;color:rgba(245,240,232,.5);line-height:1.6;margin-bottom:8px}
+.eq-uses strong{color:var(--green-light);font-weight:500;font-style:normal}
+.eq-tip{font-size:12px;font-weight:300;color:rgba(245,240,232,.38);margin-top:10px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.05);font-style:italic;line-height:1.6}
 </style>
 </head>
 <body>
@@ -27,7 +29,7 @@
   <div class="container">
     <span class="section-label">Tools</span>
     <h1 class="section-title">Equipment Guide.</h1>
-    <p>Every piece of gym equipment explained — what it's called, what it does, and when to use it. No more wandering around the gym wondering what anything is.</p>
+    <p>Every piece of gym equipment explained — what it is, what it does, and when to use it. No more wandering around the gym wondering what anything is.</p>
   </div>
 </div>
 <section class="section">
@@ -36,7 +38,7 @@
       <button class="etab active" onclick="filter('all',this)">All</button>
       <button class="etab" onclick="filter('free',this)">Free Weights</button>
       <button class="etab" onclick="filter('machine',this)">Machines</button>
-      <button class="etab" onclick="filter('cable',this)">Cable & Pulley</button>
+      <button class="etab" onclick="filter('cable',this)">Cable</button>
       <button class="etab" onclick="filter('cardio',this)">Cardio</button>
       <button class="etab" onclick="filter('accessory',this)">Accessories</button>
       <button class="etab" onclick="filter('home',this)">Home Gym</button>
@@ -47,50 +49,342 @@
 <script src="shared.js"></script>
 <script>
 injectDisclaimer();
-  injectNav('Tools');
+injectNav('Tools');
 injectFooter();
-const equipment=[
-  {name:'Barbell',cat:'free',icon:'',desc:'A long metal bar (usually 45 lbs) used for the biggest compound lifts. The foundation of serious strength training.',uses:'Squats, deadlifts, bench press, overhead press, rows, and Olympic lifts.',tip:'Most barbells in a commercial gym weigh 45 lbs. Always count the bar when calculating your total weight.'},
-  {name:'Dumbbells',cat:'free',icon:'',desc:'Pairs of handheld weights ranging from 2–150+ lbs. The most versatile piece of equipment in any gym.',uses:'Virtually every exercise — presses, rows, curls, lunges, carries, and more.',tip:'Adjust the bench angle and your grip to target different parts of the same muscle group.'},
-  {name:'Kettlebell',cat:'free',icon:'',desc:'A cast iron ball with a handle. The handle offset makes it ideal for ballistic, swinging, and carrying movements.',uses:'Swings, Turkish get-ups, goblet squats, carries, and pressing variations.',tip:'The standard swing is a hip hinge, not a squat. Keep your back flat and drive with your hips.'},
-  {name:'EZ Curl Bar',cat:'free',icon:'',desc:'A wavy barbell that allows a more natural grip angle for arm and tricep exercises.',uses:'Bicep curls, skull crushers, upright rows, and close-grip presses.',tip:'The angled grip reduces wrist strain compared to a straight bar for curls.'},
-  {name:'Trap Bar / Hex Bar',cat:'free',icon:'',desc:'A hexagonal or diamond-shaped bar you stand inside. Great for beginners and anyone with lower back limitations.',uses:'Deadlifts, farmer\'s carries, shrugs, and jump squats.',tip:'The trap bar deadlift puts less stress on the lower back than a conventional barbell deadlift.'},
-  {name:'Smith Machine',cat:'machine',icon:'',desc:'A barbell fixed to vertical rails that only moves straight up and down. Good for some exercises, limited for others.',uses:'Squats, bench press, shoulder press, and lunges — especially useful for beginners learning movement patterns.',tip:'The fixed path means your body adapts to the machine rather than vice versa. Use free weights when possible.'},
-  {name:'Leg Press Machine',cat:'machine',icon:'',desc:'A sled machine where you push weight with your legs at an angle while seated. Allows very heavy loading safely.',uses:'Quad-dominant pressing, high-rep conditioning, and as a squat alternative for injured athletes.',tip:'Foot position changes the muscle emphasis — higher feet targets hamstrings/glutes, lower feet targets quads.'},
-  {name:'Hack Squat Machine',cat:'machine',icon:'',desc:'A padded machine for squatting at an angle with your back supported.',uses:'Quad development. Good alternative when barbell squatting is uncomfortable.',tip:'Keep your heels planted and knees tracking over toes throughout the movement.'},
-  {name:'Chest Press Machine',cat:'machine',icon:'',desc:'A seated pressing machine that mimics the bench press with a fixed path.',uses:'Chest, triceps, and shoulder development — especially useful for beginners or when a spotter isn\'t available.',tip:'Adjust the seat height so the handles are at mid-chest level.'},
-  {name:'Lat Pulldown Machine',cat:'machine',icon:'',desc:'A cable-based machine for vertical pulling. One of the best upper body builders.',uses:'Lat development, bicep work, and building toward pull-ups.',tip:'Think about pulling your elbows down and back — not just pulling the bar down.'},
-  {name:'Cable Machine',cat:'cable',icon:'',desc:'A weight stack connected to a pulley and cable. Provides constant tension through the entire range of motion — unlike free weights.',uses:'Rows, flyes, tricep pushdowns, face pulls, woodchops, curls, and hundreds more.',tip:'Constant tension throughout the movement makes cables excellent for muscle growth — the muscle never gets a break.'},
-  {name:'Cable Crossover',cat:'cable',icon:'',desc:'Two cable machines facing each other. Allows chest flyes and crossover movements with adjustable angles.',uses:'Chest flyes at multiple angles, functional movements, and core rotation work.',tip:'Adjust the pulley height to emphasize different parts of the chest (high = lower chest, low = upper chest).'},
-  {name:'Treadmill',cat:'cardio',icon:'',desc:'A moving belt for walking, jogging, and running indoors. The most common cardio machine.',uses:'Steady-state cardio, interval training (HIIT), and warm-up walks.',tip:'Incline walking (10–15% at 3–4 mph) burns significant calories with much less joint impact than running.'},
-  {name:'Stationary Bike',cat:'cardio',icon:'',desc:'A fixed bicycle for low-impact cardiovascular exercise. Easy on the joints.',uses:'Warm-up, steady-state cardio, and HIIT intervals.',tip:'Adjust the seat height so your knee has a slight bend (not fully extended) at the bottom of the pedal stroke.'},
-  {name:'Rowing Machine',cat:'cardio',icon:'',desc:'A full-body cardio machine that mimics rowing. Engages legs, back, and arms simultaneously.',uses:'Full body conditioning, low-impact HIIT, and building aerobic capacity.',tip:'The power comes from your legs first (70%), then core, then arms. Most people do it backwards.'},
-  {name:'Resistance Bands',cat:'home',icon:'',desc:'Elastic bands ranging from light to very heavy resistance. Portable and extremely versatile.',uses:'Warm-up activation, assisted pull-ups, added resistance to barbell work, and full workouts.',tip:'Bands provide more resistance at the end of the movement (peak contraction) — great for muscle activation.'},
-  {name:'TRX / Suspension Trainer',cat:'home',icon:'',desc:'Straps anchored to a wall, door, or rack. Uses your bodyweight at various angles for resistance.',uses:'Rows, push-ups, squats, lunges, core work — full body with minimal equipment.',tip:'The more horizontal your body angle, the harder the exercise. Small adjustments = big difficulty changes.'},
-  {name:'Foam Roller',cat:'accessory',icon:'',desc:'A cylindrical foam tool used for self-myofascial release (self-massage).',uses:'Pre-workout tissue prep, post-workout recovery, and addressing muscle tightness.',tip:'Roll slowly and pause on tender spots for 20–30 seconds. Don\'t roll directly on joints.'},
-  {name:'Lifting Belt',cat:'accessory',icon:'',desc:'A rigid belt worn around the waist to increase intra-abdominal pressure during heavy lifts.',uses:'Heavy squats, deadlifts, and overhead pressing.',tip:'A belt doesn\'t replace core strength — it enhances it. Only use for your heaviest sets (85%+ of 1RM).'},
-  {name:'Wrist Wraps',cat:'accessory',icon:'',desc:'Supportive fabric wrapped around the wrist joint to provide stability during pressing movements.',uses:'Heavy bench press, overhead press, and any movement where wrist stability is a concern.',tip:'Wrap at the wrist joint, not higher. They should support the joint, not restrict blood flow.'},
-  {name:'Chalk',cat:'accessory',icon:'',desc:'Magnesium carbonate applied to the hands to reduce sweat and improve grip.',uses:'Deadlifts, pull-ups, rows, and any heavy pulling movement.',tip:'Not all gyms allow chalk. Liquid chalk is a less messy alternative accepted by most facilities.'},
+
+function W(b){return`<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg"><rect width="280" height="140" fill="#0A1F12"/>${b}</svg>`}
+function BB(x,y,w,h,c,r){return`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r||2}" fill="${c||'#C9A84C'}"/>`}
+function L(x1,y1,x2,y2,w,c){return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||'#2A8A55'}" stroke-width="${w||4}" stroke-linecap="round"/>`}
+function C(cx,cy,r,c){return`<circle cx="${cx}" cy="${cy}" r="${r||8}" fill="${c||'#C9A84C'}"/>`}
+function TX(x,y,t,c,a){return`<text x="${x}" y="${y}" font-family="Arial,sans-serif" font-size="9" fill="${c||'rgba(201,168,76,.55)'}" text-anchor="${a||'middle'}">${t}</text>`}
+function FL(y){return L(10,y||128,270,y||128,1,'rgba(201,168,76,.2)')}
+
+const SVGS = {
+
+'Barbell': W(FL()+
+  // Bar
+  BB(10,65,260,8,'#888',3)+
+  // Left plates
+  BB(15,48,14,40,'#C9A84C',2)+BB(12,42,10,52,'#906810',2)+
+  BB(32,52,10,36,'#C9A84C',2)+BB(30,46,8,48,'#906810',2)+
+  // Right plates
+  BB(251,48,14,40,'#C9A84C',2)+BB(258,42,10,52,'#906810',2)+
+  BB(238,52,10,36,'#C9A84C',2)+BB(240,46,8,48,'#906810',2)+
+  // Knurling marks
+  BB(120,63,40,12,'#666',1)+
+  TX(140,50,'BARBELL')+TX(140,110,'Standard weight: 45 lbs')+TX(140,120,'Always count the bar')
+),
+
+'Dumbbells': W(FL()+
+  // Left dumbbell
+  BB(28,58,16,28,'#C9A84C',2)+BB(24,52,12,40,'#906810',2)+BB(24,60,48,8,'#888',2)+BB(44,60,12,28,'#C9A84C',2)+BB(46,52,10,40,'#906810',2)+
+  BB(60,62,24,8,'#888',3)+
+  // Right dumbbell (heavier)
+  BB(168,54,20,36,'#C9A84C',2)+BB(164,47,14,48,'#906810',2)+BB(164,62,60,8,'#888',2)+BB(196,54,20,36,'#C9A84C',2)+BB(202,47,14,48,'#906810',2)+
+  TX(85,55,'lighter')+TX(200,45,'heavier')+
+  TX(140,108,'Available from 2 lbs to 150+ lbs')+TX(140,120,'Most versatile equipment in the gym')
+),
+
+'Kettlebell': W(FL()+
+  // Ball
+  C(140,88,36,'#C9A84C')+C(140,88,32,'#906810')+
+  // Handle
+  BB(118,50,44,12,'#C9A84C',6)+BB(122,54,36,18,'#0A1F12',4)+
+  // Base flat
+  BB(120,116,40,6,'#906810',2)+
+  TX(140,30,'KETTLEBELL')+TX(140,112,'Handle offset creates')+TX(140,122,'unique swing mechanics')
+),
+
+'EZ Curl Bar': W(FL()+
+  // Bar with bends
+  `<path d="M20 70 L75 70 Q85 70 90 62 Q95 54 105 54 Q115 54 120 62 Q125 70 135 70 Q145 70 150 62 Q155 54 165 54 Q175 54 180 62 Q185 70 195 70 L260 70" stroke="#888" stroke-width="8" fill="none" stroke-linecap="round"/>`+
+  // Plates each side
+  BB(12,55,14,36,'#C9A84C',2)+BB(9,50,10,46,'#906810',2)+
+  BB(254,55,14,36,'#C9A84C',2)+BB(261,50,10,46,'#906810',2)+
+  TX(140,42,'EZ CURL BAR')+TX(140,112,'Angled grip reduces wrist strain')+TX(140,122,'Used for curls and skull crushers')
+),
+
+'Trap Bar': W(FL()+
+  // Hexagonal shape
+  `<polygon points="140,30 200,55 200,100 140,125 80,100 80,55" fill="none" stroke="#888" stroke-width="7"/>`+
+  // Handles inside
+  BB(116,74,48,8,'#C9A84C',3)+
+  // Plates outside
+  BB(198,60,16,44,'#C9A84C',2)+BB(214,55,10,54,'#906810',2)+
+  BB(66,60,16,44,'#C9A84C',2)+BB(56,55,10,54,'#906810',2)+
+  TX(140,72,'Stand')+TX(140,84,'inside')+
+  TX(140,112,'Less lower back stress')+TX(140,122,'than conventional deadlift')
+),
+
+'Smith Machine': W(FL()+
+  // Frame uprights
+  BB(60,10,12,118,'#1E5C30',2)+BB(208,10,12,118,'#1E5C30',2)+
+  BB(55,10,180,10,'#1E5C30',2)+
+  // Bar on rails
+  BB(70,55,140,8,'#906810',2)+BB(66,46,14,22,'#C9A84C',2)+BB(200,46,14,22,'#C9A84C',2)+
+  // Safety hooks
+  BB(72,50,8,12,'#3AAA68',1)+BB(200,50,8,12,'#3AAA68',1)+
+  TX(140,35,'SMITH MACHINE')+TX(140,112,'Bar fixed on vertical rails')+TX(140,122,'Good for beginners, limited movement')
+),
+
+'Leg Press Machine': W(FL()+
+  // Seat back
+  BB(20,50,50,70,'#163020',4)+BB(18,46,54,8,'#1E5C30',2)+
+  // Footplate at angle
+  `<polygon points="80,50 180,30 190,42 90,62" fill="#163020" stroke="#1E5C30" stroke-width="2"/>`+
+  // Platform
+  BB(78,56,110,12,'#1A5A38',2)+
+  // Weights on sled
+  BB(180,28,18,50,'#C9A84C',2)+BB(200,24,14,58,'#906810',2)+
+  // Guide rails
+  L(70,48,220,26,2,'#2A4A30')+L(70,62,220,40,2,'#2A4A30')+
+  TX(140,112,'Foot position changes')+TX(140,122,'which muscles are targeted')
+),
+
+'Hack Squat Machine': W(FL()+
+  // Angled pad/back support
+  `<path d="M60 120 L90 40 L120 40 L90 120 Z" fill="#163020" stroke="#1E5C30" stroke-width="2"/>`+
+  // Shoulder pads
+  BB(85,36,40,12,'#1E5C30',3)+
+  // Weight sled
+  BB(115,50,80,60,'#163020',2)+BB(113,46,84,8,'#1E5C30',2)+
+  // Plates
+  BB(196,48,18,60,'#C9A84C',2)+BB(216,44,12,68,'#906810',2)+
+  TX(80,22,'Shoulder')+TX(80,32,'pads here')+
+  TX(185,112,'Quad focused')+TX(185,122,'squat variation')
+),
+
+'Chest Press Machine': W(FL()+
+  // Seat
+  BB(20,80,70,15,'#1E5C30',3)+BB(18,70,74,14,'#163020',2)+
+  BB(40,40,30,40,'#163020',2)+BB(38,36,34,8,'#1E5C30',2)+
+  // Handles that push
+  BB(100,58,16,30,'#C9A84C',3)+BB(164,58,16,30,'#C9A84C',3)+
+  L(116,73,164,73,5,'#906810')+
+  // Weight stack
+  BB(220,30,30,88,'#163020',2)+BB(218,26,34,8,'#1E5C30',2)+
+  BB(222,50,26,10,'#C9A84C',1)+
+  TX(140,18,'CHEST PRESS')+TX(140,112,'Adjust seat so handles')+TX(140,122,'are at mid-chest height')
+),
+
+'Lat Pulldown Machine': W(
+  // Overhead bar and pulley
+  BB(40,12,200,8,'#1E5C30',2)+BB(134,12,12,30,'#163020',2)+
+  // Pull bar
+  BB(60,28,160,6,'#C9A84C',3)+C(60,31,5,'#906810')+C(220,31,5,'#906810')+
+  L(62,31,100,55,2,'rgba(201,168,76,.4)')+L(218,31,180,55,2,'rgba(201,168,76,.4)')+
+  // Seat and knee pad
+  BB(80,78,120,12,'#1E5C30',3)+BB(76,70,128,12,'#163020',2)+
+  BB(95,56,90,14,'#1E5C30',3)+
+  // Weight stack
+  BB(238,20,28,100,'#163020',2)+BB(236,16,32,8,'#1E5C30',2)+BB(240,42,24,12,'#C9A84C',1)+
+  FL(128)+TX(140,112,'Pull to upper chest')+TX(140,122,'elbows drive down and back')
+),
+
+'Cable Machine': W(FL()+
+  // Frame
+  BB(20,10,28,118,'#163020',2)+BB(18,6,32,8,'#1E5C30',2)+
+  // Weight stack
+  BB(24,22,20,88,'#1A4A28',1)+BB(25,40,18,12,'#C9A84C',1)+
+  // Pulley top
+  C(34,14,6,'#906810')+
+  // Cable line
+  L(34,14,34,100,2,'rgba(201,168,76,.5)')+
+  // Different height attachments shown
+  C(34,35,4,'#C9A84C')+C(34,65,4,'#C9A84C')+C(34,95,4,'#C9A84C')+
+  // Handle attachment
+  BB(34,94,30,6,'#C9A84C',2)+C(64,97,4,'#906810')+
+  TX(140,50,'Adjustable')+TX(140,62,'height')+TX(140,74,'pulley')+
+  TX(180,112,'Constant tension')+TX(180,122,'through full range')
+),
+
+'Cable Crossover': W(FL()+
+  // Two machines
+  BB(18,10,20,118,'#163020',2)+BB(242,10,20,118,'#163020',2)+
+  BB(16,6,24,8,'#1E5C30',2)+BB(240,6,24,8,'#1E5C30',2)+
+  // Top pulleys
+  C(28,18,5,'#906810')+C(252,18,5,'#906810')+
+  // Cables crossing to center
+  L(28,18,140,80,2,'rgba(201,168,76,.5)')+L(252,18,140,80,2,'rgba(201,168,76,.5)')+
+  C(140,80,6,'#C9A84C')+
+  // Bottom cables too
+  L(28,110,140,80,1,'rgba(201,168,76,.3)')+L(252,110,140,80,1,'rgba(201,168,76,.3)')+
+  TX(140,52,'Cables')+TX(140,62,'cross')+TX(140,72,'at center')+
+  TX(140,112,'Adjustable angles')+TX(140,122,'full chest range of motion')
+),
+
+'Treadmill': W(FL()+
+  // Base frame
+  BB(30,90,220,28,'#163020',4)+BB(28,86,224,8,'#1E5C30',2)+
+  // Belt
+  BB(35,88,210,10,'#1A4A28',3)+
+  // Upright console supports
+  BB(75,30,12,60,'#1E5C30',2)+BB(193,30,12,60,'#1E5C30',2)+
+  // Console
+  BB(60,18,160,14,'#163020',3)+BB(58,14,164,8,'#1E5C30',2)+
+  // Handles
+  L(82,86,82,40,4,'#2A5A38')+L(198,86,198,40,4,'#2A5A38')+
+  TX(140,10,'TREADMILL')+TX(140,112,'Incline walking burns')+TX(140,122,'calories with less joint impact')
+),
+
+'Stationary Bike': W(FL()+
+  // Frame
+  L(80,110,140,60,6,'#1E5C30')+L(140,60,200,90,6,'#1E5C30')+L(140,60,140,30,6,'#1E5C30')+
+  // Seat
+  BB(118,26,44,8,'#163020',4)+BB(120,22,40,8,'#1E5C30',3)+
+  // Handlebars
+  BB(118,26,6,20,'#1E5C30',2)+L(100,26,130,26,5,'#163020')+L(100,22,100,32,4,'#C9A84C')+L(130,22,130,32,4,'#C9A84C')+
+  // Pedals and crank
+  C(140,90,18,'#163020')+C(140,90,14,'#1A4A28')+
+  L(140,90,162,105,5,'#C9A84C')+BB(158,100,14,8,'#906810',2)+
+  L(140,90,118,75,5,'#C9A84C')+BB(108,70,14,8,'#906810',2)+
+  // Front wheel
+  C(80,108,18,'none')+`<circle cx="80" cy="108" r="18" fill="none" stroke="#1E5C30" stroke-width="4"/>`+
+  TX(200,112,'Easy on joints')+TX(200,122,'great warm-up option')
+),
+
+'Rowing Machine': W(FL()+
+  // Frame rail
+  BB(20,95,230,8,'#1E5C30',3)+
+  // Seat on rail
+  BB(90,80,40,16,'#163020',3)+BB(88,76,44,8,'#1E5C30',2)+
+  // Footplate
+  BB(195,72,45,28,'#163020',3)+BB(193,68,49,8,'#1E5C30',2)+
+  // Handle and cable
+  L(28,98,90,88,3,'rgba(201,168,76,.5)')+BB(22,92,12,12,'#163020',3)+C(28,98,5,'#906810')+
+  BB(80,85,14,8,'#C9A84C',2)+
+  // Back support angle
+  BB(100,50,14,36,'#163020',3)+`<path d="M100 86 L85 58 L90 56 L105 84 Z" fill="#163020"/>`+
+  TX(140,30,'Drive with legs first')+TX(140,40,'then lean back')+TX(140,50,'then pull arms')+
+  TX(140,112,'Full body cardio')+TX(140,122,'70% legs 30% upper body')
+),
+
+'Resistance Bands': W(FL()+
+  // Multiple bands of different thickness
+  `<path d="M40 50 Q140 20 240 50" stroke="#C9A84C" stroke-width="8" fill="none" stroke-linecap="round"/>`+
+  `<path d="M40 70 Q140 40 240 70" stroke="#3AAA68" stroke-width="6" fill="none" stroke-linecap="round"/>`+
+  `<path d="M40 88 Q140 58 240 88" stroke="#906810" stroke-width="4" fill="none" stroke-linecap="round"/>`+
+  `<path d="M40 104 Q140 74 240 104" stroke="#2A5A38" stroke-width="3" fill="none" stroke-linecap="round"/>`+
+  TX(20,52,'Heavy','rgba(201,168,76,.7)','start')+TX(20,72,'Medium','rgba(58,170,104,.7)','start')+
+  TX(20,90,'Light','rgba(144,104,16,.7)','start')+TX(20,106,'X-Light','rgba(42,90,56,.7)','start')+
+  TX(140,112,'More resistance at peak contraction')+TX(140,122,'great for activation work')
+),
+
+'TRX / Suspension Trainer': W(FL()+
+  // Anchor point
+  BB(130,10,20,8,'#163020',2)+C(140,14,5,'#906810')+
+  // Straps
+  L(140,18,100,60,3,'#C9A84C')+L(140,18,180,60,3,'#C9A84C')+
+  // Handles/cradles
+  BB(88,56,24,14,'#1E5C30',3)+BB(168,56,24,14,'#1E5C30',3)+
+  C(100,63,5,'#906810')+C(180,63,5,'#906810')+
+  // Extended straps down
+  L(100,68,100,100,3,'#C9A84C')+L(180,68,180,100,3,'#C9A84C')+
+  BB(88,96,24,12,'#1E5C30',3)+BB(168,96,24,12,'#1E5C30',3)+
+  TX(140,90,'Adjust length')+TX(140,100,'= adjust difficulty')+
+  TX(140,112,'Bodyweight at any angle')+TX(140,122,'full gym in a bag')
+),
+
+'Foam Roller': W(FL()+
+  // Cylinder
+  `<ellipse cx="140" cy="80" rx="20" ry="60" fill="#C9A84C" stroke="#906810" stroke-width="2"/>`+
+  `<ellipse cx="140" cy="22" rx="20" ry="8" fill="#E8C870"/>`+
+  `<ellipse cx="140" cy="138" rx="20" ry="8" fill="#906810"/>`+
+  // Texture lines
+  L(120,40,160,40,1,'rgba(144,104,16,.5)')+L(120,55,160,55,1,'rgba(144,104,16,.5)')+L(120,70,160,70,1,'rgba(144,104,16,.5)')+L(120,85,160,85,1,'rgba(144,104,16,.5)')+L(120,100,160,100,1,'rgba(144,104,16,.5)')+L(120,115,160,115,1,'rgba(144,104,16,.5)')+
+  TX(52,65,'Roll slowly')+TX(52,75,'pause on')+TX(52,85,'tender spots')+TX(52,95,'20-30 sec')+
+  TX(215,65,'Pre-workout')+TX(215,75,'tissue prep')+TX(215,85,'and post-')+TX(215,95,'workout')+TX(215,105,'recovery')
+),
+
+'Lifting Belt': W(FL()+
+  // Belt shape (wide)
+  `<path d="M40 55 L240 55 L240 95 Q140 110 40 95 Z" fill="#906810" stroke="#C9A84C" stroke-width="2"/>`+
+  // Buckle
+  BB(128,60,24,30,'#C9A84C',3)+BB(132,64,16,22,'#0A1F12',2)+
+  // Holes
+  C(75,75,3,'#C9A84C')+C(95,76,3,'#C9A84C')+C(115,76,3,'#C9A84C')+
+  C(165,76,3,'#C9A84C')+C(185,75,3,'#C9A84C')+C(205,73,3,'#C9A84C')+
+  TX(140,30,'LIFTING BELT')+TX(140,112,'Only for your heaviest sets')+TX(140,122,'85% of 1RM and above')
+),
+
+'Wrist Wraps': W(FL()+
+  // Rolled wrap
+  `<ellipse cx="90" cy="70" rx="30" ry="30" fill="#C9A84C" stroke="#906810" stroke-width="2"/>`+
+  `<ellipse cx="90" cy="70" rx="22" ry="22" fill="#E8C870"/>`+
+  `<ellipse cx="90" cy="70" rx="14" ry="14" fill="#C9A84C"/>`+
+  `<ellipse cx="90" cy="70" rx="6" ry="6" fill="#0A1F12"/>`+
+  // Unrolled / in use
+  `<path d="M160 50 Q180 45 200 55 Q220 65 215 80 Q210 95 190 92 Q170 89 162 78 Q154 67 160 50 Z" fill="none" stroke="#C9A84C" stroke-width="4"/>`+
+  `<path d="M165 60 Q182 52 200 62 Q212 72 206 84 Q200 96 184 90" fill="none" stroke="#906810" stroke-width="3"/>`+
+  TX(90,112,'Wrap at wrist joint')+TX(90,122,'not higher up forearm')
+),
+
+'Chalk': W(FL()+
+  // Chalk block
+  BB(60,55,80,50,'#E8E0D0',3)+BB(58,50,84,8,'#F5F0E8',2)+
+  // Chalk dust / cloud effect
+  `<circle cx="185" cy="65" r="28" fill="rgba(245,240,232,.12)"/>`+
+  `<circle cx="195" cy="80" r="20" fill="rgba(245,240,232,.1)"/>`+
+  `<circle cx="170" cy="78" r="16" fill="rgba(245,240,232,.08)"/>`+
+  // Hand outline
+  `<path d="M165 95 Q170 80 175 72 Q178 65 185 68 Q192 71 188 80 Q195 72 198 68 Q204 66 205 73 Q208 68 212 68 Q218 68 216 76 Q218 72 222 74 Q226 76 220 88 Q215 100 200 105 Q185 108 170 102 Z" fill="rgba(42,90,56,.4)" stroke="rgba(58,170,104,.3)" stroke-width="1"/>`+
+  TX(90,38,'Magnesium carbonate')+TX(90,48,'improves grip on lifts')+
+  TX(180,112,'Not all gyms allow chalk')+TX(180,122,'Liquid chalk is an alternative')
+),
+
+};
+
+const equipment = [
+  {name:'Barbell',cat:'free',desc:'A long metal bar (usually 45 lbs) used for the biggest compound lifts. The foundation of serious strength training.',uses:'Squats, deadlifts, bench press, overhead press, rows, and Olympic lifts.',tip:'Most barbells in a commercial gym weigh 45 lbs. Always count the bar when calculating total weight.'},
+  {name:'Dumbbells',cat:'free',desc:'Pairs of handheld weights ranging from 2 to 150+ lbs. The most versatile piece of equipment in any gym.',uses:'Virtually every exercise — presses, rows, curls, lunges, carries, and more.',tip:'Adjust the bench angle and your grip to target different parts of the same muscle.'},
+  {name:'Kettlebell',cat:'free',desc:'A cast iron ball with a handle. The handle offset makes it ideal for ballistic, swinging, and carrying movements.',uses:'Swings, Turkish get-ups, goblet squats, carries, and pressing variations.',tip:'The standard swing is a hip hinge, not a squat. Keep your back flat and drive with your hips.'},
+  {name:'EZ Curl Bar',cat:'free',desc:'A wavy barbell that allows a more natural grip angle for arm and tricep exercises.',uses:'Bicep curls, skull crushers, upright rows, and close-grip presses.',tip:'The angled grip reduces wrist strain compared to a straight bar for curls.'},
+  {name:'Trap Bar',cat:'free',desc:'A hexagonal bar you stand inside. Great for beginners and anyone with lower back limitations.',uses:"Deadlifts, farmer's carries, shrugs, and jump squats.",tip:'The trap bar deadlift puts less stress on the lower back than a conventional deadlift.'},
+  {name:'Smith Machine',cat:'machine',desc:'A barbell fixed to vertical rails that only moves straight up and down. Good for some exercises, limited for others.',uses:'Squats, bench press, shoulder press, and lunges — especially useful for beginners.',tip:'The fixed path means your body adapts to the machine rather than vice versa. Prefer free weights when possible.'},
+  {name:'Leg Press Machine',cat:'machine',desc:'A sled machine where you push weight with your legs at an angle while seated. Allows very heavy loading safely.',uses:'Quad-dominant pressing, high-rep conditioning, and as a squat alternative when injured.',tip:'Foot position changes the muscle emphasis — higher feet targets hamstrings and glutes, lower targets quads.'},
+  {name:'Hack Squat Machine',cat:'machine',desc:'A padded machine for squatting at an angle with your back supported.',uses:'Quad development. Good alternative when barbell squatting is uncomfortable.',tip:'Keep your heels planted and knees tracking over toes throughout.'},
+  {name:'Chest Press Machine',cat:'machine',desc:'A seated pressing machine that mimics the bench press with a fixed path.',uses:'Chest, triceps, and shoulder development — useful when a spotter is not available.',tip:'Adjust the seat height so the handles are at mid-chest level.'},
+  {name:'Lat Pulldown Machine',cat:'machine',desc:'A cable-based machine for vertical pulling. One of the best upper body builders.',uses:'Lat development, bicep work, and building toward pull-ups.',tip:'Think about pulling your elbows down and back — not just pulling the bar down.'},
+  {name:'Cable Machine',cat:'cable',desc:'A weight stack connected to a pulley and cable. Provides constant tension through the entire range of motion.',uses:'Rows, flyes, tricep pushdowns, face pulls, woodchops, curls, and hundreds more.',tip:'Constant tension throughout the movement makes cables excellent for muscle growth.'},
+  {name:'Cable Crossover',cat:'cable',desc:'Two cable machines facing each other. Allows chest flyes and crossover movements with adjustable angles.',uses:'Chest flyes at multiple angles, functional movements, and core rotation work.',tip:'Adjust the pulley height to emphasize different parts of the chest.'},
+  {name:'Treadmill',cat:'cardio',desc:'A moving belt for walking, jogging, and running indoors. The most common cardio machine.',uses:'Steady-state cardio, interval training, and warm-up walks.',tip:'Incline walking at 10 to 15 percent grade burns significant calories with less joint impact than running.'},
+  {name:'Stationary Bike',cat:'cardio',desc:'A fixed bicycle for low-impact cardiovascular exercise. Easy on the joints.',uses:'Warm-up, steady-state cardio, and HIIT intervals.',tip:'Adjust the seat height so your knee has a slight bend at the bottom of the pedal stroke.'},
+  {name:'Rowing Machine',cat:'cardio',desc:'A full-body cardio machine that mimics rowing. Engages legs, back, and arms simultaneously.',uses:'Full body conditioning, low-impact HIIT, and building aerobic capacity.',tip:'The power comes from your legs first, then core, then arms. Most people do it backwards.'},
+  {name:'Resistance Bands',cat:'home',desc:'Elastic bands ranging from light to very heavy resistance. Portable and extremely versatile.',uses:'Warm-up activation, assisted pull-ups, added resistance to barbell work, and full workouts.',tip:'Bands provide more resistance at the end of the movement — great for muscle activation.'},
+  {name:'TRX / Suspension Trainer',cat:'home',desc:'Straps anchored to a wall, door, or rack. Uses your bodyweight at various angles for resistance.',uses:'Rows, push-ups, squats, lunges, core work — a full body workout with minimal equipment.',tip:'The more horizontal your body angle, the harder the exercise. Small adjustments make big differences.'},
+  {name:'Foam Roller',cat:'accessory',desc:'A cylindrical foam tool used for self-myofascial release — basically a self-massage tool.',uses:'Pre-workout tissue prep, post-workout recovery, and addressing muscle tightness.',tip:'Roll slowly and pause on tender spots for 20 to 30 seconds. Do not roll directly on joints.'},
+  {name:'Lifting Belt',cat:'accessory',desc:'A rigid belt worn around the waist to increase intra-abdominal pressure during heavy lifts.',uses:'Heavy squats, deadlifts, and overhead pressing.',tip:'A belt does not replace core strength — it enhances it. Only use for your heaviest sets.'},
+  {name:'Wrist Wraps',cat:'accessory',desc:'Supportive fabric wrapped around the wrist joint to provide stability during pressing movements.',uses:'Heavy bench press, overhead press, and any movement where wrist stability is a concern.',tip:'Wrap at the wrist joint, not higher. They should support the joint, not restrict blood flow.'},
+  {name:'Chalk',cat:'accessory',desc:'Magnesium carbonate applied to the hands to reduce sweat and improve grip on heavy pulling movements.',uses:"Deadlifts, pull-ups, rows, and any heavy pulling movement.",tip:'Not all gyms allow chalk. Liquid chalk is a less messy alternative accepted by most facilities.'},
 ];
-let active='all';
-function filter(c,btn){
-  active=c;
-  document.querySelectorAll('.etab').forEach(b=>b.classList.remove('active'));
+
+const catColors = {free:'#C9A84C',machine:'#3AAA68',cable:'#185FA5',cardio:'#A32D2D',home:'#533AB7',accessory:'#854F0B'};
+let active = 'all';
+
+function filter(c, btn) {
+  active = c;
+  document.querySelectorAll('.etab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   render();
 }
-function render(){
-  const list=active==='all'?equipment:equipment.filter(e=>e.cat===active);
-  document.getElementById('eq-grid').innerHTML=list.map(e=>`
+
+function render() {
+  const list = active === 'all' ? equipment : equipment.filter(e => e.cat === active);
+  document.getElementById('eq-grid').innerHTML = list.map(e => `
     <div class="eq-card">
-      <div class="eq-top">
-        <div><div class="eq-name">${e.name}</div><div class="eq-cat">${e.cat}</div></div>
+      <div class="eq-img">${SVGS[e.name] || W(`<text x="140" y="75" font-family="Arial" font-size="12" fill="rgba(245,240,232,.2)" text-anchor="middle">${e.name}</text>`)}</div>
+      <div class="eq-body">
+        <div class="eq-top">
+          <div class="eq-name">${e.name}</div>
+          <div class="eq-cat" style="color:${catColors[e.cat]||'var(--gold)'}">${e.cat}</div>
+        </div>
+        <div class="eq-desc">${e.desc}</div>
+        <div class="eq-uses"><strong>Used for:</strong> ${e.uses}</div>
+        ${e.tip ? `<div class="eq-tip">${e.tip}</div>` : ''}
       </div>
-      <div class="eq-desc">${e.desc}</div>
-      <div class="eq-uses"><strong>Used for:</strong> ${e.uses}</div>
-      ${e.tip?`<div class="eq-tip"> ${e.tip}</div>`:''}
     </div>`).join('');
 }
+
 render();
 initReveal();
 </script>
