@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Coaches · Toadal Performance</title>
+<meta name="description" content="Meet the Toadal Performance coaching team — certified personal trainers based on Long Island, NY.">
+<link rel="stylesheet" href="style.css">
+<style>
+.coach-section { display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: start; margin-bottom: 80px; padding-bottom: 80px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.coach-section:last-of-type { border-bottom: none; }
+.coach-photo-wrap { position: sticky; top: 100px; }
+.coach-photo-box { width: 100%; aspect-ratio: 3/4; background: var(--green-dark); border-radius: 3px; border: 1px solid rgba(255,255,255,.07); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; margin-bottom: 12px; }
+.coach-photo-placeholder { font-family: var(--font-display); font-size: 120px; color: rgba(201,168,76,.08); }
+.coach-photo-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(15,42,26,.9)); padding: 24px 20px 20px; }
+.coach-photo-name { font-family: var(--font-display); font-size: 32px; color: var(--cream); letter-spacing: .04em; }
+.coach-photo-title { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+.coach-certs-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.cert { font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 2px; background: rgba(201,168,76,.12); color: var(--gold); border: 1px solid rgba(201,168,76,.25); letter-spacing: .05em; }
+.coach-detail h2 { font-family: var(--font-display); font-size: 42px; color: var(--cream); letter-spacing: .03em; margin-bottom: 4px; }
+.coach-detail h3 { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+.coach-bio-block { margin-bottom: 28px; }
+.coach-bio-block p { font-size: 16px; font-weight: 300; color: var(--green-light); line-height: 1.85; margin-bottom: 16px; }
+.coach-specialties { margin-bottom: 28px; }
+.coach-specialties h4 { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.specialty-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.specialty { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 400; color: var(--cream); }
+.specialty::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.coach-philosophy { background: var(--green-dark); border-radius: 3px; padding: 24px 28px; border-left: 3px solid var(--gold); }
+.coach-philosophy h4 { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.coach-philosophy p { font-size: 15px; font-weight: 300; color: var(--cream); line-height: 1.8; font-style: italic; }
+.team-values { background: var(--green-dark); border-radius: 3px; padding: 40px; margin-bottom: 0; border: 1px solid rgba(255,255,255,.07); }
+.team-values h2 { font-family: var(--font-display); font-size: 42px; color: var(--cream); letter-spacing: .03em; margin-bottom: 12px; }
+.team-values > p { font-size: 16px; font-weight: 300; color: var(--green-light); line-height: 1.8; margin-bottom: 32px; max-width: 600px; }
+.values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.value-card { }
+.value-num { font-family: var(--font-display); font-size: 48px; color: rgba(201,168,76,.2); line-height: 1; margin-bottom: 8px; }
+.value-title { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 8px; }
+.value-text { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.7; }
+@media(max-width:860px){ .coach-section{grid-template-columns:1fr;} .coach-photo-wrap{position:static;} .specialty-list{grid-template-columns:1fr;} .values-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">The Team</span>
+    <h1 class="section-title">Your coaches.</h1>
+    <p>Two certified coaches based on Long Island. Every Toadal client gets both of us — two perspectives, one plan, zero gaps.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- COACH 1 -->
+    <div class="coach-section reveal">
+      <div class="coach-photo-wrap">
+        <div class="coach-photo-box">
+          <div class="coach-photo-placeholder">TP</div>
+          <div class="coach-photo-overlay">
+            <div class="coach-photo-name">COACH ONE</div>
+            <div class="coach-photo-title">Co-Founder · Head of Programming</div>
+          </div>
+        </div>
+        <!-- REPLACE placeholder above with: <img src="images/coach1.jpg" alt="Coach One" style="width:100%;height:100%;object-fit:cover"> -->
+        <div class="coach-certs-wrap">
+          <span class="cert">ACE CPT</span>
+          <span class="cert">NASM Nutrition Coach</span>
+          <span class="cert">CPR/AED Certified</span>
+        </div>
+      </div>
+      <div class="coach-detail">
+        <h2>YOUR NAME HERE</h2>
+        <h3>Co-Founder · Head of Programming · Long Island, NY</h3>
+        <div class="coach-bio-block">
+          <p>Replace this paragraph with your real story. Tell people how you got into fitness, what your background is, and what led you to start Toadal Performance. Be personal and honest — clients buy people, not credentials.</p>
+          <p>Add a second paragraph about what you specialize in, who you love working with, and what makes your coaching different. Mention your experience on Long Island and why you understand the local community.</p>
+          <p>A third paragraph about your approach, your values, and why the team model matters to you personally. This is the paragraph that makes someone decide to apply.</p>
+        </div>
+        <div class="coach-specialties">
+          <h4>Specialties</h4>
+          <div class="specialty-list">
+            <div class="specialty">Strength programming</div>
+            <div class="specialty">Body recomposition</div>
+            <div class="specialty">Fat loss coaching</div>
+            <div class="specialty">Beginner development</div>
+            <div class="specialty">Injury modifications</div>
+            <div class="specialty">Nutrition coaching</div>
+          </div>
+        </div>
+        <div class="coach-philosophy">
+          <h4>Coaching philosophy</h4>
+          <p>"Replace this with a short, personal quote about your coaching philosophy. What do you believe about fitness, consistency, or your clients? 1-2 sentences, genuine, in your own words."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COACH 2 -->
+    <div class="coach-section reveal">
+      <div class="coach-photo-wrap">
+        <div class="coach-photo-box">
+          <div class="coach-photo-placeholder">TP</div>
+          <div class="coach-photo-overlay">
+            <div class="coach-photo-name">COACH TWO</div>
+            <div class="coach-photo-title">Co-Founder · Head of Client Success</div>
+          </div>
+        </div>
+        <div class="coach-certs-wrap">
+          <span class="cert">ISSA CPT</span>
+          <span class="cert">NASM Nutrition Coach</span>
+          <span class="cert">CPR/AED Certified</span>
+        </div>
+      </div>
+      <div class="coach-detail">
+        <h2>YOUR NAME HERE</h2>
+        <h3>Co-Founder · Head of Client Success · Long Island, NY</h3>
+        <div class="coach-bio-block">
+          <p>Replace this with the second coach's real story. What's your background in fitness? What made you want to coach? What drew you to the team-coaching model?</p>
+          <p>Talk about what you specialize in, the kind of client you love working with, and your approach to consistency and accountability. Be specific — "I work best with people who have tried everything and feel stuck" is more powerful than "I work with all types of clients."</p>
+          <p>A personal story here goes a long way. A moment when you realized coaching was what you were meant to do, or a client result that showed you the team model worked. Real and specific always beats polished and general.</p>
+        </div>
+        <div class="coach-specialties">
+          <h4>Specialties</h4>
+          <div class="specialty-list">
+            <div class="specialty">Client accountability</div>
+            <div class="specialty">Athletic performance</div>
+            <div class="specialty">Muscle building</div>
+            <div class="specialty">Lifestyle integration</div>
+            <div class="specialty">Nutrition planning</div>
+            <div class="specialty">Remote coaching</div>
+          </div>
+        </div>
+        <div class="coach-philosophy">
+          <h4>Coaching philosophy</h4>
+          <p>"Replace this with a short, personal quote about what you believe as a coach. What drives your approach? What do you want every client to feel? Your words, not a generic fitness quote."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM VALUES -->
+    <div class="team-values reveal">
+      <span class="section-label">Our Commitment</span>
+      <h2>What we stand for.</h2>
+      <p>We started Toadal on Long Island because we believed coaching could be done better. These are the principles we built it on — and the ones we hold ourselves to every single day.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-num">01</div>
+          <div class="value-title">Client satisfaction above everything</div>
+          <div class="value-text">We built the team model specifically because we knew one coach wasn't enough. Every decision we make puts your results first.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">02</div>
+          <div class="value-title">No client falls through the cracks</div>
+          <div class="value-text">No client goes 10 days without hearing from us. That's not a goal — it's a rule we enforce on ourselves every week.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">03</div>
+          <div class="value-title">Honesty over hype</div>
+          <div class="value-text">We'll tell you the truth about your program, your nutrition, and your timeline. Results take time and we'd rather be honest about that upfront.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">04</div>
+          <div class="value-title">Built for Long Island and NYC</div>
+          <div class="value-text">We're local. We know the gyms, the commutes, the busy seasons, and the lifestyle. Our coaching reflects where you actually live.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">05</div>
+          <div class="value-title">Evidence-based, always</div>
+          <div class="value-text">No fads. No gimmicks. Just proven programming principles applied consistently over time. That's how real results happen.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-num">06</div>
+          <div class="value-title">We scale only when we're ready</div>
+          <div class="value-text">We cap our client intake deliberately. We'd rather take 15 clients and change their lives than take 50 and do average work.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:56px">
+      <a href="apply.html" class="btn btn-gold" style="font-size:13px;padding:16px 40px">Apply — Work With Both of Us</a>
+    </div>
+  </div>
+</section>
+
+<script src="shared.js"></script>
+<script>
+injectDisclaimer();
+  injectNav('Coaches');
+injectFooter();
+initReveal();
+</script>
+</body>
+</html>

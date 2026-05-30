@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise Library · Toadal Performance</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.muscle-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.mtab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:2px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(245,240,232,.6);cursor:pointer;transition:all .2s}
+.mtab:hover,.mtab.active{background:var(--green-mid);border-color:var(--green-mid);color:var(--cream)}
+.ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.ex-card{background:var(--green-card);border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:border-color .2s,transform .2s}
+.ex-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-3px)}
+.ex-thumb{height:130px;background:#0A1F12;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.ex-thumb svg{width:100%;height:100%}
+.ex-muscle-tag{position:absolute;top:8px;right:8px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;background:rgba(10,31,18,.8)}
+.ex-info{padding:14px 16px}
+.ex-title{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:4px}
+.ex-desc{font-size:12px;font-weight:300;color:var(--green-light);line-height:1.5;margin-bottom:8px}
+.ex-tags{display:flex;gap:4px;flex-wrap:wrap}
+.ex-tag{font-size:10px;padding:2px 7px;border-radius:2px;background:rgba(201,168,76,.1);color:var(--gold);font-weight:600}
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Tools</span>
+    <h1 class="section-title">Exercise Library.</h1>
+    <p>Video breakdowns of every exercise in our programs. Full coaching cues, common mistakes, and progressions — organized by muscle group. Free for everyone.</p>
+  </div>
+</div>
+<section class="section">
+  <div class="container">
+    <div class="muscle-tabs">
+      <button class="mtab active" onclick="filter('all',this)">All</button>
+      <button class="mtab" onclick="filter('legs',this)">Legs</button>
+      <button class="mtab" onclick="filter('back',this)">Back</button>
+      <button class="mtab" onclick="filter('chest',this)">Chest</button>
+      <button class="mtab" onclick="filter('shoulders',this)">Shoulders</button>
+      <button class="mtab" onclick="filter('arms',this)">Arms</button>
+      <button class="mtab" onclick="filter('core',this)">Core</button>
+      <button class="mtab" onclick="filter('full',this)">Full Body</button>
+    </div>
+    <div class="ex-grid" id="ex-grid"></div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:20px;font-style:italic">Video links coming soon — we are filming the full library. New exercises added weekly.</p>
+  </div>
+</section>
+<script src="shared.js"></script>
+<script>
+injectDisclaimer();
+injectNav('Tools');
+injectFooter();
+
+// ── Drawing helpers ──
+function W(body){return`<svg viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="130" fill="#0A1F12"/>${body}</svg>`}
+function L(x1,y1,x2,y2,w,c){return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c||'#2A8A55'}" stroke-width="${w||6}" stroke-linecap="round"/>`}
+function H(x,y){return`<circle cx="${x}" cy="${y}" r="9" fill="#2A7A45" stroke="#3AAA68" stroke-width="1.2"/>`}
+function J(x,y,c){return`<circle cx="${x}" cy="${y}" r="4" fill="${c||'#3AAA68'}"/>`}
+function BB(x,y,w,h,c){return`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="${c||'#C9A84C'}"/>`}
+function FL(){return`<line x1="10" y1="122" x2="230" y2="122" stroke="rgba(201,168,76,.2)" stroke-width="1"/>`}
+function TX(x,y,t,c,a){return`<text x="${x}" y="${y}" font-family="Arial,sans-serif" font-size="9" fill="${c||'rgba(201,168,76,.55)'}" text-anchor="${a||'middle'}">${t}</text>`}
+function ARC(d,c){return`<path d="${d}" stroke="${c||'#C9A84C'}" stroke-width="1.5" fill="none" stroke-dasharray="4,3" opacity=".8"/>`}
+
+// ── Exercise SVGs ──
+const SVGS = {
+
+'Romanian Deadlift': W(FL()+
+  BB(25,113,190,6,'#906810')+BB(23,106,14,18,'#C9A84C')+BB(203,106,14,18,'#C9A84C')+
+  H(100,25)+L(100,34,100,65,8)+
+  L(100,65,68,78,8)+
+  L(75,74,105,115,5,'#1A5A38')+L(75,74,125,115,5,'#1A5A38')+
+  L(100,65,90,122,8)+L(100,65,110,122,8)+J(90,122)+J(110,122)+
+  TX(175,52,'Hip hinge')+TX(175,62,'back flat')+
+  ARC('M120 65 Q140 50 145 35')+
+  `<polygon points="145,33 140,40 148,39" fill="#C9A84C" opacity=".8"/>`
+),
+
+'Goblet Squat': W(FL()+
+  BB(108,44,24,8,'#C9A84C')+BB(104,40,8,16,'#906810')+BB(128,40,8,16,'#906810')+
+  H(120,28)+L(120,37,120,68,8)+
+  L(120,48,108,48,5,'#1A5A38')+L(120,48,132,48,5,'#1A5A38')+
+  L(120,68,92,96,8)+L(120,68,148,96,8)+
+  L(92,96,88,122,7)+L(148,96,152,122,7)+J(88,122)+J(152,122)+
+  TX(60,110,'Knees track')+TX(60,120,'over toes')+
+  ARC('M88 88 Q76 98 72 108')
+),
+
+'Bulgarian Split Squat': W(FL()+
+  BB(158,88,62,8,'#1E5C30')+BB(155,80,68,10,'#163020')+
+  H(95,28)+L(95,37,95,72,8)+
+  L(95,72,85,122,8)+J(85,122)+
+  L(95,72,142,82,8)+J(164,88,'#C9A84C')+
+  L(95,50,75,62,5,'#1A5A38')+L(95,50,115,62,5,'#1A5A38')+
+  TX(50,95,'Deep')+TX(50,105,'front knee')+TX(50,115,'bend')
+),
+
+'Hip Thrust': W(
+  BB(18,72,78,14,'#1E5C30')+BB(15,65,84,10,'#163020')+
+  BB(68,58,120,6,'#906810')+BB(64,51,12,18,'#C9A84C')+BB(184,51,12,18,'#C9A84C')+
+  H(48,52)+L(48,61,48,72,7)+
+  L(48,72,98,64,8)+L(98,64,130,78,8)+
+  L(130,78,150,108,8)+L(150,108,165,122,7)+J(165,122)+
+  L(98,64,82,102,7)+J(82,102)+
+  TX(185,45,'Drive hips')+TX(185,55,'up hard')+TX(185,65,'squeeze glutes')+
+  ARC('M120 48 Q120 34 120 22')+
+  `<polygon points="120,20 116,27 124,27" fill="#C9A84C" opacity=".8"/>`
+),
+
+'Leg Press': W(
+  BB(8,52,82,58,'#163020')+BB(6,48,86,8,'#1E5C30')+
+  BB(88,18,100,90,'#163020')+BB(86,14,104,8,'#1E5C30')+
+  BB(88,92,100,12,'#1A5A38')+
+  H(42,70)+L(42,80,42,105,8)+J(42,105,'#3AAA68')+
+  L(42,88,118,98,8)+L(42,88,112,108,8)+J(42,108,'#3AAA68')+
+  TX(165,60,'Push through')+TX(165,70,'full heel')+TX(165,80,'no knee cave')
+),
+
+'Nordic Curl': W(FL()+
+  BB(158,106,52,14,'#1E5C30')+
+  H(88,36)+L(88,45,88,78,8)+
+  L(88,78,120,104,8)+L(120,104,175,110,7)+J(175,110,'#C9A84C')+
+  L(88,56,64,78,5,'#1A5A38')+L(88,56,60,74,5,'#1A5A38')+
+  TX(55,30,'Control')+TX(55,40,'the descent')+TX(55,50,'eccentric')
+),
+
+'Barbell Row': W(FL()+
+  BB(30,113,180,6,'#906810')+BB(27,105,14,16,'#C9A84C')+BB(199,105,14,16,'#C9A84C')+
+  H(98,25)+L(98,34,98,68,8)+
+  L(98,68,65,78,8)+
+  L(72,75,108,115,5,'#1A5A38')+L(72,75,128,115,5,'#1A5A38')+
+  L(98,68,88,122,8)+L(98,68,108,122,8)+J(88,122)+J(108,122)+
+  TX(175,55,'Pull to')+TX(175,65,'belly button')+TX(175,75,'elbows back')
+),
+
+'Pull-Up': W(
+  BB(38,14,164,5,'#1E5C30')+BB(36,8,10,12,'#163020')+BB(194,8,10,12,'#163020')+
+  H(120,40)+L(120,49,120,85,8)+
+  L(120,54,84,18,5,'#1A5A38')+L(120,54,156,18,5,'#1A5A38')+J(84,18,'#C9A84C')+J(156,18,'#C9A84C')+
+  L(120,85,110,115,7)+L(120,85,130,115,7)+J(110,115)+J(130,115)+
+  TX(65,35,'Full hang')+TX(65,45,'to chin over')+
+  ARC('M135 52 Q148 36 148 24')+
+  `<polygon points="148,22 143,29 151,28" fill="#C9A84C" opacity=".8"/>`
+),
+
+'Single Arm DB Row': W(FL()+
+  BB(14,83,68,10,'#1E5C30')+BB(11,76,74,10,'#163020')+
+  H(55,44)+L(55,53,55,78,8)+
+  L(55,62,28,78,5,'#1A5A38')+J(28,78,'#C9A84C')+
+  L(55,62,98,92,5,'#1A5A38')+
+  BB(92,85,16,8,'#C9A84C')+BB(89,80,6,18,'#906810')+BB(101,80,6,18,'#906810')+
+  L(55,78,42,122,7)+L(55,78,72,122,7)+J(42,122)+J(72,122)+
+  TX(165,68,'Elbow')+TX(165,78,'drives up')+TX(165,88,'row to hip')
+),
+
+'Cable Row': W(
+  BB(8,18,18,100,'#163020')+BB(6,54,22,14,'#1E5C30')+
+  L(30,61,105,88,2,'rgba(201,168,76,.4)')+J(105,88,'#C9A84C')+
+  H(130,42)+L(130,51,130,85,8)+
+  L(130,62,108,88,5,'#1A5A38')+
+  BB(104,83,58,8,'#1E5C30')+
+  L(130,85,118,108,7)+L(130,85,142,108,7)+J(118,108)+J(142,108)+
+  TX(178,42,'Elbows')+TX(178,52,'past torso')+TX(178,62,'squeeze back')
+),
+
+'Lat Pulldown': W(
+  BB(48,12,144,5,'#1E5C30')+BB(114,12,12,22,'#163020')+
+  BB(58,24,124,5,'#C9A84C')+J(58,26,'#C9A84C')+J(182,26,'#C9A84C')+
+  L(60,26,90,54,2,'rgba(201,168,76,.4)')+L(180,26,150,54,2,'rgba(201,168,76,.4)')+
+  H(120,46)+L(120,55,120,86,8)+
+  L(120,58,90,54,5,'#1A5A38')+L(120,58,150,54,5,'#1A5A38')+J(90,54,'#C9A84C')+J(150,54,'#C9A84C')+
+  BB(86,86,68,8,'#1E5C30')+L(120,86,108,115,7)+L(120,86,132,115,7)+J(108,115)+J(132,115)+
+  TX(55,40,'Pull to')+TX(55,50,'upper chest')
+),
+
+'Bench Press': W(
+  BB(52,88,136,10,'#1E5C30')+BB(50,80,140,10,'#163020')+
+  BB(52,18,8,68,'#163020')+BB(180,18,8,68,'#163020')+
+  BB(38,52,164,6,'#906810')+BB(33,44,14,20,'#C9A84C')+BB(193,44,14,20,'#C9A84C')+
+  H(120,67)+L(120,76,120,88,7)+
+  L(120,78,95,56,5,'#1A5A38')+L(120,78,145,56,5,'#1A5A38')+J(95,56,'#C9A84C')+J(145,56,'#C9A84C')+
+  L(120,88,104,116,6)+L(120,88,136,116,6)+J(104,116)+J(136,116)+
+  TX(120,22,'Press to lockout')+TX(120,32,'retract shoulder blades')
+),
+
+'Dumbbell Fly': W(
+  BB(52,88,136,10,'#1E5C30')+BB(50,80,140,10,'#163020')+
+  H(120,66)+L(120,76,120,88,7)+
+  L(120,74,74,88,5,'#1A5A38')+L(120,74,166,88,5,'#1A5A38')+
+  BB(66,83,16,8,'#C9A84C')+BB(158,83,16,8,'#C9A84C')+
+  ARC('M76 83 Q120 52 164 83')+
+  `<polygon points="76,83 80,75 72,74" fill="#C9A84C" opacity=".75"/>`+
+  `<polygon points="164,83 160,75 168,74" fill="#C9A84C" opacity=".75"/>`+
+  L(120,88,104,116,6)+L(120,88,136,116,6)+J(104,116)+J(136,116)+
+  TX(120,22,'Wide arc in')+TX(120,32,'squeeze at top')
+),
+
+'Push-Up Variations': W(FL()+
+  H(68,38)+L(68,48,68,72,7)+
+  L(68,60,44,72,5,'#1A5A38')+J(44,72,'#C9A84C')+
+  L(68,72,162,68,9)+J(164,68)+J(172,66)+
+  L(162,68,172,80,5,'#1A5A38')+J(174,82,'#3AAA68')+
+  `<line x1="60" y1="40" x2="175" y2="75" stroke="rgba(201,168,76,.25)" stroke-width="1.5" stroke-dasharray="5,3"/>`+
+  TX(120,18,'Body straight')+TX(120,28,'head neutral')
+),
+
+'Incline DB Press': W(
+  `<path d="M48 115 L78 55 L88 55 L58 115 Z" fill="#163020"/>`+
+  BB(78,50,114,10,'#1E5C30')+BB(46,108,150,10,'#163020')+
+  BB(70,36,14,8,'#C9A84C')+BB(67,30,6,18,'#906810')+BB(79,30,6,18,'#906810')+
+  BB(152,36,14,8,'#C9A84C')+BB(149,30,6,18,'#906810')+BB(161,30,6,18,'#906810')+
+  H(115,50)+L(115,59,115,86,7)+
+  L(115,66,84,40,5,'#1A5A38')+L(115,66,146,40,5,'#1A5A38')+J(84,40,'#C9A84C')+J(146,40,'#C9A84C')+
+  L(115,86,102,108,6)+L(115,86,128,108,6)+J(102,108)+J(128,108)+
+  TX(185,30,'Targets')+TX(185,40,'upper chest')
+),
+
+'Overhead Press': W(FL()+
+  BB(53,22,134,5,'#906810')+BB(50,14,14,18,'#C9A84C')+BB(176,14,14,18,'#C9A84C')+
+  H(120,40)+L(120,49,120,90,8)+
+  L(120,56,86,26,5,'#1A5A38')+L(120,56,154,26,5,'#1A5A38')+J(86,26,'#C9A84C')+J(154,26,'#C9A84C')+
+  L(120,90,108,122,7)+L(120,90,132,122,7)+J(108,122)+J(132,122)+
+  TX(55,55,'Brace core')+TX(55,65,'ribs down')+TX(55,75,'full lockout')
+),
+
+'Lateral Raise': W(FL()+
+  H(120,36)+L(120,45,120,90,8)+
+  L(120,90,108,122,7)+L(120,90,132,122,7)+J(108,122)+J(132,122)+
+  L(120,58,68,58,5,'#C9A84C')+L(120,58,172,58,5,'#C9A84C')+
+  BB(60,53,14,8,'#C9A84C')+BB(166,53,14,8,'#C9A84C')+
+  ARC('M68 76 Q68 58 68 58')+
+  `<line x1="68" y1="80" x2="68" y2="62" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3,2"/>`+
+  `<polygon points="68,60 64,67 72,67" fill="#C9A84C" opacity=".8"/>`+
+  `<line x1="172" y1="80" x2="172" y2="62" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3,2"/>`+
+  `<polygon points="172,60 168,67 176,67" fill="#C9A84C" opacity=".8"/>`+
+  TX(120,20,'Raise to shoulder height')+TX(120,30,'slight bend in elbow')
+),
+
+'Face Pull': W(FL()+
+  BB(8,18,16,100,'#163020')+BB(6,52,20,12,'#1E5C30')+
+  L(28,58,108,58,2,'rgba(201,168,76,.4)')+J(108,58,'#C9A84C')+
+  H(132,42)+L(132,51,132,88,8)+
+  L(132,60,110,58,5,'#1A5A38')+L(132,60,106,54,5,'#1A5A38')+
+  L(132,88,120,122,7)+L(132,88,144,122,7)+J(120,122)+J(144,122)+
+  TX(185,38,'Pull to')+TX(185,48,'nose or forehead')+TX(185,58,'elbows high')
+),
+
+'Arnold Press': W(FL()+
+  H(120,33)+L(120,42,120,88,8)+
+  BB(80,44,16,8,'#C9A84C')+BB(78,38,6,20,'#906810')+BB(90,38,6,20,'#906810')+
+  BB(142,44,16,8,'#C9A84C')+BB(140,38,6,20,'#906810')+BB(152,38,6,20,'#906810')+
+  L(120,52,86,48,5,'#1A5A38')+L(120,52,154,48,5,'#1A5A38')+
+  ARC('M86 48 Q76 32 94 24')+
+  `<polygon points="94,23 88,30 96,29" fill="#C9A84C" opacity=".8"/>`+
+  L(120,88,108,122,7)+L(120,90,132,122,7)+J(108,122)+J(132,122)+
+  TX(185,22,'Rotate palms')+TX(185,32,'out as you press')
+),
+
+'Bicep Curl': W(FL()+
+  H(120,33)+L(120,42,120,90,8)+
+  BB(86,60,48,6,'#906810')+BB(82,52,12,20,'#C9A84C')+BB(126,52,12,20,'#C9A84C')+
+  L(120,60,90,66,5,'#1A5A38')+L(120,60,150,66,5,'#1A5A38')+
+  `<ellipse cx="92" cy="57" rx="6" ry="4" fill="rgba(201,168,76,.15)" stroke="rgba(201,168,76,.35)" stroke-width="1"/>`+
+  `<ellipse cx="148" cy="57" rx="6" ry="4" fill="rgba(201,168,76,.15)" stroke="rgba(201,168,76,.35)" stroke-width="1"/>`+
+  L(120,90,108,122,7)+L(120,90,132,122,7)+J(108,122)+J(132,122)+
+  TX(175,40,'Full ROM')+TX(175,50,'no swinging')+TX(175,60,'elbows pinned')
+),
+
+'Tricep Pushdown': W(FL()+
+  BB(108,10,24,6,'#163020')+BB(118,10,6,22,'#1E5C30')+
+  L(120,32,120,52,2,'rgba(201,168,76,.4)')+
+  BB(100,52,40,5,'#C9A84C')+J(100,54,'#C9A84C')+J(140,54,'#C9A84C')+
+  H(120,32)+L(120,41,120,88,8)+
+  L(120,54,100,54,5,'#1A5A38')+L(120,54,140,54,5,'#1A5A38')+
+  `<ellipse cx="102" cy="51" rx="5" ry="4" fill="rgba(201,168,76,.12)" stroke="rgba(201,168,76,.3)" stroke-width="1"/>`+
+  L(120,88,108,122,7)+L(120,88,132,122,7)+J(108,122)+J(132,122)+
+  TX(55,80,'Elbows')+TX(55,90,'pinned to sides')+TX(55,100,'squeeze at bottom')
+),
+
+'Hammer Curl': W(FL()+
+  H(120,33)+L(120,42,120,90,8)+
+  BB(88,63,10,24,'#906810')+BB(84,66,18,6,'#C9A84C')+BB(84,76,18,6,'#C9A84C')+
+  BB(140,63,10,24,'#906810')+BB(136,66,18,6,'#C9A84C')+BB(136,76,18,6,'#C9A84C')+
+  L(120,60,92,70,5,'#1A5A38')+L(120,60,148,70,5,'#1A5A38')+
+  L(120,90,108,122,7)+L(120,90,132,122,7)+J(108,122)+J(132,122)+
+  TX(55,40,'Thumbs up')+TX(55,50,'neutral grip')+TX(55,60,'brachialis focus')
+),
+
+'Skull Crusher': W(
+  BB(52,88,136,10,'#1E5C30')+BB(50,80,140,10,'#163020')+
+  BB(90,43,58,5,'#906810')+BB(87,36,10,18,'#C9A84C')+BB(141,36,10,18,'#C9A84C')+
+  H(120,66)+L(120,76,120,88,7)+
+  L(120,76,96,48,5,'#1A5A38')+L(120,76,144,48,5,'#1A5A38')+J(96,48,'#C9A84C')+J(144,48,'#C9A84C')+
+  `<ellipse cx="98" cy="60" rx="5" ry="7" fill="rgba(201,168,76,.12)" stroke="rgba(201,168,76,.3)" stroke-width="1" transform="rotate(-35 98 60)"/>`+
+  L(120,88,104,116,6)+L(120,88,136,116,6)+J(104,116)+J(136,116)+
+  TX(55,22,'Elbows stay')+TX(55,32,'pointed up')+TX(55,42,'dont flare')
+),
+
+'Plank': W(FL()+
+  BB(52,110,32,6,'#C9A84C')+BB(152,110,32,6,'#C9A84C')+
+  H(68,58)+L(68,68,68,110,8)+
+  L(68,84,165,90,10)+J(168,90)+J(176,88)+
+  L(165,90,178,104,5,'#1A5A38')+J(180,106,'#3AAA68')+
+  `<line x1="60" y1="60" x2="180" y2="86" stroke="rgba(201,168,76,.3)" stroke-width="1.5" stroke-dasharray="5,3"/>`+
+  TX(120,18,'Body rigid')+TX(120,28,'squeeze everything')+TX(120,38,'breathe steadily')
+),
+
+"Farmer's Carry": W(FL()+
+  H(120,28)+L(120,37,120,85,8)+
+  L(120,85,108,122,7)+L(120,85,132,122,7)+J(108,122)+J(132,122)+
+  BB(72,56,10,32,'#906810')+BB(68,60,18,8,'#C9A84C')+BB(68,76,18,8,'#C9A84C')+
+  BB(158,56,10,32,'#906810')+BB(154,60,18,8,'#C9A84C')+BB(154,76,18,8,'#C9A84C')+
+  L(120,54,78,72,5,'#1A5A38')+L(120,54,162,72,5,'#1A5A38')+
+  `<line x1="125" y1="28" x2="145" y2="22" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="3,2"/>`+
+  `<polygon points="147,21 140,24 143,31" fill="#C9A84C" opacity=".8"/>`+
+  TX(120,112,'Walk tall')+TX(120,121,'brace hard')
+),
+
+'Dead Bug': W(FL()+
+  H(78,52)+L(78,62,78,88,7)+
+  `<ellipse cx="78" cy="86" rx="14" ry="7" fill="#1A4A28"/>`+
+  L(78,68,112,48,5,'#C9A84C')+J(114,46,'#C9A84C')+
+  L(78,84,118,104,5,'#C9A84C')+J(120,106,'#C9A84C')+
+  L(78,68,46,48,5,'#2A8A55')+J(44,46,'#2A8A55')+
+  L(78,84,42,102,5,'#2A8A55')+J(40,104,'#2A8A55')+
+  TX(172,48,'Opposite')+TX(172,58,'arm and leg')+TX(172,70,'extend together')+
+  TX(78,22,'Lower back flat on floor')
+),
+
+'Cable Woodchop': W(FL()+
+  BB(8,18,16,100,'#163020')+BB(6,28,20,12,'#1E5C30')+
+  L(28,34,95,72,2,'rgba(201,168,76,.4)')+J(95,72,'#C9A84C')+
+  H(130,36)+L(130,45,130,88,8)+
+  L(130,56,95,72,5,'#1A5A38')+
+  L(130,56,165,95,5,'#C9A84C')+J(165,97,'#C9A84C')+
+  ARC('M100 62 Q128 58 158 88')+
+  `<polygon points="158,88 152,84 156,92" fill="#C9A84C" opacity=".8"/>`+
+  L(130,88,115,122,7)+L(130,88,145,122,7)+J(115,122)+J(145,122)+
+  TX(185,26,'High to low')+TX(185,36,'rotation')+TX(185,46,'brace core')
+),
+
+'Deadlift': W(FL()+
+  BB(22,112,196,6,'#906810')+BB(19,103,16,20,'#C9A84C')+BB(205,103,16,20,'#C9A84C')+
+  H(120,26)+L(120,35,120,80,9)+
+  L(120,53,98,115,5,'#1A5A38')+L(120,53,142,115,5,'#1A5A38')+
+  L(120,80,106,122,8)+L(120,80,134,122,8)+J(106,122)+J(134,122)+
+  `<rect x="112" y="26" width="16" height="96" rx="4" fill="rgba(201,168,76,.06)"/>`+
+  TX(175,35,'Hips and')+TX(175,45,'shoulders rise')+TX(175,55,'together')+TX(175,65,'bar stays close')
+),
+
+'Clean & Press': W(FL()+
+  BB(62,18,116,5,'#906810')+BB(58,10,14,18,'#C9A84C')+BB(168,10,14,18,'#C9A84C')+
+  H(120,36)+L(120,45,120,88,8)+
+  L(120,52,85,22,5,'#1A5A38')+L(120,52,155,22,5,'#1A5A38')+J(85,22,'#C9A84C')+J(155,22,'#C9A84C')+
+  L(120,88,108,122,7)+L(120,88,132,122,7)+J(108,122)+J(132,122)+
+  TX(55,52,'Triple')+TX(55,62,'extension')+TX(55,72,'ankles knees hips')
+),
+
+'Kettlebell Swing': W(FL()+
+  `<circle cx="120" cy="82" r="12" fill="#C9A84C" stroke="#906810" stroke-width="2"/>`+
+  BB(114,68,12,14,'#906810')+
+  H(120,28)+L(120,37,120,68,8)+
+  L(120,68,88,78,8)+
+  L(90,76,118,84,5,'#1A5A38')+L(90,76,122,80,5,'#1A5A38')+
+  L(120,68,105,122,8)+L(120,68,135,122,8)+J(105,122)+J(135,122)+
+  ARC('M118 84 Q98 58 116 32')+
+  `<polygon points="116,30 112,37 120,36" fill="#C9A84C" opacity=".75"/>`+
+  TX(185,55,'Hip hinge')+TX(185,65,'power drive')+TX(185,75,'not a squat')
+),
+
+};
+
+const exercises = [
+  {name:'Romanian Deadlift',muscle:'legs',desc:'Hip hinge pattern. Builds hamstrings and glutes with full stretch.',tags:['Hamstrings','Glutes','Lower back']},
+  {name:'Goblet Squat',muscle:'legs',desc:'Great for learning squat mechanics, knee tracking, and depth.',tags:['Quads','Glutes','Core']},
+  {name:'Bulgarian Split Squat',muscle:'legs',desc:'Unilateral squat for quad and glute development. Builds balance.',tags:['Quads','Glutes','Balance']},
+  {name:'Hip Thrust',muscle:'legs',desc:'Glute isolation with full range of motion. Best glute builder.',tags:['Glutes','Hamstrings']},
+  {name:'Leg Press',muscle:'legs',desc:'Quad-dominant push. Allows heavy loading with controlled form.',tags:['Quads','Glutes']},
+  {name:'Nordic Curl',muscle:'legs',desc:'Eccentric hamstring exercise. Excellent for injury prevention.',tags:['Hamstrings']},
+  {name:'Barbell Row',muscle:'back',desc:'Horizontal pulling. Builds back thickness and strength.',tags:['Lats','Rhomboids','Biceps']},
+  {name:'Pull-Up',muscle:'back',desc:'Vertical pull. Builds lat width and upper body strength.',tags:['Lats','Biceps','Core']},
+  {name:'Single Arm DB Row',muscle:'back',desc:'Unilateral row to address muscle imbalances.',tags:['Lats','Rhomboids']},
+  {name:'Cable Row',muscle:'back',desc:'Constant tension horizontal pull for mid-back development.',tags:['Mid back','Rhomboids']},
+  {name:'Lat Pulldown',muscle:'back',desc:'Machine vertical pull. Great for building lat width.',tags:['Lats','Biceps']},
+  {name:'Bench Press',muscle:'chest',desc:'Foundational horizontal push. Chest, triceps, and shoulder dominant.',tags:['Chest','Triceps','Shoulders']},
+  {name:'Dumbbell Fly',muscle:'chest',desc:'Chest isolation through full stretch and contraction.',tags:['Chest']},
+  {name:'Push-Up Variations',muscle:'chest',desc:'Bodyweight push-up and all major progressions.',tags:['Chest','Triceps','Core']},
+  {name:'Incline DB Press',muscle:'chest',desc:'Upper chest emphasis. Great for balanced chest development.',tags:['Upper chest','Triceps']},
+  {name:'Overhead Press',muscle:'shoulders',desc:'Vertical pressing movement. Shoulder and tricep dominant.',tags:['Shoulders','Triceps','Core']},
+  {name:'Lateral Raise',muscle:'shoulders',desc:'Medial delt isolation for shoulder width.',tags:['Medial delt']},
+  {name:'Face Pull',muscle:'shoulders',desc:'Rear delt and external rotation. Critical for shoulder health.',tags:['Rear delt','Rotator cuff']},
+  {name:'Arnold Press',muscle:'shoulders',desc:'Full shoulder press with rotation. Hits all three delt heads.',tags:['All delts','Triceps']},
+  {name:'Bicep Curl',muscle:'arms',desc:'Bicep isolation through full range of motion.',tags:['Biceps']},
+  {name:'Tricep Pushdown',muscle:'arms',desc:'Cable tricep isolation. Squeeze hard at lockout.',tags:['Triceps']},
+  {name:'Hammer Curl',muscle:'arms',desc:'Neutral grip curl for brachialis and forearm development.',tags:['Biceps','Brachialis','Forearms']},
+  {name:'Skull Crusher',muscle:'arms',desc:'Overhead tricep extension with EZ bar or dumbbells.',tags:['Triceps']},
+  {name:'Plank',muscle:'core',desc:'Anti-extension core stability. Squeeze everything at once.',tags:['Core','Stability']},
+  {name:"Farmer's Carry",muscle:'core',desc:'Loaded carry. Builds core, grip strength, and conditioning.',tags:['Core','Grip','Full body']},
+  {name:'Dead Bug',muscle:'core',desc:'Anti-extension pattern. Excellent for beginners and lower back health.',tags:['Core','Lower back']},
+  {name:'Cable Woodchop',muscle:'core',desc:'Rotational core movement. Builds anti-rotation strength.',tags:['Core','Obliques']},
+  {name:'Deadlift',muscle:'full',desc:'The king of all lifts. Full posterior chain and total body strength.',tags:['Full body','Hamstrings','Back','Glutes']},
+  {name:'Clean & Press',muscle:'full',desc:'Olympic-style full body power movement.',tags:['Full body','Power']},
+  {name:'Kettlebell Swing',muscle:'full',desc:'Hip hinge power exercise. Great for conditioning and glute development.',tags:['Hamstrings','Glutes','Conditioning']},
+];
+
+const tagColors = {legs:'#533AB7',back:'#854F0B',chest:'#A32D2D',shoulders:'#185FA5',arms:'#0F6E56',core:'#1D9E75',full:'#906810'};
+let active = 'all';
+
+function filter(m, btn) {
+  active = m;
+  document.querySelectorAll('.mtab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  const list = active === 'all' ? exercises : exercises.filter(e => e.muscle === active);
+  document.getElementById('ex-grid').innerHTML = list.map(e => `
+    <div class="ex-card">
+      <div class="ex-thumb">
+        ${SVGS[e.name] || W(`<text x="120" y="70" font-family="Arial" font-size="11" fill="rgba(245,240,232,.2)" text-anchor="middle">${e.name}</text>`)}
+        <div class="ex-muscle-tag" style="color:${tagColors[e.muscle]||'#C9A84C'}">${e.muscle}</div>
+      </div>
+      <div class="ex-info">
+        <div class="ex-title">${e.name}</div>
+        <div class="ex-desc">${e.desc}</div>
+        <div class="ex-tags">${e.tags.map(t => `<span class="ex-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+render();
+initReveal();
+</script>
+</body>
+</html>

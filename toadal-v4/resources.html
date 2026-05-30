@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources · Toadal Performance</title>
+<meta name="description" content="Free fitness resources from Toadal Performance — RPE calculator, RMR calculator, 1RM calculator, exercise library, Long Island gym finder, and fitness glossary.">
+<link rel="stylesheet" href="style.css">
+<style>
+.resources-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 48px; }
+.res-tab { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 20px; border-radius: 2px; border: 1px solid rgba(255,255,255,.12); background: transparent; color: rgba(245,240,232,.6); cursor: pointer; transition: all .2s; text-decoration: none; }
+.res-tab:hover, .res-tab.active { background: var(--gold); border-color: var(--gold); color: var(--green-deep); }
+.resource-section { margin-bottom: 80px; }
+.resource-section h2 { font-family: var(--font-display); font-size: 42px; color: var(--cream); letter-spacing: .03em; margin-bottom: 8px; }
+.resource-section > p { font-size: 15px; font-weight: 300; color: var(--green-light); line-height: 1.7; max-width: 540px; margin-bottom: 28px; }
+
+/* ── CALCULATORS ── */
+.calc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.calc-card { background: var(--green-dark); border-radius: 3px; padding: 28px; border: 1px solid rgba(255,255,255,.07); }
+.calc-card h3 { font-family: var(--font-display); font-size: 22px; color: var(--cream); letter-spacing: .04em; margin-bottom: 4px; }
+.calc-card p { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.6; margin-bottom: 18px; }
+.calc-inputs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.calc-inputs label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--green-light); }
+.calc-inputs input, .calc-inputs select { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 2px; padding: 9px 12px; font-family: var(--font-body); font-size: 14px; color: var(--cream); outline: none; width: 100%; transition: border-color .2s; }
+.calc-inputs input:focus, .calc-inputs select:focus { border-color: var(--gold); }
+.calc-inputs select option { background: var(--green-deep); }
+.calc-btn { width: 100%; padding: 11px; font-size: 12px; }
+.calc-result-box { margin-top: 14px; padding: 14px 16px; background: rgba(201,168,76,.08); border-radius: 2px; border-left: 3px solid var(--gold); display: none; }
+.calc-result-box.show { display: block; }
+.calc-result-num { font-family: var(--font-display); font-size: 36px; color: var(--gold); }
+.calc-result-label { font-size: 12px; font-weight: 300; color: var(--green-light); margin-top: 2px; }
+.calc-result-note { font-size: 12px; font-weight: 300; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+
+/* ── EXERCISE LIBRARY ── */
+.muscle-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.muscle-tab { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 7px 14px; border-radius: 2px; border: 1px solid rgba(255,255,255,.1); background: transparent; color: rgba(245,240,232,.6); cursor: pointer; transition: all .2s; }
+.muscle-tab:hover, .muscle-tab.active { background: var(--green-mid); border-color: var(--green-mid); color: var(--cream); }
+.exercise-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.exercise-card { background: var(--green-dark); border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,.06); transition: border-color .2s; cursor: pointer; }
+.exercise-card:hover { border-color: rgba(201,168,76,.3); }
+.exercise-thumb { height: 110px; background: var(--green-mid); display: flex; align-items: center; justify-content: center; font-size: 36px; position: relative; }
+.exercise-thumb-muscle { position: absolute; bottom: 8px; left: 10px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(245,240,232,.6); }
+.exercise-card-body { padding: 14px 16px; }
+.exercise-card-name { font-size: 14px; font-weight: 500; color: var(--cream); margin-bottom: 4px; }
+.exercise-card-desc { font-size: 12px; font-weight: 300; color: var(--green-light); line-height: 1.5; }
+.exercise-card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+.ex-tag { font-size: 10px; padding: 2px 7px; border-radius: 2px; background: rgba(201,168,76,.12); color: var(--gold); font-weight: 600; }
+
+/* ── GYM FINDER ── */
+.gym-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.gym-card { background: var(--green-dark); border-radius: 3px; padding: 20px 22px; border: 1px solid rgba(255,255,255,.07); }
+.gym-name { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+.gym-area { font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.gym-desc { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.6; margin-bottom: 12px; }
+.gym-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.gym-tag { font-size: 11px; padding: 3px 8px; border-radius: 2px; background: rgba(255,255,255,.06); color: rgba(245,240,232,.7); }
+.gym-rating { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; color: var(--gold); }
+
+/* ── GLOSSARY ── */
+.glossary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.gloss-card { background: var(--green-dark); border-radius: 3px; padding: 20px 22px; border: 1px solid rgba(255,255,255,.07); }
+.gloss-term { font-family: var(--font-display); font-size: 22px; color: var(--gold); letter-spacing: .04em; margin-bottom: 6px; }
+.gloss-def { font-size: 14px; font-weight: 300; color: var(--cream); line-height: 1.7; }
+.gloss-example { font-size: 13px; font-weight: 300; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+
+@media(max-width:860px){ .calc-grid{grid-template-columns:1fr;} .glossary-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">Free Resources</span>
+    <h1 class="section-title">Tools for everyone.</h1>
+    <p>Every resource on this page is completely free — for clients and non-clients alike. Use them, share them, and come back every week for new content.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="resources-nav">
+      <a href="#calculators" class="res-tab active">Calculators</a>
+      <a href="#library" class="res-tab">Exercise Library</a>
+      <a href="#gyms" class="res-tab">LI Gym Finder</a>
+      <a href="#glossary" class="res-tab">Fitness Glossary</a>
+    </div>
+
+    <!-- CALCULATORS -->
+    <div class="resource-section" id="calculators">
+      <span class="section-label">Calculators</span>
+      <h2>Know your numbers.</h2>
+      <p>Four calculators built by the Toadal team. Bookmark this page — you will come back to these.</p>
+
+      <!-- RPE LOAD CALCULATOR -->
+      <div id="rpe-load" style="margin-bottom:20px">
+        <h3 style="font-family:var(--font-display);font-size:28px;color:var(--cream);letter-spacing:.04em;margin-bottom:6px">RPE LOAD CALCULATOR</h3>
+        <p style="font-size:14px;font-weight:300;color:var(--green-light);line-height:1.6;margin-bottom:16px">Enter your 1RM, target reps, and target RPE — we'll tell you exactly what weight to use.</p>
+        <div style="background:var(--green-card);border-radius:3px;padding:28px;border:1px solid rgba(255,255,255,.07)">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
+            <div>
+              <label for="rpe-1rm">Your 1RM (lbs)</label>
+              <input type="number" id="rpe-1rm" placeholder="e.g. 315" oninput="calcRPELoad()">
+            </div>
+            <div>
+              <label for="rpe-reps">Target reps</label>
+              <input type="number" id="rpe-reps" placeholder="e.g. 5" min="1" max="20" oninput="calcRPELoad()">
+            </div>
+            <div>
+              <label for="rpe-target">Target RPE (1–10)</label>
+              <input type="number" id="rpe-target" placeholder="e.g. 7" min="1" max="10" oninput="calcRPELoad()">
+            </div>
+          </div>
+          <div id="rpe-load-result" style="display:none;background:rgba(201,168,76,.08);border-left:3px solid var(--gold);padding:16px 18px;border-radius:0 3px 3px 0">
+            <div style="font-family:var(--font-display);font-size:48px;color:var(--gold);line-height:1" id="rpe-load-weight">--</div>
+            <div style="font-size:13px;color:var(--green-light);margin-top:4px" id="rpe-load-label"></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:14px" id="rpe-load-zones"></div>
+          </div>
+          <div style="margin-top:14px;font-size:12px;font-weight:300;color:var(--text-muted);font-style:italic">Based on the Tuchscherer RPE chart — the most widely used RPE-to-percentage table in strength sports.</div>
+        </div>
+      </div>
+
+      <div class="calc-grid">
+
+        <!-- RPE GUIDE -->
+        <div class="calc-card">
+          <h3>RPE GUIDE</h3>
+          <p>Rate of Perceived Exertion — understand how hard you should be pushing on any given set.</p>
+          <div class="calc-inputs">
+            <div>
+              <label>Your RPE target (1–10)</label>
+              <input type="range" id="rpe-slider" min="1" max="10" value="7" step="1" oninput="updateRPE()" style="width:100%;accent-color:var(--gold);">
+              <div style="text-align:center;font-family:var(--font-display);font-size:40px;color:var(--gold);margin:4px 0" id="rpe-val">7</div>
+            </div>
+          </div>
+          <div class="calc-result-box show" id="rpe-result">
+            <div class="calc-result-label" id="rpe-label">Challenging</div>
+            <div class="calc-result-note" id="rpe-note">Could do 3 more reps. Good for most working sets.</div>
+          </div>
+        </div>
+
+        <!-- RMR -->
+        <div class="calc-card">
+          <h3>RMR CALCULATOR</h3>
+          <p>Estimate your Resting Metabolic Rate — the calories you burn at complete rest. Foundation of any nutrition plan.</p>
+          <div class="calc-inputs">
+            <div><label>Biological sex</label>
+              <select id="rmr-sex"><option value="m">Male</option><option value="f">Female</option></select>
+            </div>
+            <div><label>Weight (lbs)</label><input type="number" id="rmr-weight" placeholder="175"></div>
+            <div><label>Height (inches)</label><input type="number" id="rmr-height" placeholder="70"></div>
+            <div><label>Age (years)</label><input type="number" id="rmr-age" placeholder="30"></div>
+          </div>
+          <button class="btn btn-gold calc-btn" onclick="calcRMR()">Calculate RMR</button>
+          <div class="calc-result-box" id="rmr-result">
+            <div class="calc-result-num" id="rmr-num">—</div>
+            <div class="calc-result-label">Calories burned at rest per day</div>
+            <div class="calc-result-note" id="rmr-tdee"></div>
+          </div>
+        </div>
+
+        <!-- 1RM -->
+        <div class="calc-card">
+          <h3>1RM CALCULATOR</h3>
+          <p>Estimate your one-rep max from any weight and rep count. Use this to set training zones.</p>
+          <div class="calc-inputs">
+            <div><label>Weight lifted (lbs)</label><input type="number" id="orm-weight" placeholder="185"></div>
+            <div><label>Reps completed</label><input type="number" id="orm-reps" placeholder="8" min="1" max="30"></div>
+          </div>
+          <button class="btn btn-gold calc-btn" onclick="calcORM()">Estimate 1RM</button>
+          <div class="calc-result-box" id="orm-result">
+            <div class="calc-result-num" id="orm-num">—</div>
+            <div class="calc-result-label">Estimated one-rep max</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px" id="orm-zones"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXERCISE LIBRARY -->
+    <div class="resource-section" id="library">
+      <span class="section-label">Exercise Library</span>
+      <h2>Learn every lift.</h2>
+      <p>Video breakdowns of every exercise in our programs. Full coaching cues, common mistakes, and progressions — organized by muscle group.</p>
+      <div class="muscle-tabs">
+        <button class="muscle-tab active" onclick="filterExercises('all',this)">All</button>
+        <button class="muscle-tab" onclick="filterExercises('legs',this)">Legs</button>
+        <button class="muscle-tab" onclick="filterExercises('back',this)">Back</button>
+        <button class="muscle-tab" onclick="filterExercises('chest',this)">Chest</button>
+        <button class="muscle-tab" onclick="filterExercises('shoulders',this)">Shoulders</button>
+        <button class="muscle-tab" onclick="filterExercises('arms',this)">Arms</button>
+        <button class="muscle-tab" onclick="filterExercises('core',this)">Core</button>
+      </div>
+      <div class="exercise-grid" id="exercise-grid"></div>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:20px"> Video links coming soon — we're filming the full library now. Check back weekly.</p>
+    </div>
+
+    <!-- GYM FINDER -->
+    <div class="resource-section" id="gyms">
+      <span class="section-label">Long Island Gym Finder</span>
+      <h2>Find your spot.</h2>
+      <p>Our honest recommendations for gyms across Long Island — commercial chains and private gyms — organized by specialty. Click any gym to learn more.</p>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;margin-top:24px">Commercial Gyms</div>
+      <div class="gym-grid">
+        <div class="gym-card">
+          <div class="gym-name">Planet Fitness</div>
+          <div class="gym-area">Multiple LI Locations</div>
+          <div class="gym-desc">Best for budget-conscious beginners. Limited free weights but good cardio and machines. No-judgment environment. Not ideal for serious strength training due to dumbbell and barbell restrictions at most locations.</div>
+          <div class="gym-tags"><span class="gym-tag">Beginner-friendly</span><span class="gym-tag">Budget</span><span class="gym-tag">Cardio</span><span class="gym-tag">Weight Loss</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">LA Fitness</div>
+          <div class="gym-area">Nassau and Suffolk</div>
+          <div class="gym-desc">Solid all-around gym with a good free weight section, squat racks, cable machines, and a pool. Busy during peak hours but well-equipped for most programs. Good choice for general fitness and body recomposition.</div>
+          <div class="gym-tags"><span class="gym-tag">General Fitness</span><span class="gym-tag">Weight Loss</span><span class="gym-tag">Muscle Building</span><span class="gym-tag">Pool</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">Crunch Fitness</div>
+          <div class="gym-area">Multiple LI Locations</div>
+          <div class="gym-desc">Good variety of equipment and a welcoming atmosphere. Less crowded than LA Fitness at most locations. Strong choice for general fitness, muscle building, and fat loss. Popular with a wide range of experience levels.</div>
+          <div class="gym-tags"><span class="gym-tag">General Fitness</span><span class="gym-tag">Fat Loss</span><span class="gym-tag">Muscle Building</span><span class="gym-tag">All Levels</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">Retro Fitness</div>
+          <div class="gym-area">Nassau County</div>
+          <div class="gym-desc">Underrated and often uncrowded. Good free weight selection and a solid all-around setup. Affordable and less intimidating than the bigger chains. Great hidden gem if there is one near you.</div>
+          <div class="gym-tags"><span class="gym-tag">General Fitness</span><span class="gym-tag">Muscle Building</span><span class="gym-tag">Affordable</span><span class="gym-tag">Less Crowded</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">Gold's Gym</div>
+          <div class="gym-area">Select LI Locations</div>
+          <div class="gym-desc">Old-school, serious lifting environment. Heavy iron, multiple squat racks, serious atmosphere. If you want a no-frills powerlifting and bodybuilding focused gym, this is it. More expensive but the equipment shows for it.</div>
+          <div class="gym-tags"><span class="gym-tag">Powerlifting</span><span class="gym-tag">Bodybuilding</span><span class="gym-tag">Strength</span><span class="gym-tag">Serious Lifters</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">YMCA Long Island</div>
+          <div class="gym-area">Nassau and Suffolk</div>
+          <div class="gym-desc">Family-friendly with solid equipment, pools, and courts. Great community atmosphere. Often less crowded than commercial chains. Good for general health, swimming, and anyone looking for a welcoming environment.</div>
+          <div class="gym-tags"><span class="gym-tag">General Health</span><span class="gym-tag">Family-Friendly</span><span class="gym-tag">Swimming</span><span class="gym-tag">Community</span></div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;margin-top:28px">Private and Specialty Gyms</div>
+      <div class="gym-grid">
+        <div class="gym-card">
+          <div class="gym-name">Title Boxing Club</div>
+          <div class="gym-area">Multiple LI Locations</div>
+          <div class="gym-desc">Specialty boxing and kickboxing gym. Group classes focused on bag work, conditioning, and cardio. Excellent for fat loss, stress relief, and building cardiovascular fitness. No sparring required.</div>
+          <div class="gym-tags"><span class="gym-tag">Boxing</span><span class="gym-tag">Fat Loss</span><span class="gym-tag">Conditioning</span><span class="gym-tag">Group Classes</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">CrossFit Affiliates (LI)</div>
+          <div class="gym-area">Multiple LI Locations</div>
+          <div class="gym-desc">High-intensity functional fitness gyms with a strong community feel. Excellent for athletic performance, conditioning, and people who thrive with group accountability. Varying coaching quality by location — visit before committing.</div>
+          <div class="gym-tags"><span class="gym-tag">Athletic Performance</span><span class="gym-tag">Conditioning</span><span class="gym-tag">Community</span><span class="gym-tag">HIIT</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">CorePower Yoga</div>
+          <div class="gym-area">Select LI and NYC Locations</div>
+          <div class="gym-desc">Studio-style yoga gym with a focus on heated yoga, strength yoga, and mindfulness. Great as a complement to strength training — improves flexibility, mobility, and mental recovery. Popular with all fitness levels.</div>
+          <div class="gym-tags"><span class="gym-tag">Flexibility</span><span class="gym-tag">Mobility</span><span class="gym-tag">Recovery</span><span class="gym-tag">Mindfulness</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">Orangetheory Fitness</div>
+          <div class="gym-area">Multiple LI Locations</div>
+          <div class="gym-desc">Heart-rate based group fitness classes combining treadmill, rowing, and weight floor work. Excellent for fat loss and cardiovascular health. Science-backed programming. Good for people who need structure and motivation in a group setting.</div>
+          <div class="gym-tags"><span class="gym-tag">Fat Loss</span><span class="gym-tag">Cardio</span><span class="gym-tag">Group Fitness</span><span class="gym-tag">Heart Rate Training</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">F45 Training</div>
+          <div class="gym-area">Multiple LI Locations</div>
+          <div class="gym-desc">45-minute functional training group classes. High energy, community-driven, and varied. Great for fat loss, conditioning, and people who get bored with traditional gym workouts. No equipment knowledge needed to start.</div>
+          <div class="gym-tags"><span class="gym-tag">Fat Loss</span><span class="gym-tag">Functional Training</span><span class="gym-tag">Group Classes</span><span class="gym-tag">Beginner-Friendly</span></div>
+        </div>
+        <div class="gym-card">
+          <div class="gym-name">Powerlifting-Specific Gyms</div>
+          <div class="gym-area">Various LI Locations</div>
+          <div class="gym-desc">Several private powerlifting-focused gyms operate across Long Island — typically smaller, chalk-allowed, serious atmosphere with specialty bars and competition-grade equipment. Search "powerlifting gym Long Island" to find the closest one to you.</div>
+          <div class="gym-tags"><span class="gym-tag">Powerlifting</span><span class="gym-tag">Strength</span><span class="gym-tag">Competition Prep</span><span class="gym-tag">Specialty Equipment</span></div>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--text-muted);margin-top:20px">Know a great LI gym we missed? Email us at <a href="mailto:team@toadalperformance.com" style="color:var(--gold)">team@toadalperformance.com</a> and we will add it.</p>
+    </div>
+
+    <!-- GLOSSARY -->
+    <div class="resource-section" id="glossary">
+      <span class="section-label">Fitness Glossary</span>
+      <h2>No jargon.</h2>
+      <p>Plain-English definitions of every term your coach might use. Bookmark this — it'll save you a lot of Googling.</p>
+      <div class="glossary-grid">
+        <div class="gloss-card">
+          <div class="gloss-term">RPE</div>
+          <div class="gloss-def">Rate of Perceived Exertion. A 1–10 scale of how hard a set feels. RPE 10 = maximum effort, RPE 7 = challenging but you have 3 reps left in the tank.</div>
+          <div class="gloss-example">Example: "Do 4 sets of 8 at RPE 7-8" means stop each set when you feel like you could do 2-3 more.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">RMR</div>
+          <div class="gloss-def">Resting Metabolic Rate. The number of calories your body burns per day doing absolutely nothing — just keeping you alive. The foundation of any calorie calculation.</div>
+          <div class="gloss-example">Example: If your RMR is 1,800, you burn 1,800 calories before any activity.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">TDEE</div>
+          <div class="gloss-def">Total Daily Energy Expenditure. Your RMR multiplied by an activity factor. This is the actual number of calories you burn in a full day including all movement.</div>
+          <div class="gloss-example">Example: RMR 1,800 × activity factor 1.55 = TDEE ~2,790 calories.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">1RM</div>
+          <div class="gloss-def">One-Rep Max. The maximum weight you can lift for a single repetition of an exercise. Used to set training percentages. You don't have to test it — use our calculator above.</div>
+          <div class="gloss-example">Example: If your 1RM squat is 200lbs, training at 70% means using 140lbs.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">Progressive Overload</div>
+          <div class="gloss-def">The principle of gradually increasing the stress placed on your body during training over time. The foundation of all strength and muscle gain. Without it, you plateau.</div>
+          <div class="gloss-example">Example: Adding 5lbs to your bench press every 1-2 weeks is progressive overload.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">METs</div>
+          <div class="gloss-def">Metabolic Equivalents. A measure of exercise intensity relative to rest. 1 MET = sitting still. Walking is ~3.5 METs. Running is 8–12 METs. Used to estimate calorie burn.</div>
+          <div class="gloss-example">Example: A 180lb person running at 6mph (10 METs) burns ~900 calories per hour.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">Hypertrophy</div>
+          <div class="gloss-def">The scientific term for muscle growth. Happens when muscle fibers experience enough stress (volume + load) to rebuild larger. Typically occurs in the 6–20 rep range at high RPE.</div>
+          <div class="gloss-example">Example: A 4×12 set at RPE 8 is a classic hypertrophy protocol.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">Deload</div>
+          <div class="gloss-def">A planned period of reduced training volume or intensity, usually lasting one week. Allows the body to recover from accumulated fatigue. Not laziness — it's programming.</div>
+          <div class="gloss-example">Example: Week 5 of a training block might be a deload week at 50% normal volume.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">Compound Movement</div>
+          <div class="gloss-def">An exercise that involves multiple joints and muscle groups simultaneously. More efficient than isolation exercises — builds strength and burns more calories per rep.</div>
+          <div class="gloss-example">Squat, deadlift, bench press, pull-up, overhead press, and row are all compound movements.</div>
+        </div>
+        <div class="gloss-card">
+          <div class="gloss-term">Isolation Exercise</div>
+          <div class="gloss-def">An exercise that targets a single muscle group by moving only one joint. Used to address weak points or imbalances after compound work is done.</div>
+          <div class="gloss-example">Bicep curl, tricep pushdown, leg extension, lateral raise — all isolation exercises.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="shared.js"></script>
+<script>
+injectDisclaimer();
+injectNav('Resources');
+injectFooter();
+initReveal();
+
+// ── RPE LOAD CALCULATOR (Tuchscherer chart) ──
+// rpeChart[reps][rpe] = percentage of 1RM
+const rpeChart = {
+  1:  {10:1.000, 9.5:0.978, 9:0.955, 8.5:0.939, 8:0.922, 7.5:0.907, 7:0.892, 6.5:0.878, 6:0.863},
+  2:  {10:0.955, 9.5:0.939, 9:0.922, 8.5:0.907, 8:0.892, 7.5:0.878, 7:0.863, 6.5:0.848, 6:0.833},
+  3:  {10:0.922, 9.5:0.907, 9:0.892, 8.5:0.878, 8:0.863, 7.5:0.848, 7:0.833, 6.5:0.820, 6:0.807},
+  4:  {10:0.892, 9.5:0.878, 9:0.863, 8.5:0.848, 8:0.833, 7.5:0.820, 7:0.807, 6.5:0.794, 6:0.781},
+  5:  {10:0.863, 9.5:0.848, 9:0.833, 8.5:0.820, 8:0.807, 7.5:0.794, 7:0.781, 6.5:0.768, 6:0.755},
+  6:  {10:0.833, 9.5:0.820, 9:0.807, 8.5:0.794, 8:0.781, 7.5:0.768, 7:0.755, 6.5:0.743, 6:0.730},
+  7:  {10:0.807, 9.5:0.794, 9:0.781, 8.5:0.768, 8:0.755, 7.5:0.743, 7:0.730, 6.5:0.718, 6:0.705},
+  8:  {10:0.781, 9.5:0.768, 9:0.755, 8.5:0.743, 8:0.730, 7.5:0.718, 7:0.705, 6.5:0.693, 6:0.680},
+  9:  {10:0.755, 9.5:0.743, 9:0.730, 8.5:0.718, 8:0.705, 7.5:0.693, 7:0.680, 6.5:0.668, 6:0.655},
+  10: {10:0.730, 9.5:0.718, 9:0.705, 8.5:0.693, 8:0.680, 7.5:0.668, 7:0.655, 6.5:0.643, 6:0.630},
+};
+
+function calcRPELoad() {
+  const orm = parseFloat(document.getElementById('rpe-1rm').value);
+  const reps = parseInt(document.getElementById('rpe-reps').value);
+  const rpe = parseFloat(document.getElementById('rpe-target').value);
+  const result = document.getElementById('rpe-load-result');
+
+  if (!orm || !reps || !rpe || reps < 1 || reps > 10 || rpe < 6 || rpe > 10) {
+    result.style.display = 'none';
+    return;
+  }
+
+  const repRow = rpeChart[reps] || rpeChart[10];
+  // Find closest RPE key
+  const rpeKeys = Object.keys(repRow).map(Number).sort((a,b) => b-a);
+  const closestRPE = rpeKeys.reduce((prev, curr) => Math.abs(curr-rpe) < Math.abs(prev-rpe) ? curr : prev);
+  const pct = repRow[closestRPE];
+  const weight = Math.round((orm * pct) / 2.5) * 2.5; // round to nearest 2.5
+
+  document.getElementById('rpe-load-weight').textContent = weight + ' lbs';
+  document.getElementById('rpe-load-label').textContent =
+    `${reps} reps at RPE ${rpe} = ${Math.round(pct * 100)}% of your ${orm} lb 1RM`;
+
+  // Show nearby RPE options for same reps
+  const zones = [];
+  rpeKeys.filter(r => r >= 6 && r <= 10).forEach(r => {
+    const w = Math.round((orm * repRow[r]) / 2.5) * 2.5;
+    zones.push({ rpe: r, weight: w, pct: Math.round(repRow[r]*100) });
+  });
+
+  document.getElementById('rpe-load-zones').innerHTML = zones.map(z =>
+    `<div style="background:rgba(255,255,255,.05);padding:7px 10px;border-radius:2px;font-size:12px;${z.rpe==closestRPE?'border:1px solid rgba(201,168,76,.4)':''}">
+      <div style="color:var(--gold);font-weight:700">RPE ${z.rpe}</div>
+      <div style="color:var(--cream)">${z.weight} lbs</div>
+      <div style="color:var(--text-muted)">${z.pct}%</div>
+    </div>`
+  ).join('');
+
+  result.style.display = 'block';
+}
+
+// RPE guide
+const rpeData = [
+  {label:'Very easy',note:'Warm-up pace. No effort. Could do 10+ more reps.'},
+  {label:'Easy',note:'Light effort. Great for warm-up sets or recovery days.'},
+  {label:'Moderate',note:'Noticeable effort but very comfortable. 7+ reps in reserve.'},
+  {label:'Somewhat hard',note:'Moderate challenge. About 6 reps left in the tank.'},
+  {label:'Hard',note:'Significantly challenging. Around 5 reps remaining.'},
+  {label:'Challenging',note:'Could do 3 more reps. Good for most working sets.'},
+  {label:'Very hard',note:'Only 2-3 reps left. Good for heavy strength work.'},
+  {label:'Extremely hard',note:'1-2 reps in reserve. Near-maximal effort.'},
+  {label:'Max effort',note:'You could do 0-1 more reps. Reserve for true max tests.'},
+  {label:'Absolute maximum',note:'Complete failure. Cannot do another rep. Use sparingly.'},
+];
+function updateRPE(){
+  const v=parseInt(document.getElementById('rpe-slider').value);
+  document.getElementById('rpe-val').textContent=v;
+  const d=rpeData[v-1];
+  document.getElementById('rpe-label').textContent=d.label;
+  document.getElementById('rpe-note').textContent=d.note;
+}
+updateRPE();
+
+// RMR (Mifflin-St Jeor)
+function calcRMR(){
+  const sex=document.getElementById('rmr-sex').value;
+  const w=parseFloat(document.getElementById('rmr-weight').value);
+  const h=parseFloat(document.getElementById('rmr-height').value);
+  const a=parseFloat(document.getElementById('rmr-age').value);
+  if(isNaN(w)||isNaN(h)||isNaN(a)){alert('Please fill in all fields.');return;}
+  const wKg=w*0.453592, hCm=h*2.54;
+  let rmr = sex==='m' ? (10*wKg)+(6.25*hCm)-(5*a)+5 : (10*wKg)+(6.25*hCm)-(5*a)-161;
+  rmr=Math.round(rmr);
+  document.getElementById('rmr-num').textContent=rmr.toLocaleString()+' cal';
+  document.getElementById('rmr-tdee').textContent='Estimated TDEE: Sedentary ~'+Math.round(rmr*1.2)+' · Active ~'+Math.round(rmr*1.55)+' · Very Active ~'+Math.round(rmr*1.725)+' calories/day';
+  document.getElementById('rmr-result').classList.add('show');
+}
+
+// 1RM (Epley formula)
+function calcORM(){
+  const w=parseFloat(document.getElementById('orm-weight').value);
+  const r=parseFloat(document.getElementById('orm-reps').value);
+  if(isNaN(w)||isNaN(r)||r<1){alert('Please enter weight and reps.');return;}
+  const orm=Math.round(w*(1+(r/30)));
+  document.getElementById('orm-num').textContent=orm+' lbs';
+  const zones=[['50%',Math.round(orm*.5)],['60%',Math.round(orm*.6)],['70%',Math.round(orm*.7)],['75%',Math.round(orm*.75)],['80%',Math.round(orm*.8)],['85%',Math.round(orm*.85)],['90%',Math.round(orm*.9)],['95%',Math.round(orm*.95)]];
+  document.getElementById('orm-zones').innerHTML=zones.map(([pct,lb])=>`<div style="background:rgba(255,255,255,.05);padding:7px 10px;border-radius:2px;font-size:12px"><span style="color:var(--gold);font-weight:700">${pct}</span><span style="color:var(--cream);float:right">${lb} lbs</span></div>`).join('');
+  document.getElementById('orm-result').classList.add('show');
+}
+
+// Exercise library data
+const exercises = [
+  {name:'Romanian Deadlift',muscle:'legs',icon:'',desc:'Hip hinge pattern. Builds hamstrings and glutes.',tags:['Hamstrings','Glutes','Lower back']},
+  {name:'Goblet Squat',muscle:'legs',icon:'',desc:'Great for knee tracking and squat depth.',tags:['Quads','Glutes','Core']},
+  {name:'Bulgarian Split Squat',muscle:'legs',icon:'',desc:'Single-leg squat variation for quad and glute development.',tags:['Quads','Glutes','Balance']},
+  {name:'Hip Thrust',muscle:'legs',icon:'',desc:'Glute isolation with full range of motion.',tags:['Glutes','Hamstrings']},
+  {name:'Leg Press',muscle:'legs',icon:'',desc:'Quad-dominant push movement with controlled loading.',tags:['Quads','Glutes']},
+  {name:'Barbell Row',muscle:'back',icon:'',desc:'Horizontal pulling pattern. Builds back thickness.',tags:['Lats','Rhomboids','Biceps']},
+  {name:'Pull-Up',muscle:'back',icon:'',desc:'Vertical pulling. Builds width and lat development.',tags:['Lats','Biceps','Core']},
+  {name:'Single Arm DB Row',muscle:'back',icon:'',desc:'Unilateral row to address imbalances.',tags:['Lats','Rhomboids']},
+  {name:'Cable Row',muscle:'back',icon:'',desc:'Constant tension horizontal pull.',tags:['Mid back','Rhomboids','Biceps']},
+  {name:'Bench Press',muscle:'chest',icon:'️',desc:'Foundational horizontal push. Chest, triceps, shoulders.',tags:['Chest','Triceps','Shoulders']},
+  {name:'Dumbbell Fly',muscle:'chest',icon:'️',desc:'Chest isolation through full stretch.',tags:['Chest','Stretch']},
+  {name:'Push-Up Variations',muscle:'chest',icon:'️',desc:'Bodyweight push-up and progressions.',tags:['Chest','Triceps','Core']},
+  {name:'Overhead Press',muscle:'shoulders',icon:'',desc:'Vertical press. Shoulder and tricep dominant.',tags:['Shoulders','Triceps','Core']},
+  {name:'Lateral Raise',muscle:'shoulders',icon:'',desc:'Medial delt isolation for shoulder width.',tags:['Medial delt']},
+  {name:'Face Pull',muscle:'shoulders',icon:'',desc:'Rear delt and external rotation health.',tags:['Rear delt','Rotator cuff']},
+  {name:'Bicep Curl',muscle:'arms',icon:'',desc:'Bicep isolation. Full range of motion is key.',tags:['Biceps']},
+  {name:'Tricep Pushdown',muscle:'arms',icon:'',desc:'Cable tricep isolation. Squeeze at lockout.',tags:['Triceps']},
+  {name:'Hammer Curl',muscle:'arms',icon:'',desc:'Neutral grip curl for brachialis and forearm.',tags:['Biceps','Forearms']},
+  {name:'Plank',muscle:'core',icon:'',desc:'Anti-extension core stability. Squeeze everything.',tags:['Core','Stability']},
+  {name:"Farmer's Carry",muscle:'core',icon:'',desc:'Loaded carry. Core, grip, and conditioning.',tags:['Core','Grip','Full body']},
+  {name:'Dead Bug',muscle:'core',icon:'',desc:'Anti-extension core pattern. Great for beginners.',tags:['Core','Lower back health']},
+];
+
+let activeFilter='all';
+function filterExercises(filter, btn){
+  activeFilter=filter;
+  document.querySelectorAll('.muscle-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderExercises();
+}
+function renderExercises(){
+  const filtered=activeFilter==='all'?exercises:exercises.filter(e=>e.muscle===activeFilter);
+  document.getElementById('exercise-grid').innerHTML=filtered.map(e=>`
+    <div class="exercise-card">
+      <div class="exercise-thumb">${e.icon}<div class="exercise-thumb-muscle">${e.muscle}</div></div>
+      <div class="exercise-card-body">
+        <div class="exercise-card-name">${e.name}</div>
+        <div class="exercise-card-desc">${e.desc}</div>
+        <div class="exercise-card-tags">${e.tags.map(t=>`<span class="ex-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+renderExercises();
+
+// Smooth scroll for resource nav
+document.querySelectorAll('.res-tab').forEach(tab=>{
+  tab.addEventListener('click',e=>{
+    document.querySelectorAll('.res-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
