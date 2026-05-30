@@ -1,4 +1,4 @@
-// ── TOADAL PERFORMANCE v3 — Shared JS ──
+// ── TOADAL PERFORMANCE v4 — Shared JS ──
 
 const LOGO_SVG = `<svg width="28" height="28" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
   <ellipse cx="30" cy="38" rx="14" ry="11" fill="#1A5A38"/>
@@ -58,6 +58,7 @@ const NAV_ITEMS = [
     label: 'Community', href: 'community.html',
     dropdown: [
       { section: 'Get involved', links: [
+        { label: 'Workout of the Week', href: 'wotw.html' },
         { label: 'Weekly Challenge', href: 'community.html#challenge' },
         { label: 'Workout Archive', href: 'community.html#archive' },
       ]}
@@ -89,7 +90,7 @@ function buildMobileMenu() {
       });
     }
   });
-  html += `<a href="apply.html" class="cta-link">Apply for Coaching</a>`;
+  html += `<a href="apply.html" class="cta-link">Book Free Consult</a>`;
   return html;
 }
 
@@ -124,7 +125,7 @@ function injectNav(activePage) {
           <span class="nav-logo-text">TOADAL<span>.</span></span>
         </a>
         <ul class="nav-list">${navLinks}</ul>
-        <a href="apply.html" class="btn btn-gold nav-cta">Apply Now</a>
+        <a href="apply.html" class="btn btn-gold nav-cta">Free Consult</a>
         <button class="hamburger" id="hamburger" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -155,15 +156,19 @@ function injectFooter() {
             <a href="index.html" style="text-decoration:none">
               <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em;color:#F5F0E8">TOADAL<span style="color:#C9A84C">.</span></span>
             </a>
-            <p>Premium team-based fitness coaching on Long Island and NYC. Multiple coaches. One mission: your results.</p>
+            <p>Premium team-based fitness coaching. Remote coaching available anywhere. In-person on Long Island and NYC.</p>
             <div class="footer-socials">
-              <a href="https://instagram.com/teamtoadal" target="_blank" class="social-btn ig">
+              <a href="https://www.instagram.com/teamtoadal/" target="_blank" class="social-btn ig">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
                 @teamtoadal
               </a>
-              <a href="https://tiktok.com/@teamtoadal" target="_blank" class="social-btn tt">
+              <a href="https://www.tiktok.com/@team.toadal" target="_blank" class="social-btn tt">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.33 6.34 6.34 6.34 0 0 0 6.33 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.16 8.16 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z"/></svg>
-                @teamtoadal
+                @team.toadal
+              </a>
+              <a href="https://www.youtube.com/@TeamToadal" target="_blank" class="social-btn yt">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.7c-1.1-1.2-2.4-1.2-3-1.3C16.2 3 12 3 12 3s-4.2 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.2v2c0 2 .3 4.1.3 4.1s.3 2 1.2 2.7c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.4 12 21.5 12 21.5s4.2 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.7 1.2-2.7 1.2-2.7s.3-2.1.3-4.1v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg>
+                YouTube
               </a>
             </div>
           </div>
@@ -171,10 +176,11 @@ function injectFooter() {
             <div class="footer-col-title">Site</div>
             <ul class="footer-links">
               <li><a href="index.html">Home</a></li>
+              <li><a href="wotw.html">Workout of the Week</a></li>
               <li><a href="packages.html">Packages</a></li>
               <li><a href="coaches.html">Our Coaches</a></li>
               <li><a href="community.html">Community</a></li>
-              <li><a href="apply.html">Apply for Coaching</a></li>
+              <li><a href="apply.html">Book Free Consult</a></li>
             </ul>
           </div>
           <div>
@@ -208,6 +214,10 @@ function initReveal() {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // Fallback: force all visible after 300ms
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }, 300);
 }
 
 function initSmoothScroll() {
@@ -218,10 +228,3 @@ function initSmoothScroll() {
     });
   });
 }
-
-// Force all reveal elements visible on load (fallback)
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function() {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-  }, 100);
-});
