@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Free Consult · Toadal Performance</title>
+<meta name="description" content="Book your free 30-minute consultation with the Toadal Performance coaching team. No commitment required.">
+<link rel="stylesheet" href="style.css">
+<style>
+.consult-page { background: var(--green-deep); min-height: 100vh; padding: 120px 0 80px; }
+.consult-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; max-width: 960px; margin: 0 auto; }
+.consult-left {}
+.consult-left h1 { font-family: var(--font-display); font-size: clamp(40px,6vw,72px); color: var(--cream); line-height: .9; letter-spacing: .02em; margin-bottom: 20px; }
+.consult-left h1 em { color: var(--gold); font-style: normal; }
+.consult-left p { font-size: 16px; font-weight: 300; color: var(--green-light); line-height: 1.8; margin-bottom: 14px; }
+.what-happens { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+.step { display: flex; align-items: flex-start; gap: 14px; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--green-mid); color: var(--gold); font-family: var(--font-display); font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-body-title { font-size: 14px; font-weight: 600; color: var(--cream); margin-bottom: 2px; }
+.step-body-text { font-size: 13px; font-weight: 300; color: var(--green-light); line-height: 1.5; }
+.consult-form-box { background: var(--green-card); border-radius: 4px; padding: 36px; border: 1px solid rgba(255,255,255,.08); }
+.consult-form-box h2 { font-family: var(--font-display); font-size: 28px; color: var(--cream); letter-spacing: .04em; margin-bottom: 6px; }
+.consult-form-box > p { font-size: 13px; font-weight: 300; color: var(--green-light); margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--green-light); margin-bottom: 7px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 2px; padding: 12px 14px; font-family: var(--font-body); font-size: 14px;
+  font-weight: 300; color: var(--cream); outline: none; transition: border-color .2s; -webkit-appearance: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); background: rgba(255,255,255,.08); }
+.form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.22); }
+.form-group select option { background: var(--green-deep); color: var(--cream); }
+.form-group textarea { resize: vertical; min-height: 80px; }
+.submit-btn { width: 100%; padding: 16px; font-size: 14px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--gold); color: var(--green-deep); border: none; border-radius: 2px; cursor: pointer; transition: background .2s, transform .2s; margin-top: 4px; }
+.submit-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+.form-note { font-size: 12px; font-weight: 300; color: var(--text-muted); text-align: center; margin-top: 10px; }
+/* Thank you / schedule step */
+.thankyou { display: none; text-align: center; padding: 20px 0; }
+.thankyou.show { display: block; }
+.thankyou-icon { font-size: 48px; margin-bottom: 16px; }
+.thankyou h3 { font-family: var(--font-display); font-size: 30px; color: var(--gold); margin-bottom: 10px; letter-spacing: .04em; }
+.thankyou p { font-size: 14px; font-weight: 300; color: var(--green-light); line-height: 1.7; margin-bottom: 24px; }
+.calendly-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
+@media(max-width:860px){ .consult-wrap{grid-template-columns:1fr;gap:40px} }
+</style>
+</head>
+<body>
+<div class="consult-page">
+  <div class="container">
+    <div class="consult-wrap">
+
+      <div class="consult-left reveal">
+        <h1>Your free<br>consult.<br><em>On us.</em></h1>
+        <p>30 minutes with the coaching team. No commitment, no pressure — just an honest conversation about your goals and whether Toadal is the right fit.</p>
+        <div class="what-happens">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <div class="step-body-title">Fill out this short form</div>
+              <div class="step-body-text">Takes under 2 minutes. Just the basics so we know who you are and what you are working toward.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <div class="step-body-title">Pick a time that works for you</div>
+              <div class="step-body-text">After you submit, you will be taken straight to our calendar to book your 30-minute call at a time that fits your schedule.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-body-title">We will reach out before the call</div>
+              <div class="step-body-text">We will send a short follow-up form to get a better picture of your history and goals so the call is as useful as possible for you.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <div class="step-body-title">Your consult call</div>
+              <div class="step-body-text">We talk through everything — your goals, your situation, what coaching with Toadal would actually look like. Honest either way.</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:32px;padding:18px 20px;background:rgba(201,168,76,.08);border-radius:3px;border-left:3px solid var(--gold)">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Questions before booking?</div>
+          <div style="font-size:13px;font-weight:300;color:var(--green-light);line-height:1.7">Email us at <a href="mailto:team@toadalperformance.com" style="color:var(--gold)">team@toadalperformance.com</a> and we will get back to you quickly.</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="consult-form-box">
+          <h2>Book a Free Consult</h2>
+          <p>Quick form — under 2 minutes.</p>
+
+          <!-- FORM — connected to Formspree -->
+          <form id="consult-form"
+                action="https://formspree.io/f/xdajjwbg"
+                method="POST">
+
+            <!-- Hidden field: redirect to Calendly after submit -->
+            <input type="hidden" name="_next" value="https://calendly.com/team-toadalperformance/30min">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="form-group">
+                <label>First name</label>
+                <input type="text" name="first_name" placeholder="Alex" required>
+              </div>
+              <div class="form-group">
+                <label>Last name</label>
+                <input type="text" name="last_name" placeholder="Johnson" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email address</label>
+              <input type="email" name="email" placeholder="alex@email.com" required>
+            </div>
+
+            <div class="form-group">
+              <label>Primary goal</label>
+              <select name="goal" required>
+                <option value="" disabled selected>What are you working toward?</option>
+                <option>Lose body fat</option>
+                <option>Build muscle and strength</option>
+                <option>Improve athletic performance</option>
+                <option>General health and consistency</option>
+                <option>Body recomposition</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Remote or in-person?</label>
+              <select name="coaching_type">
+                <option value="" disabled selected>What works for you?</option>
+                <option>Remote coaching (I can be anywhere)</option>
+                <option>In-person on Long Island or NYC</option>
+                <option>Both — open to either</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Anything we should know? (optional)</label>
+              <textarea name="notes" placeholder="Injuries, limitations, questions — anything that would help us prepare for your call."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit and Pick Your Time</button>
+            <div class="form-note">After submitting you will be taken to our calendar to book your call.</div>
+          </form>
+
+          <!-- Thank you shown after JS submit (fallback) -->
+          <div class="thankyou" id="thankyou">
+            <div class="thankyou-icon">&#128056;</div>
+            <h3>YOU ARE ALL SET</h3>
+            <p>We received your form. Click below to pick a time for your free consult call — it only takes a minute.</p>
+            <a href="https://calendly.com/team-toadalperformance/30min" target="_blank" class="btn btn-gold" style="font-size:13px;padding:14px 32px;display:inline-block">Pick Your Consult Time</a>
+            <p class="calendly-note">Or email us at <a href="mailto:team@toadalperformance.com" style="color:var(--gold)">team@toadalperformance.com</a> and we will send you a link.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="shared.js"></script>
+<script>
+injectDisclaimer();
+injectNav('');
+injectFooter();
+initReveal();
+</script>
+</body>
+</html>
